@@ -1,14 +1,17 @@
 /* 기본 스타일 및 폰트 설정 */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Jua&display=swap'); /* Jua 폰트 추가 */
 
+/* 기존 :root 부분을 아래 코드로 교체하세요 */
 :root {
-    --primary-color: #2466ea; /* 신뢰감 주는 녹색 */
-    --secondary-color: #FFF9C4; /* 따뜻한 노란색 */
-    --light-bg-color: #F8F9FA;
-    --text-color: #333;
-    --heading-font: 'Jua', 'Noto Sans KR', sans-serif; /* 제목 폰트 Jua 적용 */
-    --body-font: 'Noto Sans KR', sans-serif;
+    --primary-color: #4FC3F7;    /* 메인 컬러: 밝은 하늘색 */
+    --secondary-color: #F1A652; /* 보조 컬러: 상큼한 오렌지 */
+    --accent-color: #FF8A65;     /* 포인트 컬러: 햇살 노란색 */
+    --light-bg-color: #F8F9FA;  /* 밝은 배경색 (유지) */
+    --text-color: #333;         /* 기본 텍스트 색 (유지) */
+    --heading-font: 'Jua', 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif; /* 제목 폰트 (Jua 우선) */
+    --body-font: 'Noto Sans KR', sans-serif; /* 본문 폰트 (유지) */
 }
+
 
 * {
     margin: 0;
@@ -47,7 +50,7 @@ nav {
 .logo a {
     text-decoration: none;
     color: var(--primary-color);
-    font-family: var(--heading-font); /* 로고에도 Jua 폰트 적용 */
+    font-family: 'Jua'; /* 로고에도 Jua 폰트 적용 */
     font-weight: 700;
     font-size: 1.8rem; /* 로고 크기 살짝 키움 */
 }
@@ -101,65 +104,67 @@ nav {
 
 /* 기존의 #hero 와 .hero-content 부분을 찾아 아래 코드로 교체하세요 */
 
-    /* 메인 화면 (Hero 섹션) - 영상 배경 스타일 */
-    #hero {
-        position: relative; /* 자식 요소를 absolute로 위치시키기 위한 기준점 */
-        height: 42vh; /* 화면 전체 높이를 차지하도록 설정 */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        overflow: hidden; /* 섹션 밖으로 나가는 영상 부분을 숨김 */
-        color: white; /* 기본 텍스트 색상을 흰색으로 */
-    }
+/* 메인 화면 (Hero 섹션) - 영상 배경 스타일 */
+#hero {
+    position: relative; /* 자식 요소를 absolute로 위치시키기 위한 기준점 */
+    height: 42vh; /* 화면 전체 높이를 차지하도록 설정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden; /* 섹션 밖으로 나가는 영상 부분을 숨김 */
+    color: white; /* 기본 텍스트 색상을 흰색으로 */
+}
 
-    .video-background {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -2; /* 콘텐츠와 오버레이 뒤로 보냄 */
-    }
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2; /* 콘텐츠와 오버레이 뒤로 보냄 */
+}
 
-    .video-background video {
-        width: 100%;
-        height: 100%;
-        object-fit: contain; /* 영상이 섹션을 비율에 맞게 꽉 채우도록 설정 */
-    }
+.video-background video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 영상이 섹션을 비율에 맞게 꽉 채우도록 설정 */
+}
 
-    /* .hero-overlay 선택자를 찾아 아래 코드로 교체하세요 */
+/* .hero-overlay 선택자를 찾아 아래 코드로 교체하세요 */
 
-    .hero-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        /* 배경의 투명도를 0.4에서 0.2로 낮춤 (더 투명하게) */
-        background-color: rgba(0, 0, 0, 0.8); 
-        z-index: -1;
-    }
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* 배경의 투명도를 0.4에서 0.2로 낮춤 (더 투명하게) */
+    background-color: rgba(0, 0, 0, 0.8); 
+    z-index: -1;
+}
 
-    .hero-content {
-        position: relative; /* z-index가 적용되도록 */
-        z-index: 1; /* 오버레이와 비디오 위에 위치 */
-        max-width: 800px;
-        padding: 0 1rem;
-        /* 이전 스타일(배경색, 그림자 등)이 남아있다면 제거 */
-        background-color: transparent;
-        box-shadow: none;
-    }
+.hero-content {
+    position: relative; /* z-index가 적용되도록 */
+    z-index: 1; /* 오버레이와 비디오 위에 위치 */
+    max-width: 800px;
+    padding: 0 1rem;
+    /* 이전 스타일(배경색, 그림자 등)이 남아있다면 제거 */
+    background-color: transparent;
+    box-shadow: none;
+}
 
-    .hero-content h1, .hero-content p {
-        color: white; /* 텍스트 색상을 명시적으로 흰색으로 지정 */
-    }
+.hero-content h1, .hero-content p {
+    color: white; /* 텍스트 색상을 명시적으로 흰색으로 지정 */
+}
 
 .hero-content h1 {
     font-family: var(--heading-font); /* 제목 폰트 적용 */
     font-size: 3.5rem; /* 더 크게 */
     margin-bottom: 1rem;
     line-height: 1.2;
+    color: white
+
 }
 
 .hero-content p {
@@ -179,8 +184,9 @@ nav {
 }
 
 .cta-button:hover {
-    background: #163e8f;
-    transform: translateY(-3px); /* 살짝 떠오르는 효과 */
+    background: var(--accent-color);
+    color: #333; /* 노란 배경에 맞춰 글자색 변경 */
+    transform: translateY(-3px);
 }
 
 /* 공통 콘텐츠 섹션 스타일 */
@@ -205,31 +211,32 @@ nav {
 /* 소개 섹션 */
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 최소 크기 조정 */
-    gap: 2.5rem; /* 간격 넓힘 */
+    /* 이 부분을 수정합니다 */
+    grid-template-columns: repeat(2, minmax(280px, 1fr)); 
+    gap: 2.5rem;
     text-align: center;
 }
 
 .feature-item {
     background: white;
-    padding: 2.5rem; /* 패딩 넓힘 */
+    padding: 2.5rem;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* 그림자 강화 */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     transition: transform 0.3s;
 }
 .feature-item:hover {
-    transform: translateY(-10px); /* 호버 시 떠오르는 효과 */
+    transform: translateY(-10px);
 }
 
 .feature-icon {
-    width: 70px; /* 아이콘 크기 키움 */
+    width: 70px;
     margin-bottom: 1.2rem;
 }
 
 .feature-item h3 {
     margin-bottom: 0.8rem;
-    color: var(--primary-color);
-    font-size: 1.5rem; /* 제목 크기 키움 */
+    color: var(--secondary-color);
+    font-size: 1.5rem;
 }
 
 /* 프로그램 섹션 */
@@ -262,6 +269,7 @@ nav {
 }
 
 .card-content h3 {
+    color: var(--secondary-color);
     margin-bottom: 0.8rem;
     font-size: 1.4rem;
 }
