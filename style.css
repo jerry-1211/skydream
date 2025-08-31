@@ -12,6 +12,11 @@
     --body-font: 'Noto Sans KR', sans-serif; /* 본문 폰트 (유지) */
 }
 
+h2{
+    background-color:  rgba(230, 244, 241, 0.1); 
+    border-radius: 10px;
+}
+
 
 * {
     margin: 0;
@@ -132,7 +137,7 @@ nav {
 .video-background video {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 영상이 섹션을 비율에 맞게 꽉 채우도록 설정 */
+    object-fit: cover /* 영상이 섹션을 비율에 맞게 꽉 채우도록 설정 */
 }
 
 /* .hero-overlay 선택자를 찾아 아래 코드로 교체하세요 */
@@ -144,7 +149,7 @@ nav {
     width: 100%;
     height: 100%;
     /* 배경의 투명도를 0.4에서 0.2로 낮춤 (더 투명하게) */
-    background-color: rgba(0, 0, 0, 0.8); 
+    background-color: rgba(134, 130, 254, 0.1); 
     z-index: -1;
 }
 
@@ -154,7 +159,9 @@ nav {
     max-width: 800px;
     padding: 0 1rem;
     /* 이전 스타일(배경색, 그림자 등)이 남아있다면 제거 */
-    background-color: transparent;
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 10px;
+    padding: 20px;
     box-shadow: none;
 }
 
@@ -199,13 +206,18 @@ nav {
     max-width: 1200px;
     margin: 0 auto;
     text-align: center;
+    border-radius: 20px;
 }
 
 .content-section h2 {
     font-family: var(--heading-font); /* 제목 폰트 적용 */
     font-size: 2.8rem; /* 더 크게 */
-    margin-bottom: 1.5rem; /* 간격 넓힘 */
+    margin-bottom: .5rem; /* 간격 넓힘 */
     color: var(--primary-color); /* 제목 색상 강조 */
+}
+
+.detailed-info-sentence{
+    margin-bottom: 30px;
 }
 
 .bg-light {
@@ -215,10 +227,10 @@ nav {
 /* 소개 섹션 */
 .features-grid {
     display: grid;
-    /* 이 부분을 수정합니다 */
     grid-template-columns: repeat(2, minmax(280px, 1fr)); 
     gap: 2.5rem;
     text-align: center;
+    margin-bottom: 50px;
 }
 
 .feature-item {
@@ -250,33 +262,7 @@ nav {
     gap: 2rem;
 }
 
-.card {
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    text-align: left;
-    transition: transform 0.3s;
-}
-.card:hover {
-    transform: translateY(-5px);
-}
 
-.card img {
-    width: 100%;
-    height: 220px; /* 이미지 높이 약간 늘림 */
-    object-fit: cover;
-}
-
-.card-content {
-    padding: 1.8rem; /* 패딩 늘림 */
-}
-
-.card-content h3 {
-    color: var(--secondary-color);
-    margin-bottom: 0.8rem;
-    font-size: 1.4rem;
-}
 
 /* 앨범 섹션 */
 .gallery-grid {
@@ -465,7 +451,6 @@ footer {
     }
     .content-section h2 {
         font-size: 2rem;
-        margin-bottom: 2rem;
     }
     .feature-item {
         padding: 1.5rem;
@@ -590,4 +575,38 @@ footer {
 }
 
 
+/* 모바일에서 그리드 1열로 변경 */
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: 1fr; /* 1열로 변경 */
+        gap: 2rem;
+        padding: 0 1rem; /* 좌우 여백 추가 */
+    }
+    
+    .feature-item {
+        padding: 2rem; /* 패딩 줄임 */
+        margin: 0 auto;
+        max-width: 400px; /* 최대 너비 제한 */
+    }
+}
 
+/* 더 작은 모바일 화면 */
+@media (max-width: 480px) {
+    .features-grid {
+        padding: 0 0.5rem;
+        gap: 1.5rem;
+    }
+    
+    .feature-item {
+        padding: 1.5rem;
+    }
+}
+
+
+
+.swiper-button-next{
+    color: #6b6a6a !important;
+}
+.swiper-button-prev{
+    color: #6b6a6a !important;
+}

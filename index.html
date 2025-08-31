@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>공공형 하늘 꿈나무 어린이집</title>
     <link rel="stylesheet" href="style.css">
-    
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic:wght@400;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic:wght@400;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 </head>
+
 <body>
 
     <header>
@@ -42,17 +43,22 @@
             </div>
             <div class="hero-overlay"></div>
             
-            <div class="hero-content">
+            <!-- <div class="hero-content">
                 <h1>아이들의 행복한 웃음이 가득한 곳</h1>
                 <p>공공형 하늘 꿈나무 어린이집은 사랑과 전문성으로 아이들의 성장을 돕습니다.</p>
                 <a href="#contact" class="cta-button">입소 상담 문의하기</a>
-            </div>
+            </div> -->
         </section>
-        
+    
 
         <section id="about" class="content-section">
+            
             <div class="detailed-info-section">
-                <h2>하늘 꿈나무 어린이집 소개</h2>
+                <div class="detailed-info-sentence">
+                    <h2>하늘 꿈나무 어린이집 소개</h2>
+                    <p>아이들의 행복한 웃음이 가득한 곳</p>
+                    <p>공공형 하늘 꿈나무 어린이집은 사람과 전문성으로 아이들의 성장을 돕습니다.</p>
+                </div>
                 <!-- "왼쪽 사진, 오른쪽 글" 레이아웃 -->
                 <div class="info-item-layout">
                     <div class="info-item-image">
@@ -61,7 +67,9 @@
                     </div>
                     <div class="info-item-text">
                         <h3>원장님의 교육 철학</h3>
-                        <p>우리 아이들이 행복한 미래를 꿈꿀 수 있도록, 저희 하늘 꿈나무 어린이집은 단순한 지식 전달을 넘어 아이들 각자의 고유한 빛을 발견하고 키워나가는 것에 집중합니다. 따뜻한 사랑과 굳건한 신뢰를 바탕으로 모든 아이들이 존중받는 환경에서 마음껏 뛰놀고 배우며 성장할 수 있도록 돕겠습니다.</p>
+                        <p>
+                            놀면서 자라고, 놀이는 곧 배움이 됩니다. 공공형 어린이집은 놀이 중심의 보육을 실천하며 아이 스스로 탐색하고 경험하는 시간을 존중합니다. 안정, 사랑, 즐거움이 조화를 이루는 공간 속에서 아이들이 마음껏 꿈꾸고 성장할 수 있도록 따뜻한 돌봄과 교육으로 함께 합니다.    
+                        </p>
                         
                         <!-- 파일 다운로드 버튼 영역 (위치를 여기로 이동) -->
                         <div class="download-area">
@@ -88,7 +96,7 @@
                         <img src="https://img.icons8.com/?size=100&id=Yz96q6HPn8Em&format=png&color=000000" alt="전문 교사진 아이콘" class="feature-icon-img">
                     </div>
                     <h3>교사들의 따뜻한 지도</h3>
-                    <p>교육부장관상을 수상한 원장님과 15년 이상 경력의 교사진이 함께합니다. 오랜 경험과 따뜻한 마음으로 아이들의 성장을 안정적으로 지원합니다.</p>
+                    <p>15년 이상 경력의 교사진이 함께합니다. 오랜 경험과 따뜻한 마음으로 아이들의 성장을 안정적으로 지원합니다.</p>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon-wrapper">
@@ -105,32 +113,46 @@
                     <p>아워홈의 신선한 식재료와 '저염식 인증'을 통해 아이들의 건강한 식습관을 만듭니다. 식재료 본연의 맛을 경험하며 즐겁게 식사합니다.</p>
                 </div>
             </div>
+
+            <a href="#contact" class="cta-button">입소 상담 문의하기</a>
         </section>
 
         <section id="programs" class="content-section bg-light">
             <h2>아이들의 꿈을 키우는 교육 프로그램</h2>
-            <div class="program-cards">
-                <div class="card">
-                    <img src="images/gallery_5.jpg" alt="미술 활동">
-                    <div class="card-content">
-                        <h3>창의 미술 프로그램</h3>
-                        <p>다양한 재료를 탐색하고 표현하며 아이들의 창의력과 상상력을 자극합니다.</p>
+
+            <div class="swiper program-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <img src="images/gallery_5.jpg" alt="미술 활동">
+                            <div class="card-content">
+                                <h3>작은 몸, 큰 성장 (체육)</h3>
+                                <p>작은 몸에서 다양한 움직임을 경험하여 신체 발달과 자신감을 키우는 영아 채육 활동입니다.</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="card">
-                    <img src="images/gallery_5.jpg" alt="자연 체험 활동">
-                    <div class="card-content">
-                        <h3>생태 자연 체험</h3>
-                        <p>텃밭 가꾸기, 숲 체험 등 자연과 교감하며 생명의 소중함을 배웁니다.</p>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <img src="images/gallery_5.jpg" alt="자연 체험 활동">
+                            <div class="card-content">
+                                <h3>자연에서 배우는 즐거움</h3>
+                                <p>농장에서 직접 심고 가꾸며 수확하는 활동을 통해 자연과 생명의 소중함을 배우는 시간입니다.</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="card">
-                    <img src="images/gallery_5.jpg" alt="음악 활동">
-                     <div class="card-content">
-                        <h3>신나는 음악 놀이</h3>
-                        <p>다양한 악기를 연주하고 노래하며 리듬감과 즐거움을 느낍니다.</p>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <img src="images/gallery_5.jpg" alt="음악 활동">
+                            <div class="card-content">
+                                <h3>놀이처럼 배우는 영어</h3>
+                                <p>아이들이 놀이를 즐기며 자연스럽게 영어를 익히는 활동입니다.</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
             </div>
         </section>
         
@@ -175,8 +197,10 @@
             <div class="contact-container">
                 <div class="contact-info">
                     <p><strong>주소:</strong> 경기 고양시 일산동구 중산동 1800 </p>
-                    <p><strong>전화:</strong> 031-818-9150</p>
+                    <p><strong>원장님 전화:</strong> 010-5058-0771</p>
+                    <p><strong>어린이집 전화:</strong> 031-818-9150</p>
                     <p><strong>운영시간:</strong> 평일 07:30 ~ 19:30</p>
+                    <p><strong>야간연장:</strong> 평일 19:30 ~ 21:30</p>
                     <p>궁금한 점이 있으시면 언제든지 편하게 연락주세요.</p>
                 </div>
                 <div class="map-container">
@@ -191,5 +215,35 @@
     </footer>
 
     <script src="main.js"></script>
+    <script>
+        const swiper = new Swiper('.program-swiper', {
+            slidesPerView: 1,
+
+            spaceBetween: 30,
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                }
+            },
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    </script>
 </body>
 </html>
