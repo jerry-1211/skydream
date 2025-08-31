@@ -8,7 +8,7 @@
     --accent-color: #FF8A65;     /* 포인트 컬러: 햇살 노란색 */
     --light-bg-color: #F8F9FA;  /* 밝은 배경색 (유지) */
     --text-color: #333;         /* 기본 텍스트 색 (유지) */
-    --heading-font: 'Jua', 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif; /* 제목 폰트 (Jua 우선) */
+    --heading-font: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif; /* 제목 폰트 (Jua 우선) */
     --body-font: 'Noto Sans KR', sans-serif; /* 본문 폰트 (유지) */
 }
 
