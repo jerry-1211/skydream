@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
 
 <body>
@@ -22,7 +26,7 @@
             </div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#about">어린이집 소개</a></li>
-                <li><a href="#programs">교육 프로그램</a></li>
+                <li><a href="#programs">배움과 놀이의 여정</a></li>
                 <li><a href="#gallery">활동 앨범</a></li>
                 <li><a href="#info">원운영안내</a></li>
                 <li><a href="#contact">오시는 길</a></li>
@@ -40,7 +44,7 @@
         <section id="hero">
             <div class="hero-slider">
                 <div class="slide active">
-                    <div class="slide-bg" style="background-image: url('images/gallery_6.png')"></div>
+                    <div class="slide-bg" style="background-image: url('images/main1.png')"></div>
                     <div class="slide-content">
                         <h1>아이들의 행복한 웃음이 가득한 곳</h1>
                         <p>사랑과 전문성으로 아이들의 성장을 돕습니다.</p>
@@ -48,7 +52,7 @@
                     </div>
                 </div>
                 <div class="slide">
-                    <div class="slide-bg" style="background-image: url('images/gallery_7.png')"></div>
+                    <div class="slide-bg" style="background-image: url('images/main2.png')"></div>
                     <div class="slide-content">
                         <h1>놀이중심 교육과정</h1>
                         <p>아이들의 창의력과 꿈을 키우는 배움터</p>
@@ -56,7 +60,7 @@
                     </div>
                 </div>
                 <div class="slide">
-                    <div class="slide-bg" style="background-image: url('images/gallery_8.png')"></div>
+                    <div class="slide-bg" style="background-image: url('images/main3.png')"></div>
                     <div class="slide-content">
                         <h1>친구와 함께하는 즐거운 배움</h1>
                         <p>소통하고 협력하며 함께 성장하는 공간</p>
@@ -85,6 +89,8 @@
                     <div>
                         <strong>운영시간</strong>
                         <span>07:30 ~ 19:30</span>
+                    </br>
+                        <span>(야간 연장) 19:30 ~ 21:30</span>
                     </div>
                 </div>
                 <div class="quick-info-item">
@@ -189,75 +195,396 @@
             </div>
         </section>
 
-        <!-- 교육 프로그램 -->
+        <!-- 배움과 놀이의 여정 -->
         <section id="programs" class="content-section bg-light">
             <div class="container">
-                <h2>교육 프로그램</h2>
+                <h2>배움과 놀이의 여정</h2>
                 <div class="program-tabs">
-                    <button class="tab-btn active" data-tab="basic">기본과정</button>
-                    <button class="tab-btn" data-tab="special">놀이 이야기</button>
+                    <button class="tab-btn active" data-tab="basic">일상</button>
+                    <button class="tab-btn" data-tab="story">놀이 이야기</button>
+                    <button class="tab-btn" data-tab="special">학부모 참여수업</button>
+                    <button class="tab-btn" data-tab="action">특별 활동</button>
+                    <button class="tab-btn" data-tab="act">체험</button>
                 </div>
                 
+                <!-- 일상 슬라이더 -->
                 <div class="tab-content active" id="basic">
-                    <div class="program-grid">
-                        <div class="program-card">
-                            <img src="images/education_1.png" alt="기본보육">
-                            <div class="card-content">
-                                <h4>표준보육과정</h4>
-                                <p>연령별 맞춤 교육과정으로 아이들의 전인적 성장을 돕습니다.</p>
+                    <div class="swiper basic-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/basic/basic1.png" alt="일상1">
+                                    <div class="card-content">
+                                        <h4>신비한 모험 놀이</h4>
+                                        <p>우주의 꿈을 키우는 아이들입니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/basic/basic2.png" alt="일상2">
+                                    <div class="card-content">
+                                        <h4>재미 쏙쏙 컵 쌓기 시간</h4>
+                                        <p>아이들의 공간 감각 능력을 길러봐요!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/basic/basic3.png" alt="일상3">
+                                    <div class="card-content">
+                                        <h4>줄을 맞춰 따라가기</h4>
+                                        <p>한 줄로 서서 기다리는 연습을 해봐요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/basic/basic4.png" alt="일상4">
+                                    <div class="card-content">
+                                        <h4>다 함께 뛰어요</h4>
+                                        <p>바깥에서 맑은 공기를 마시며 자유롭게 뛰어놀아요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/basic/basic5.png" alt="일상5">
+                                    <div class="card-content">
+                                        <h4>동물 체험</h4>
+                                        <p>동물 가면을 쓰고서 동물이 되어봐요!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/basic/basic6.png" alt="일상6">
+                                    <div class="card-content">
+                                        <h4>박스 꾸미기</h4>
+                                        <p>일상의 물건을 예쁘게 꾸며봅니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/basic/basic7.png" alt="일상7">
+                                    <div class="card-content">
+                                        <h4>깨끗이 씻어요</h4>
+                                        <p>더러워진 장난감을 스스로 씻어봅니다.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="program-card">
-                            <img src="images/education_2.png" alt="놀이활동">
-                            <div class="card-content">
-                                <h4>자유놀이</h4>
-                                <p>아이들이 주도하는 자유놀이를 통한 창의력 개발</p>
+                        <!-- 네비게이션 버튼 -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <!-- 페이지네이션 -->
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+
+                <!-- 놀이 슬라이더 -->
+                <div class="tab-content" id="story">
+                    <div class="swiper story-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/story/story1.png" alt="놀이이야기1">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/story/story2.png" alt="놀이이야기2">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/story/story3.png" alt="놀이이야기3">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/story/story4.png" alt="놀이이야기4">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/story/story5.png" alt="놀이이야기5">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/story/story6.png" alt="놀이이야기6">
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/story/story7.png" alt="놀이이야기7">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/story/story8.png" alt="놀이이야기8">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/story/story9.png" alt="놀이이야기9">
+                                </div>
                             </div>
                         </div>
-                        <div class="program-card">
-                            <img src="images/education_3.png" alt="자연체험">
-                            <div class="card-content">
-                                <h4>자연체험활동</h4>
-                                <p>자연과 교감하며 생명의 소중함을 배우는 체험활동</p>
-                            </div>
-                        </div>
-                        <div class="program-card">
-                            <img src="images/education_4.png" alt="창의활동">
-                            <div class="card-content">
-                                <h4>창의미술</h4>
-                                <p>상상력과 창의력을 키우는 다양한 미술 활동</p>
-                            </div>
-                        </div>
+                        <!-- 네비게이션 버튼 -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <!-- 페이지네이션 -->
+                        <div class="swiper-pagination"></div>
                     </div>
                 </div>
                 
+                <!-- 학부모 슬라이더 -->
                 <div class="tab-content" id="special">
-                    <div class="program-grid">
-                        <div class="program-card">
-                            <img src="images/nori_1.png" alt="체육활동">
-                            <div class="card-content">
-                                <h4>신체활동</h4>
-                                <p>작은 몸에서 큰 성장을 경험하는 신체 발달 프로그램</p>
+                    <div class="swiper special-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/special/special1.png" alt="학부모참여수업1">
+                                    <div class="card-content">
+                                        <h4>동물병원 견학</h4>
+                                        <p>학부모님이 운영하는 동물병원 견학으로 아이의 꿈을 키워갑니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/special/special2.png" alt="학부모참여수업2">
+                                    <div class="card-content">
+                                        <h4>부모님 참여 수업</h4>
+                                        <p>참여해주시는 부모님께 감사의 마음을 담아 감사장을 드립니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/special/special3.png" alt="학부모참여수업3">
+                                    <div class="card-content">
+                                        <h4>크리스마스 활동</h4>
+                                        <p>크리스마스에 가족과 함께 맛있는 케이크를 만들어요!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/special/special4.png" alt="학부모참여수업4">
+                                    <div class="card-content">
+                                        <h4>어린이날 행사</h4>
+                                        <p>아이들을 위한 특별한 축제에 부모님도 함께 참여하세요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/special/special5.png" alt="학부모참여수업5">
+                                    <div class="card-content">
+                                        <h4>현장 학습 체험</h4>
+                                        <p>아이들과 부모님이 함께하는 생생한 현장 학습 체험입니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/special/special6.png" alt="학부모참여수업6">
+                                    <div class="card-content">
+                                        <h4>가을 운동회</h4>
+                                        <p>아이들과 부모님이 함께하는 즐거운 가을 운동회에 참여하세요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/special/special7.png" alt="학부모참여수업7">
+                                    <div class="card-content">
+                                        <h4>1일 교사</h4>
+                                        <p>오늘은 아빠가 선생님이 되어 직접 수업을 진행해요.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="program-card">
-                            <img src="images/nori_2.png" alt="영어활동">
-                            <div class="card-content">
-                                <h4>영어놀이</h4>
-                                <p>놀이를 통해 자연스럽게 영어를 익히는 즐거운 시간</p>
+
+                        <!-- 네비게이션 버튼 -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <!-- 페이지네이션 -->
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+
+
+                <!-- 특별활동 슬라이더 -->
+                <div class="tab-content" id="action">
+                    <div class="swiper action-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/action/action1.png" alt="특별활동1">
+                                    <div class="card-content">
+                                        <h4>체육활동(중심 잡아요)</h4>
+                                        <p>발판에 올라가 균형 감각을 길러봅니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/action/action2.png" alt="특별활동2">
+                                    <div class="card-content">
+                                        <h4>체육활동(다 함께 차차차)</h4>
+                                        <p>체육 선생님과 함께 신나게 운동해요!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/action/action3.png" alt="특별활동3">
+                                    <div class="card-content">
+                                        <h4>체육활동(풍선 터널)</h4>
+                                        <p>풍선 터널을 통과하는 재미있는 놀이예요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/action/action4.png" alt="특별활동4">
+                                    <div class="card-content">
+                                        <h4>구멍으로 쏙!</h4>
+                                        <p>나만의 자리를 찾아 구멍으로 들어가요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/action/action5.png" alt="특별활동5">
+                                    <div class="card-content">
+                                        <h4>동물체험</h4>
+                                        <p>실제 동물들과 함께하는 생생한 체험이에요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/action/action6.png" alt="특별활동6">
+                                    <div class="card-content">
+                                        <h4>딸기 영어 체험(사랑해)</h4>
+                                        <p>친구들에게 사랑을 표현해봐요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/action/action7.png" alt="특별활동7">
+                                    <div class="card-content">
+                                        <h4>딸기 영어 체험(별자리 찾기)</h4>
+                                        <p>아이들의 별자리를 찾아봐요!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/action/action8.jpeg" alt="특별활동8">
+                                    <div class="card-content">
+                                        <h4>딸기 영어 체험(인형극)</h4>
+                                        <p>아이들에게 재미있는 인형극을 보여줘요.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="program-card">
-                            <img src="images/nori_3.png" alt="영어활동">
-                            <div class="card-content">
-                                <h4>영어놀이</h4>
-                                <p>놀이를 통해 자연스럽게 영어를 익히는 즐거운 시간</p>
+                        
+                        <!-- 네비게이션 버튼 -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <!-- 페이지네이션 -->
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+
+                <!-- 체험 슬라이더 -->
+                <div class="tab-content" id="act">
+                    <div class="swiper act-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/act/act1.jpeg" alt="체험1">
+                                    <div class="card-content">
+                                        <h4>아이들과 자연이 만든 갤러리</h4>
+                                        <p>숲에서 아이들이 그린 멋진 작품입니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/act/act2.png" alt="체험2">
+                                    <div class="card-content">
+                                        <h4>동화같은 시간</h4>
+                                        <p>아이들과 부모님이 자연에서 보내는 소중한 시간이에요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/act/act3.png" alt="체험3">
+                                    <div class="card-content">
+                                        <h4>자연과 함께하는 하루</h4>
+                                        <p>아이들과 자연, 그리고 부모님의 행복한 시간이에요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/act/act4.jpeg" alt="체험4">
+                                    <div class="card-content">
+                                        <h4>농장 체험</h4>
+                                        <p>직접 농작물을 수확하며 농장 체험을 해봐요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/act/act5.png" alt="체험5">
+                                    <div class="card-content">
+                                        <h4>꼬마 농부</h4>
+                                        <p>아이들이 농부가 되는 특별한 체험이에요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/act/act6.png" alt="체험6">
+                                    <div class="card-content">
+                                        <h4>땅속에서 배우는 하루</h4>
+                                        <p>땅속에서 직접 캐서 음식의 소중함을 느껴봐요.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="program-card">
+                                    <img src="images/act/act7.jpeg" alt="체험7">
+                                    <div class="card-content">
+                                        <h4>땅 속에서 꺼낸 선물</h4>
+                                        <p>직접 딴 수확물로 집에서 맛있게 먹어요.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- 네비게이션 버튼 -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <!-- 페이지네이션 -->
+                        <div class="swiper-pagination"></div>
                     </div>
                 </div>
             </div>
         </section>
+
 
         <!-- 활동 앨범 - Swiper 슬라이더로 변경 -->
         <section id="gallery" class="content-section">
@@ -342,10 +669,10 @@
                         <h4>입소 대기 신청</h4>
                         <p>임신육아종합포털 아이사랑(www.childcare.go.kr)에서 온라인 신청 가능합니다.</p>
                         <ul>
-                            <li>만 0세~5세 보육</li>
+                            <li>만 0세~2세 보육</li>
                             <li>공공형 어린이집 우선순위 적용</li>
                             <li>입소 상담 후 최종 결정</li>
-                            <li>정원: 40명 (현재 35명 재원)</li>
+                            <li>정원: 20명 (현재 20명 재원)</li>
                         </ul>
                     </div>
                 </div>
@@ -376,6 +703,7 @@
                         <div class="meal-info">
                             <div class="meal-features">
                                 <h5>급식 특징</h5>
+                            </br>
                                 <ul>
                                     <li>저염식 인증 어린이집</li>
                                     <li>신선한 제철 식재료 사용</li>
@@ -433,34 +761,19 @@
                     <h4>하늘 꿈나무 어린이집</h4>
                     <p>경기 고양시 일산동구 중산동 1800</p>
                     <p>TEL: 031-818-9150 | 원장: 010-5058-0771</p>
-                    <p>설립: 2018년 | 정원: 40명</p>
-                    <p>어린이집 평가: A등급 | 공공형 어린이집 선정</p>
-                </div>
-                
-                <div class="footer-menu">
-                    <div class="menu-column">
-                        <h5>어린이집 정보</h5>
-                        <ul>
-                            <li><a href="#about">어린이집 소개</a></li>
-                            <li><a href="#programs">교육 프로그램</a></li>
-                            <li><a href="#gallery">활동 앨범</a></li>
-                            <li><a href="#contact">찾아오시는 길</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="menu-column">
-                        <h5>입소 안내</h5>
-                        <ul>
-                            <li><a href="#info" onclick="switchTab('admission')">입소 절차</a></li>
-                            <li><a href="#info" onclick="switchTab('schedule')">운영시간</a></li>
-                            <li><a href="#info" onclick="switchTab('meal')">급식 안내</a></li>
-                        </ul>
-                    </div>
+                    <p>정원 20명 | A등급 공공형 어린이집</p>
                 </div>
                 
                 <div class="footer-links">
-                    <a href="tel:031-818-9150">전화 문의</a>
-                    <a href="#contact">오시는 길</a>
+                    <a href="tel:031-818-9150">
+                        <i class="fas fa-phone"></i> 전화문의
+                    </a>
+                    <a href="#contact">
+                        <i class="fas fa-map-marker-alt"></i> 오시는 길
+                    </a>
+                    <a href="#programs">
+                        <i class="fas fa-graduation-cap"></i> 교육프로그램
+                    </a>
                 </div>
             </div>
             
@@ -469,6 +782,7 @@
             </div>
         </div>
     </footer>
+
 
     <script src="main.js"></script>
 </body>
