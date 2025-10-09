@@ -219,6 +219,47 @@ nav {
     color: white;
 }
 
+/* 태블릿 최적화 (768px ~ 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
+    #hero {
+        width: 85%;
+        height: 60vh;
+        margin: 60px auto 0;
+    }
+    
+    .slide-content {
+        padding: 2.5rem;
+    }
+    
+    .slide-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    .slide-content p {
+        font-size: 1.1rem;
+    }
+}
+
+/* 작은 모바일 (480px 이하) */
+@media (max-width: 480px) {
+    
+    .slide-content {
+        top: 30%;
+    }
+    .cta-button{
+        font-size: 10px;
+    }
+
+    .hero-controls{
+        top: 30%;
+        padding: 0px;
+    }
+    
+
+}
+
+
+
 /* 퀵 인포 바 */
 .quick-info-bar {
     position: absolute;
