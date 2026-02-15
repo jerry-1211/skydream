@@ -1,0 +1,737 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "components/hero.html" %}
+
+{# Menu Boxes #}
+<section class="menu-boxes">
+    <div class="container">
+        <div class="menu-grid">
+            <div class="menu-box" onclick="scrollToSection('#info', 'meal')">
+                <i class="fas fa-utensils" aria-hidden="true"></i>
+                <h4>급식 안내</h4>
+                <p>건강한 식단으로<br>아이들과 함께해요</p>
+            </div>
+            <div class="menu-box" onclick="scrollToSection('#info', 'schedule')">
+                <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                <h4>운영시간</h4>
+                <p>어린이집 운영시간을<br>확인하세요</p>
+            </div>
+            <div class="menu-box" onclick="scrollToSection('#info', 'admission')">
+                <i class="fas fa-user-plus" aria-hidden="true"></i>
+                <h4>입소안내</h4>
+                <p>입소 절차와<br>안내사항을 확인하세요</p>
+            </div>
+            <div class="menu-box" onclick="scrollToSection('#contact')">
+                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                <h4>오시는 길</h4>
+                <p>어린이집 위치와<br>연락처를 확인하세요</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# About Section #}
+<section id="about" class="content-section">
+    <div class="container">
+        <h2>하늘 꿈나무 어린이집</h2>
+        <div class="intro-content">
+            <div class="intro-text">
+                <h3>원장님의 인사말</h3>
+                <p>놀면서 자라고, 놀이는 곧 배움이 됩니다. 공공형 어린이집은 놀이 중심의 보육을 실천하며 아이 스스로 탐색하고 경험하는 시간을 존중합니다.</p>
+                <p>안정, 사랑, 즐거움이 조화를 이루는 공간 속에서 아이들이 마음껏 꿈꾸고 성장할 수 있도록 따뜻한 돌봄과 교육으로 함께 하겠습니다.</p>
+
+                <!-- Download Area -->
+                <div class="download-area">
+                    <div class="download-container">
+                        <div class="download-icon">
+                            <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                        </div>
+                        <div class="download-text">
+                            <h4>어린이집 운영계획서</h4>
+                            <p class="download-info">어린이집의 자세한 운영 방침과 교육 계획을 확인하세요</p>
+                        </div>
+                        <a href="{{ url_for('static', filename='files/어린이집 운영계획서.pdf') }}" class="download-button" download>
+                            <i class="fas fa-download" aria-hidden="true"></i>
+                            <span>다운로드</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="intro-image">
+                <img src="{{ url_for('static', filename='images/teacher.jpeg') }}" alt="원장님" loading="lazy">
+            </div>
+        </div>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                </div>
+                <h4>안전한 환경</h4>
+                <p>매일 안전점검과 소독으로 깨끗하고 안전한 환경을 만듭니다.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-users" aria-hidden="true"></i>
+                </div>
+                <h4>전문 교사진</h4>
+                <p>15년 이상 경력의 전문 교사들이 아이들을 돌봅니다.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-gamepad" aria-hidden="true"></i>
+                </div>
+                <h4>놀이중심 교육</h4>
+                <p>아이들의 창의력과 사고력을 키우는 놀이 중심 교육과정</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-apple-alt" aria-hidden="true"></i>
+                </div>
+                <h4>건강한 급식</h4>
+                <p>저염식 인증을 받은 신선하고 건강한 급식을 제공합니다.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# Programs Section #}
+<section id="programs" class="content-section bg-light">
+    <div class="container">
+        <h2>배움과 놀이의 여정</h2>
+        <div class="program-tabs">
+            <button class="tab-btn active" data-tab="basic">일상</button>
+            <button class="tab-btn" data-tab="story">놀이 이야기</button>
+            <button class="tab-btn" data-tab="special">학부모 참여수업</button>
+            <button class="tab-btn" data-tab="action">특별 활동</button>
+            <button class="tab-btn" data-tab="act">체험</button>
+        </div>
+
+        <!-- basic (일상) -->
+        <div class="tab-content active" id="basic">
+            <div class="swiper basic-swiper">
+                <div class="swiper-wrapper">
+                    {% if programs and programs.get('basic') %}
+                    {% for program in programs['basic'] %}
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            {% if program.image %}
+                            <img src="{{ url_for('static', filename='images/' + program.image.filename) }}" alt="{{ program.title }}" loading="lazy">
+                            {% endif %}
+                            {% if program.description %}
+                            <div class="card-content">
+                                <h4>{{ program.title }}</h4>
+                                <p>{{ program.description }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/basic/basic1.png') }}" alt="신비한 모험 놀이" loading="lazy">
+                            <div class="card-content">
+                                <h4>신비한 모험 놀이</h4>
+                                <p>우주의 꿈을 키우는 아이들입니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/basic/basic2.png') }}" alt="재미 쏙쏙 컵 쌓기 시간" loading="lazy">
+                            <div class="card-content">
+                                <h4>재미 쏙쏙 컵 쌓기 시간</h4>
+                                <p>아이들의 공간 감각 능력을 길러봐요!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/basic/basic3.png') }}" alt="줄을 맞춰 따라가기" loading="lazy">
+                            <div class="card-content">
+                                <h4>줄을 맞춰 따라가기</h4>
+                                <p>한 줄로 서서 기다리는 연습을 해봐요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/basic/basic4.png') }}" alt="다 함께 뛰어요" loading="lazy">
+                            <div class="card-content">
+                                <h4>다 함께 뛰어요</h4>
+                                <p>바깥에서 맑은 공기를 마시며 자유롭게 뛰어놀아요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/basic/basic5.png') }}" alt="동물 체험" loading="lazy">
+                            <div class="card-content">
+                                <h4>동물 체험</h4>
+                                <p>동물 가면을 쓰고서 동물이 되어봐요!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/basic/basic6.png') }}" alt="박스 꾸미기" loading="lazy">
+                            <div class="card-content">
+                                <h4>박스 꾸미기</h4>
+                                <p>일상의 물건을 예쁘게 꾸며봅니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/basic/basic7.png') }}" alt="깨끗이 씻어요" loading="lazy">
+                            <div class="card-content">
+                                <h4>깨끗이 씻어요</h4>
+                                <p>더러워진 장난감을 스스로 씻어봅니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/basic/basic8.png') }}" alt="요리 활동" loading="lazy">
+                            <div class="card-content">
+                                <h4>요리 활동</h4>
+                                <p>오감 톡톡! 쿠킹 플레이</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/basic/basic9.png') }}" alt="세차장 놀이" loading="lazy">
+                            <div class="card-content">
+                                <h4>세차장 놀이</h4>
+                                <p>반짝반짝 자동차 세차장이 열렸어요!</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <!-- story (놀이 이야기) -->
+        <div class="tab-content" id="story">
+            <div class="swiper story-swiper">
+                <div class="swiper-wrapper">
+                    {% if programs and programs.get('story') %}
+                    {% for program in programs['story'] %}
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            {% if program.image %}
+                            <img src="{{ url_for('static', filename='images/' + program.image.filename) }}" alt="{{ program.title }}" loading="lazy">
+                            {% endif %}
+                            {% if program.description %}
+                            <div class="card-content">
+                                <h4>{{ program.title }}</h4>
+                                <p>{{ program.description }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    {% for i in range(1, 10) %}
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/story/story' ~ i ~ '.png') }}" alt="놀이이야기{{ i }}" loading="lazy">
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <!-- special (학부모 참여수업) -->
+        <div class="tab-content" id="special">
+            <div class="swiper special-swiper">
+                <div class="swiper-wrapper">
+                    {% if programs and programs.get('special') %}
+                    {% for program in programs['special'] %}
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            {% if program.image %}
+                            <img src="{{ url_for('static', filename='images/' + program.image.filename) }}" alt="{{ program.title }}" loading="lazy">
+                            {% endif %}
+                            {% if program.description %}
+                            <div class="card-content">
+                                <h4>{{ program.title }}</h4>
+                                <p>{{ program.description }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/special/special1.png') }}" alt="동물병원 견학" loading="lazy">
+                            <div class="card-content">
+                                <h4>동물병원 견학</h4>
+                                <p>학부모님이 운영하는 동물병원 견학으로 아이의 꿈을 키워갑니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/special/special2.png') }}" alt="부모님 참여 수업" loading="lazy">
+                            <div class="card-content">
+                                <h4>부모님 참여 수업</h4>
+                                <p>참여해주시는 부모님께 감사의 마음을 담아 감사장을 드립니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/special/special3.png') }}" alt="크리스마스 활동" loading="lazy">
+                            <div class="card-content">
+                                <h4>크리스마스 활동</h4>
+                                <p>크리스마스에 가족과 함께 맛있는 케이크를 만들어요!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/special/special4.png') }}" alt="어린이날 행사" loading="lazy">
+                            <div class="card-content">
+                                <h4>어린이날 행사</h4>
+                                <p>아이들을 위한 특별한 축제에 부모님도 함께 참여하세요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/special/special5.png') }}" alt="현장 학습 체험" loading="lazy">
+                            <div class="card-content">
+                                <h4>현장 학습 체험</h4>
+                                <p>아이들과 부모님이 함께하는 생생한 현장 학습 체험입니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/special/special6.png') }}" alt="가을 운동회" loading="lazy">
+                            <div class="card-content">
+                                <h4>가을 운동회</h4>
+                                <p>아이들과 부모님이 함께하는 즐거운 가을 운동회에 참여하세요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/special/special7.png') }}" alt="1일 교사" loading="lazy">
+                            <div class="card-content">
+                                <h4>1일 교사</h4>
+                                <p>오늘은 아빠가 선생님이 되어 직접 수업을 진행해요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <!-- action (특별 활동) -->
+        <div class="tab-content" id="action">
+            <div class="swiper action-swiper">
+                <div class="swiper-wrapper">
+                    {% if programs and programs.get('action') %}
+                    {% for program in programs['action'] %}
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            {% if program.image %}
+                            <img src="{{ url_for('static', filename='images/' + program.image.filename) }}" alt="{{ program.title }}" loading="lazy">
+                            {% endif %}
+                            {% if program.description %}
+                            <div class="card-content">
+                                <h4>{{ program.title }}</h4>
+                                <p>{{ program.description }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/action/action1.png') }}" alt="체육활동(중심 잡아요)" loading="lazy">
+                            <div class="card-content">
+                                <h4>체육활동(중심 잡아요)</h4>
+                                <p>발판에 올라가 균형 감각을 길러봅니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/action/action2.png') }}" alt="체육활동(다 함께 차차차)" loading="lazy">
+                            <div class="card-content">
+                                <h4>체육활동(다 함께 차차차)</h4>
+                                <p>체육 선생님과 함께 신나게 운동해요!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/action/action3.png') }}" alt="체육활동(풍선 터널)" loading="lazy">
+                            <div class="card-content">
+                                <h4>체육활동(풍선 터널)</h4>
+                                <p>풍선 터널을 통과하는 재미있는 놀이예요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/action/action4.png') }}" alt="구멍으로 쏙!" loading="lazy">
+                            <div class="card-content">
+                                <h4>구멍으로 쏙!</h4>
+                                <p>나만의 자리를 찾아 구멍으로 들어가요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/action/action5.png') }}" alt="동물체험" loading="lazy">
+                            <div class="card-content">
+                                <h4>동물체험</h4>
+                                <p>실제 동물들과 함께하는 생생한 체험이에요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/action/action6.png') }}" alt="딸기 영어 체험(사랑해)" loading="lazy">
+                            <div class="card-content">
+                                <h4>딸기 영어 체험(사랑해)</h4>
+                                <p>친구들에게 사랑을 표현해봐요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/action/action7.png') }}" alt="딸기 영어 체험(별자리 찾기)" loading="lazy">
+                            <div class="card-content">
+                                <h4>딸기 영어 체험(별자리 찾기)</h4>
+                                <p>아이들의 별자리를 찾아봐요!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/action/action8.jpeg') }}" alt="딸기 영어 체험(인형극)" loading="lazy">
+                            <div class="card-content">
+                                <h4>딸기 영어 체험(인형극)</h4>
+                                <p>아이들에게 재미있는 인형극을 보여줘요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <!-- act (체험) -->
+        <div class="tab-content" id="act">
+            <div class="swiper act-swiper">
+                <div class="swiper-wrapper">
+                    {% if programs and programs.get('act') %}
+                    {% for program in programs['act'] %}
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            {% if program.image %}
+                            <img src="{{ url_for('static', filename='images/' + program.image.filename) }}" alt="{{ program.title }}" loading="lazy">
+                            {% endif %}
+                            {% if program.description %}
+                            <div class="card-content">
+                                <h4>{{ program.title }}</h4>
+                                <p>{{ program.description }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/act/act1.jpeg') }}" alt="아이들과 자연이 만든 갤러리" loading="lazy">
+                            <div class="card-content">
+                                <h4>아이들과 자연이 만든 갤러리</h4>
+                                <p>숲에서 아이들이 그린 멋진 작품입니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/act/act2.png') }}" alt="동화같은 시간" loading="lazy">
+                            <div class="card-content">
+                                <h4>동화같은 시간</h4>
+                                <p>아이들과 부모님이 자연에서 보내는 소중한 시간이에요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/act/act3.png') }}" alt="자연과 함께하는 하루" loading="lazy">
+                            <div class="card-content">
+                                <h4>자연과 함께하는 하루</h4>
+                                <p>아이들과 자연, 그리고 부모님의 행복한 시간이에요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/act/act4.jpeg') }}" alt="농장 체험" loading="lazy">
+                            <div class="card-content">
+                                <h4>농장 체험</h4>
+                                <p>직접 농작물을 수확하며 농장 체험을 해봐요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/act/act5.png') }}" alt="꼬마 농부" loading="lazy">
+                            <div class="card-content">
+                                <h4>꼬마 농부</h4>
+                                <p>아이들이 농부가 되는 특별한 체험이에요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/act/act6.png') }}" alt="땅속에서 배우는 하루" loading="lazy">
+                            <div class="card-content">
+                                <h4>땅속에서 배우는 하루</h4>
+                                <p>땅속에서 직접 캐서 음식의 소중함을 느껴봐요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <img src="{{ url_for('static', filename='images/act/act7.jpeg') }}" alt="땅 속에서 꺼낸 선물" loading="lazy">
+                            <div class="card-content">
+                                <h4>땅 속에서 꺼낸 선물</h4>
+                                <p>직접 딴 수확물로 집에서 맛있게 먹어요.</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# Gallery Section #}
+<section id="gallery" class="content-section">
+    <div class="container">
+        <h2>활동 앨범</h2>
+        <div class="swiper gallery-swiper">
+            <div class="swiper-wrapper">
+                {% if gallery_items %}
+                {% for item in gallery_items %}
+                <div class="swiper-slide">
+                    <div class="gallery-item">
+                        {% if item.image %}
+                        <img src="{{ url_for('static', filename='images/' + item.image.filename) }}" alt="{{ item.title }}" loading="lazy">
+                        {% endif %}
+                        <div class="overlay">
+                            <h4>{{ item.title }}</h4>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="swiper-slide">
+                    <div class="gallery-item">
+                        <img src="{{ url_for('static', filename='images/gallery_1.png') }}" alt="여름아 놀자" loading="lazy">
+                        <div class="overlay">
+                            <h4>여름아 놀자</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="gallery-item">
+                        <img src="{{ url_for('static', filename='images/gallery_2.png') }}" alt="인형극으로 전해요, 할머니의 사랑" loading="lazy">
+                        <div class="overlay">
+                            <h4>인형극으로 전해요, 할머니의 사랑</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="gallery-item">
+                        <img src="{{ url_for('static', filename='images/gallery_3.png') }}" alt="함께라서 더 빛나는 크리스마스" loading="lazy">
+                        <div class="overlay">
+                            <h4>함께라서 더 빛나는 크리스마스</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="gallery-item">
+                        <img src="{{ url_for('static', filename='images/gallery_4.png') }}" alt="흙공으로 하천을 구해요!" loading="lazy">
+                        <div class="overlay">
+                            <h4>흙공으로 하천을 구해요!</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="gallery-item">
+                        <img src="{{ url_for('static', filename='images/gallery_5.png') }}" alt="여름 햇살 아래 함께 웃어요" loading="lazy">
+                        <div class="overlay">
+                            <h4>여름 햇살 아래 함께 웃어요</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="gallery-item">
+                        <img src="{{ url_for('static', filename='images/gallery_6.png') }}" alt="DMZ 평화 체험 놀이" loading="lazy">
+                        <div class="overlay">
+                            <h4>DMZ 평화 체험 놀이</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="gallery-item">
+                        <img src="{{ url_for('static', filename='images/gallery_7.jpeg') }}" alt="자식 농사 잘 지었네. 한가위 축제" loading="lazy">
+                        <div class="overlay">
+                            <h4>자식 농사 잘 지었네. 한가위 축제</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="gallery-item">
+                        <img src="{{ url_for('static', filename='images/gallery_8.png') }}" alt="코스모스 향기 따라 걷는 길" loading="lazy">
+                        <div class="overlay">
+                            <h4>코스모스 향기 따라 걷는 길</h4>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
+
+{# Info Section #}
+<section id="info" class="content-section bg-light">
+    <div class="container">
+        <h2>원 운영 안내</h2>
+        <div class="info-tabs">
+            <button class="tab-btn active" data-tab="admission">입소안내</button>
+            <button class="tab-btn" data-tab="schedule">운영시간</button>
+            <button class="tab-btn" data-tab="meal">급식안내</button>
+        </div>
+
+        <div class="tab-content active" id="admission">
+            <div class="info-content">
+                <h4>입소 대기 신청</h4>
+                <p>임신육아종합포털 아이사랑(www.childcare.go.kr)에서 온라인 신청 가능합니다.</p>
+                <ul>
+                    <li>만 0세~2세 보육</li>
+                    <li>공공형 어린이집 우선순위 적용</li>
+                    <li>입소 상담 후 최종 결정</li>
+                    <li>정원: 20명 (현재 20명 재원)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content" id="schedule">
+            <div class="info-content">
+                <h4>운영 시간</h4>
+                <div class="schedule-table">
+                    <div class="schedule-row">
+                        <span class="time-label">기본시간</span>
+                        <span class="time-value">{{ site_info.get('operating_hours', '07:30 ~ 19:30') if site_info else '07:30 ~ 19:30' }}</span>
+                    </div>
+                    <div class="schedule-row">
+                        <span class="time-label">야간연장</span>
+                        <span class="time-value">{{ site_info.get('extended_hours', '19:30 ~ 21:30') if site_info else '19:30 ~ 21:30' }}</span>
+                    </div>
+                    <div class="schedule-row">
+                        <span class="time-label">휴원일</span>
+                        <span class="time-value">{{ site_info.get('closed_days', '일요일, 공휴일') if site_info else '일요일, 공휴일' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="meal">
+            <div class="info-content">
+                <h4>급식 안내</h4>
+                <div class="meal-info">
+                    <div class="meal-features">
+                        <h5>급식 특징</h5>
+                        <ul>
+                            <li>저염식 인증 어린이집</li>
+                            <li>신선한 제철 식재료 사용</li>
+                            <li>아워홈 식재료 공급업체</li>
+                            <li>알레르기 대응 개별 식단</li>
+                            <li>영양사 관리 하의 균형 잡힌 식사</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# Contact Section #}
+<section id="contact" class="content-section">
+    <div class="container">
+        <h2>오시는 길</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                    <div>
+                        <strong>주소</strong>
+                        <p>{{ site_info.get('address', '경기 고양시 일산동구 중산동 1800') if site_info else '경기 고양시 일산동구 중산동 1800' }}</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone" aria-hidden="true"></i>
+                    <div>
+                        <strong>연락처</strong>
+                        <p>어린이집: {{ site_info.get('phone', '031-818-9150') if site_info else '031-818-9150' }}<br>원장님: {{ site_info.get('director_phone', '010-5058-0771') if site_info else '010-5058-0771' }}</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <div>
+                        <strong>운영시간</strong>
+                        <p>평일 {{ site_info.get('operating_hours', '07:30 ~ 19:30') if site_info else '07:30 ~ 19:30' }}<br>야간연장 {{ site_info.get('extended_hours', '19:30 ~ 21:30') if site_info else '19:30 ~ 21:30' }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="map-container">
+                <iframe src="https://maps.google.com/maps?q={{ site_info.get('map_latitude', '37.6770705') if site_info else '37.6770705' }},{{ site_info.get('map_longitude', '126.787819') if site_info else '126.787819' }}&hl=ko&z=17&output=embed"
+                        width="100%" height="100%" style="border:0;"
+                        allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="하늘 꿈나무 어린이집 위치"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

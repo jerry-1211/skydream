@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+env/
+
+# Environment
+.env
+
+# Database
+*.db
+*.sqlite3
+
+# Uploads (user content)
+app/static/uploads/originals/*
+app/static/uploads/thumbnails/*
+app/static/uploads/webp/*
+!app/static/uploads/originals/.gitkeep
+!app/static/uploads/thumbnails/.gitkeep
+!app/static/uploads/webp/.gitkeep
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker/postgres_data/
+
+# Migrations
+migrations/versions/*.pyc
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# OMC state
+.omc/

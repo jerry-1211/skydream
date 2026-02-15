@@ -1,0 +1,50 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ '교사 수정' if teacher else '교사 추가' }}{% endblock %}
+{% block page_title %}{{ '교사 수정' if teacher else '교사 추가' }}{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="post" action="{{ url_for('admin.teachers_edit', id=teacher.id) if teacher else url_for('admin.teachers_create') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" class="form-control" value="{{ teacher.name if teacher else '' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="title">직책</label>
+                <input type="text" id="title" name="title" class="form-control" value="{{ teacher.title if teacher else '' }}" placeholder="예: 원장, 보육교사">
+            </div>
+
+            <div class="form-group">
+                <label for="greeting">인사말</label>
+                <textarea id="greeting" name="greeting" class="form-control" rows="4">{{ teacher.greeting if teacher else '' }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="photo_id">프로필 사진</label>
+                <select id="photo_id" name="photo_id" class="form-control">
+                    <option value="">사진 없음</option>
+                    {% for media in media_list %}
+                    <option value="{{ media.id }}" {{ 'selected' if teacher and teacher.photo_id == media.id }}>{{ media.original_filename }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="sort_order">정렬 순서</label>
+                <input type="number" id="sort_order" name="sort_order" class="form-control" value="{{ teacher.sort_order if teacher else 0 }}" style="max-width:120px;">
+                <div class="form-hint">숫자가 작을수록 앞에 표시됩니다.</div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ '수정' if teacher else '등록' }}
+                </button>
+                <a href="{{ url_for('admin.teachers_list') }}" class="btn btn-secondary">취소</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

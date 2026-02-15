@@ -1,0 +1,60 @@
+{% extends "admin/base.html" %}
+{% block title %}교사 소개 관리{% endblock %}
+{% block page_title %}교사 소개 관리{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>총 {{ teachers|length }}명</h2>
+    <a href="{{ url_for('admin.teachers_create') }}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> 교사 추가
+    </a>
+</div>
+
+{% if teachers %}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width:50px;">순서</th>
+                <th style="width:60px;">사진</th>
+                <th>이름</th>
+                <th>직책</th>
+                <th style="width:140px;">관리</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teacher in teachers %}
+            <tr>
+                <td>{{ teacher.sort_order }}</td>
+                <td>
+                    {% if teacher.photo %}
+                    <img src="{{ url_for('static', filename='uploads/originals/' + teacher.photo.filename) }}" class="table-thumb" alt="">
+                    {% else %}
+                    <span class="text-muted">-</span>
+                    {% endif %}
+                </td>
+                <td>{{ teacher.name }}</td>
+                <td>{{ teacher.title or '-' }}</td>
+                <td>
+                    <div class="actions">
+                        <a href="{{ url_for('admin.teachers_edit', id=teacher.id) }}" class="btn btn-sm btn-secondary">
+                            <i class="fas fa-edit"></i> 수정
+                        </a>
+                        <form method="post" action="{{ url_for('admin.teachers_delete', id=teacher.id) }}" onsubmit="return confirm('정말 삭제하시겠습니까?');" style="display:inline;">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <i class="fas fa-chalkboard-teacher"></i>
+    <p>등록된 교사 정보가 없습니다.</p>
+    <a href="{{ url_for('admin.teachers_create') }}" class="btn btn-primary">교사 추가하기</a>
+</div>
+{% endif %}
+{% endblock %}

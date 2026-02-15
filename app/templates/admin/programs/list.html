@@ -1,0 +1,68 @@
+{% extends "admin/base.html" %}
+{% block title %}프로그램 관리{% endblock %}
+{% block page_title %}프로그램 관리{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>총 {{ programs|length }}건</h2>
+    <a href="{{ url_for('admin.programs_create') }}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> 프로그램 추가
+    </a>
+</div>
+
+{% if programs %}
+    {% set ns = namespace(current_cat='') %}
+    {% for program in programs %}
+        {% if program.category != ns.current_cat %}
+            {% if ns.current_cat != '' %}
+                </tbody></table></div>
+            {% endif %}
+            {% set ns.current_cat = program.category %}
+            <div class="category-group">
+                <h3><i class="fas fa-folder"></i> {{ categories.get(program.category, program.category) }}</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:50px;">순서</th>
+                            <th style="width:60px;">이미지</th>
+                            <th>제목</th>
+                            <th style="width:140px;">관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        {% endif %}
+                        <tr>
+                            <td>{{ program.sort_order }}</td>
+                            <td>
+                                {% if program.image %}
+                                <img src="{{ url_for('static', filename='uploads/originals/' + program.image.filename) }}" class="table-thumb" alt="">
+                                {% else %}
+                                <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ program.title }}</td>
+                            <td>
+                                <div class="actions">
+                                    <a href="{{ url_for('admin.programs_edit', id=program.id) }}" class="btn btn-sm btn-secondary">
+                                        <i class="fas fa-edit"></i> 수정
+                                    </a>
+                                    <form method="post" action="{{ url_for('admin.programs_delete', id=program.id) }}" onsubmit="return confirm('정말 삭제하시겠습니까?');" style="display:inline;">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+    {% endfor %}
+    {% if ns.current_cat != '' %}
+                    </tbody>
+                </table>
+            </div>
+    {% endif %}
+{% else %}
+<div class="empty-state">
+    <i class="fas fa-graduation-cap"></i>
+    <p>등록된 프로그램이 없습니다.</p>
+    <a href="{{ url_for('admin.programs_create') }}" class="btn btn-primary">프로그램 추가하기</a>
+</div>
+{% endif %}
+{% endblock %}

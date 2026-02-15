@@ -1,0 +1,40 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ '급식 수정' if meal else '급식 등록' }}{% endblock %}
+{% block page_title %}{{ '급식 수정' if meal else '급식 등록' }}{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="post" action="{{ url_for('admin.meals_edit', id=meal.id) if meal else url_for('admin.meals_create') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="form-group">
+                <label for="plan_date">날짜</label>
+                <input type="date" id="plan_date" name="plan_date" class="form-control" value="{{ meal.plan_date.strftime('%Y-%m-%d') if meal and meal.plan_date else '' }}" required style="max-width:200px;">
+            </div>
+
+            <div class="form-group">
+                <label for="meal_type">식사 유형</label>
+                <select id="meal_type" name="meal_type" class="form-control" required style="max-width:200px;">
+                    <option value="">선택하세요</option>
+                    {% for key, label in meal_types.items() %}
+                    <option value="{{ key }}" {{ 'selected' if meal and meal.meal_type == key }}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="menu_items">메뉴 (한 줄에 하나씩)</label>
+                <textarea id="menu_items" name="menu_items" class="form-control" rows="6" placeholder="쌀밥&#10;된장찌개&#10;김치&#10;과일">{% if meal %}{{ meal.menu_items | join('\n') }}{% endif %}</textarea>
+                <div class="form-hint">각 메뉴 항목을 한 줄에 하나씩 입력하세요.</div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ '수정' if meal else '등록' }}
+                </button>
+                <a href="{{ url_for('admin.meals_list') }}" class="btn btn-secondary">취소</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

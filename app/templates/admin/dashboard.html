@@ -1,0 +1,41 @@
+{% extends "admin/base.html" %}
+{% block title %}대시보드{% endblock %}
+{% block page_title %}대시보드{% endblock %}
+{% block content %}
+<p style="margin-bottom: 1.5rem; color: #6c757d;">환영합니다! 아래에서 어린이집 콘텐츠를 관리할 수 있습니다.</p>
+
+<div class="stats-grid">
+    <a href="{{ url_for('admin.notices_list') }}" class="stat-card primary" style="text-decoration:none;">
+        <div class="stat-number">{{ stats.notices }}</div>
+        <div class="stat-label"><i class="fas fa-bullhorn"></i> 공지사항</div>
+    </a>
+    <a href="{{ url_for('admin.media_list') }}" class="stat-card secondary" style="text-decoration:none;">
+        <div class="stat-number">{{ stats.media }}</div>
+        <div class="stat-label"><i class="fas fa-images"></i> 미디어</div>
+    </a>
+    <a href="{{ url_for('admin.programs_list') }}" class="stat-card success" style="text-decoration:none;">
+        <div class="stat-number">{{ stats.programs }}</div>
+        <div class="stat-label"><i class="fas fa-graduation-cap"></i> 프로그램</div>
+    </a>
+    <a href="{{ url_for('admin.gallery_list') }}" class="stat-card purple" style="text-decoration:none;">
+        <div class="stat-number">{{ stats.galleries }}</div>
+        <div class="stat-label"><i class="fas fa-photo-video"></i> 갤러리</div>
+    </a>
+    <a href="{{ url_for('admin.hero_slides_list') }}" class="stat-card primary" style="text-decoration:none;">
+        <div class="stat-number">{{ stats.hero_slides }}</div>
+        <div class="stat-label"><i class="fas fa-sliders-h"></i> 히어로 슬라이드</div>
+    </a>
+    <a href="{{ url_for('admin.meals_list') }}" class="stat-card secondary" style="text-decoration:none;">
+        <div class="stat-number">{{ stats.meals }}</div>
+        <div class="stat-label"><i class="fas fa-utensils"></i> 급식</div>
+    </a>
+    <a href="{{ url_for('admin.events_list') }}" class="stat-card success" style="text-decoration:none;">
+        <div class="stat-number">{{ stats.events }}</div>
+        <div class="stat-label"><i class="fas fa-calendar-alt"></i> 행사</div>
+    </a>
+    <a href="{{ url_for('admin.teachers_list') }}" class="stat-card purple" style="text-decoration:none;">
+        <div class="stat-number">{{ stats.teachers }}</div>
+        <div class="stat-label"><i class="fas fa-chalkboard-teacher"></i> 교사</div>
+    </a>
+</div>
+{% endblock %}

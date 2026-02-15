@@ -1,0 +1,43 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ '행사 수정' if event else '행사 등록' }}{% endblock %}
+{% block page_title %}{{ '행사 수정' if event else '행사 등록' }}{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="post" action="{{ url_for('admin.events_edit', id=event.id) if event else url_for('admin.events_create') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" id="title" name="title" class="form-control" value="{{ event.title if event else '' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">설명</label>
+                <textarea id="description" name="description" class="form-control" rows="5">{{ event.description if event else '' }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="event_date">날짜</label>
+                <input type="date" id="event_date" name="event_date" class="form-control" value="{{ event.event_date.strftime('%Y-%m-%d') if event and event.event_date else '' }}" required style="max-width:200px;">
+            </div>
+
+            <div class="form-group">
+                <label for="event_type">유형</label>
+                <select id="event_type" name="event_type" class="form-control" style="max-width:200px;">
+                    {% for key, label in event_types.items() %}
+                    <option value="{{ key }}" {{ 'selected' if event and event.event_type == key }}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ '수정' if event else '등록' }}
+                </button>
+                <a href="{{ url_for('admin.events_list') }}" class="btn btn-secondary">취소</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "admin/base.html" %}
+{% block title %}히어로 슬라이드 관리{% endblock %}
+{% block page_title %}히어로 슬라이드 관리{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>총 {{ slides|length }}건</h2>
+    <a href="{{ url_for('admin.hero_slides_create') }}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> 슬라이드 추가
+    </a>
+</div>
+
+{% if slides %}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width:50px;">순서</th>
+                <th style="width:80px;">이미지</th>
+                <th>제목</th>
+                <th>설명</th>
+                <th style="width:80px;">상태</th>
+                <th style="width:140px;">관리</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for slide in slides %}
+            <tr>
+                <td>{{ slide.sort_order }}</td>
+                <td>
+                    {% if slide.image %}
+                    <img src="{{ url_for('static', filename='uploads/originals/' + slide.image.filename) }}" class="table-thumb" alt="">
+                    {% else %}
+                    <span class="text-muted">-</span>
+                    {% endif %}
+                </td>
+                <td>{{ slide.heading }}</td>
+                <td><span class="text-truncate">{{ slide.description or '-' }}</span></td>
+                <td>
+                    {% if slide.is_active %}
+                    <span class="badge badge-success">활성</span>
+                    {% else %}
+                    <span class="badge badge-secondary">비활성</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="actions">
+                        <a href="{{ url_for('admin.hero_slides_edit', id=slide.id) }}" class="btn btn-sm btn-secondary">
+                            <i class="fas fa-edit"></i> 수정
+                        </a>
+                        <form method="post" action="{{ url_for('admin.hero_slides_delete', id=slide.id) }}" onsubmit="return confirm('정말 삭제하시겠습니까?');" style="display:inline;">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <i class="fas fa-sliders-h"></i>
+    <p>등록된 슬라이드가 없습니다.</p>
+    <a href="{{ url_for('admin.hero_slides_create') }}" class="btn btn-primary">슬라이드 추가하기</a>
+</div>
+{% endif %}
+{% endblock %}

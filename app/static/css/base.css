@@ -1,0 +1,192 @@
+/* ============================================
+   Design System - 하늘 꿈나무 어린이집
+   ============================================ */
+
+/* CSS Reset */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Design Tokens */
+:root {
+    /* Colors - from existing site */
+    --color-primary: #4FC3F7;
+    --color-primary-light: #B3E5FC;
+    --color-primary-dark: #0288D1;
+    --color-secondary: #FF8A65;
+    --color-secondary-light: #FFCCBC;
+    --color-accent: #81C784;
+    --color-accent-light: #C8E6C9;
+
+    /* Neutral Colors */
+    --color-dark: #333333;
+    --color-gray: #6c757d;
+    --color-gray-light: #adb5bd;
+    --color-border: #dee2e6;
+    --color-bg-light: #F8F9FA;
+    --color-bg-section: #f8fbff;
+    --color-white: #FFFFFF;
+
+    /* Footer Colors */
+    --color-footer-bg-start: #2c3e50;
+    --color-footer-bg-end: #34495e;
+    --color-footer-text: #bdc3c7;
+    --color-footer-muted: #95a5a6;
+
+    /* Spacing Scale (8px base) */
+    --space-xs: 0.25rem;   /* 4px */
+    --space-sm: 0.5rem;    /* 8px */
+    --space-md: 1rem;      /* 16px */
+    --space-lg: 1.5rem;    /* 24px */
+    --space-xl: 2rem;      /* 32px */
+    --space-2xl: 3rem;     /* 48px */
+    --space-3xl: 4rem;     /* 64px */
+    --space-4xl: 5rem;     /* 80px */
+
+    /* Typography */
+    --font-primary: 'Noto Sans KR', 'Nanum Gothic', sans-serif;
+    --font-heading: 'Dongle', sans-serif;
+
+    --text-xs: 0.75rem;    /* 12px */
+    --text-sm: 0.875rem;   /* 14px */
+    --text-base: 1rem;     /* 16px */
+    --text-lg: 1.125rem;   /* 18px */
+    --text-xl: 1.25rem;    /* 20px */
+    --text-2xl: 1.5rem;    /* 24px */
+    --text-3xl: 2rem;      /* 32px */
+    --text-4xl: 2.5rem;    /* 40px */
+
+    --leading-tight: 1.25;
+    --leading-normal: 1.6;
+    --leading-relaxed: 1.8;
+
+    --weight-normal: 400;
+    --weight-medium: 500;
+    --weight-bold: 700;
+    --weight-extra-bold: 800;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 10px;
+    --radius-lg: 15px;
+    --radius-full: 50px;
+    --radius-circle: 50%;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 15px 40px rgba(0, 0, 0, 0.15);
+    --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
+
+    /* Transitions */
+    --duration-fast: 0.15s;
+    --duration-normal: 0.3s;
+    --duration-slow: 0.5s;
+    --duration-hero: 1s;
+    --ease-default: ease;
+    --ease-in-out: ease-in-out;
+
+    /* Layout */
+    --container-max: 1200px;
+    --header-height: 80px;
+    --nav-font-size: 1.6rem;
+}
+
+/* Base Styles */
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-primary);
+    line-height: var(--leading-normal);
+    color: var(--color-dark);
+    background-color: var(--color-white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    line-height: var(--leading-tight);
+    color: var(--color-dark);
+}
+
+/* Container */
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+}
+
+/* Links */
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--duration-normal) var(--ease-default);
+}
+
+a:hover {
+    color: var(--color-primary-dark);
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Skip to Content (Accessibility) */
+.skip-to-content {
+    position: absolute;
+    top: -100%;
+    left: var(--space-md);
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    z-index: 10000;
+    font-weight: var(--weight-bold);
+    transition: top var(--duration-fast);
+}
+
+.skip-to-content:focus {
+    top: var(--space-sm);
+    color: var(--color-white);
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* Screen reader only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}

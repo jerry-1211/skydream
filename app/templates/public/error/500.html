@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}서버 오류{% endblock %}
+{% block content %}
+<div style="text-align: center; padding: 150px 20px 80px;">
+    <div style="font-size: 5rem; color: #FF8A65; font-family: 'Dongle', sans-serif;">500</div>
+    <h1 style="font-size: 1.5rem; color: #333; margin-bottom: 1rem;">서버 오류가 발생했습니다</h1>
+    <p style="color: #6c757d; margin-bottom: 2rem;">잠시 후 다시 시도해 주세요.</p>
+    <a href="{{ url_for('public.index') }}" style="background: #4FC3F7; color: white; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 700;">
+        홈으로 돌아가기
+    </a>
+</div>
+{% endblock %}

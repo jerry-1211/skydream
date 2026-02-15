@@ -1,0 +1,81 @@
+<!-- Hero Section -->
+<section id="hero">
+    <div class="hero-slider">
+        {% if hero_slides %}
+        {# Dynamic: render from DB #}
+        {% for slide in hero_slides %}
+        <div class="slide {% if loop.first %}active{% endif %}">
+            {% if slide.image %}
+            <div class="slide-bg" style="background-image: url('{{ url_for('static', filename='images/' + slide.image.filename) }}')"></div>
+            {% endif %}
+            <div class="slide-content">
+                <h1>{{ slide.heading }}</h1>
+                <p>{{ slide.description }}</p>
+                {% if slide.button_text %}
+                <a href="{{ slide.button_link }}" class="cta-button">{{ slide.button_text }}</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        {# Static fallback #}
+        <div class="slide active">
+            <div class="slide-bg" style="background-image: url('{{ url_for('static', filename='images/main1.png') }}')"></div>
+            <div class="slide-content">
+                <h1>아이들의 행복한 웃음이 가득한 곳</h1>
+                <p>사랑과 전문성으로 아이들의 성장을 돕습니다.</p>
+                <a href="#contact" class="cta-button">입소 상담 문의하기</a>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-bg" style="background-image: url('{{ url_for('static', filename='images/main2.png') }}')"></div>
+            <div class="slide-content">
+                <h1>놀이중심 교육과정</h1>
+                <p>아이들의 창의력과 꿈을 키우는 배움터</p>
+                <a href="#programs" class="cta-button">프로그램 보기</a>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-bg" style="background-image: url('{{ url_for('static', filename='images/main3.png') }}')"></div>
+            <div class="slide-content">
+                <h1>친구와 함께하는 즐거운 배움</h1>
+                <p>소통하고 협력하며 함께 성장하는 공간</p>
+                <a href="#info" class="cta-button">원운영안내</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Hero Controls -->
+    <div class="hero-controls">
+        <button class="hero-prev" onclick="changeSlide(-1)" aria-label="이전 슬라이드">&#10094;</button>
+        <button class="hero-next" onclick="changeSlide(1)" aria-label="다음 슬라이드">&#10095;</button>
+    </div>
+
+    <!-- Quick Info Bar -->
+    <div class="quick-info-bar">
+        <div class="quick-info-item">
+            <i class="fas fa-phone" aria-hidden="true"></i>
+            <div>
+                <strong>입소 문의</strong>
+                <span>{{ site_info.get('phone', '031-818-9150') if site_info else '031-818-9150' }}</span>
+            </div>
+        </div>
+        <div class="quick-info-item">
+            <i class="fas fa-clock" aria-hidden="true"></i>
+            <div>
+                <strong>운영시간</strong>
+                <span>{{ site_info.get('operating_hours', '07:30 ~ 19:30') if site_info else '07:30 ~ 19:30' }}</span>
+                <br>
+                <span>(야간 연장) {{ site_info.get('extended_hours', '19:30 ~ 21:30') if site_info else '19:30 ~ 21:30' }}</span>
+            </div>
+        </div>
+        <div class="quick-info-item">
+            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+            <div>
+                <strong>위치</strong>
+                <span>일산동구 중산동</span>
+            </div>
+        </div>
+    </div>
+</section>

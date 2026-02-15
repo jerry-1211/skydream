@@ -1,0 +1,280 @@
+/* ============================================
+   Utilities - Animations, Helpers, Responsive
+   ============================================ */
+
+/* ---- Keyframe Animations ---- */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-3px);
+    }
+    60% {
+        transform: translateY(-2px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---- Scroll-triggered Animation Classes ---- */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--duration-slow) var(--ease-default),
+                transform var(--duration-slow) var(--ease-default);
+}
+
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-fade-in {
+    animation: fadeIn var(--duration-slow) var(--ease-default) forwards;
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp var(--duration-slow) var(--ease-default) forwards;
+}
+
+.animate-fade-in-left {
+    animation: fadeInLeft var(--duration-slow) var(--ease-default) forwards;
+}
+
+.animate-fade-in-right {
+    animation: fadeInRight var(--duration-slow) var(--ease-default) forwards;
+}
+
+.animate-scale-in {
+    animation: scaleIn var(--duration-slow) var(--ease-default) forwards;
+}
+
+/* Animation delay utilities */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+
+/* ---- Spacing Utilities ---- */
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--space-xs); }
+.mt-2 { margin-top: var(--space-sm); }
+.mt-3 { margin-top: var(--space-md); }
+.mt-4 { margin-top: var(--space-lg); }
+.mt-5 { margin-top: var(--space-xl); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--space-xs); }
+.mb-2 { margin-bottom: var(--space-sm); }
+.mb-3 { margin-bottom: var(--space-md); }
+.mb-4 { margin-bottom: var(--space-lg); }
+.mb-5 { margin-bottom: var(--space-xl); }
+
+.pt-0 { padding-top: 0; }
+.pb-0 { padding-bottom: 0; }
+
+/* ---- Text Utilities ---- */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.text-primary { color: var(--color-primary); }
+.text-secondary { color: var(--color-secondary); }
+.text-accent { color: var(--color-accent); }
+.text-dark { color: var(--color-dark); }
+.text-gray { color: var(--color-gray); }
+.text-white { color: var(--color-white); }
+
+.text-sm { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-lg { font-size: var(--text-lg); }
+.text-xl { font-size: var(--text-xl); }
+
+.font-medium { font-weight: var(--weight-medium); }
+.font-bold { font-weight: var(--weight-bold); }
+
+/* ---- Display Utilities ---- */
+.d-none { display: none; }
+.d-block { display: block; }
+.d-flex { display: flex; }
+.d-grid { display: grid; }
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ---- Visibility Utilities ---- */
+.visible { visibility: visible; }
+.invisible { visibility: hidden; }
+
+/* Mobile-only / Desktop-only */
+@media (max-width: 768px) {
+    .hide-mobile { display: none !important; }
+    .show-mobile { display: block !important; }
+}
+
+@media (min-width: 769px) {
+    .hide-desktop { display: none !important; }
+    .show-desktop { display: block !important; }
+}
+
+/* ---- Overflow ---- */
+.overflow-hidden { overflow: hidden; }
+.overflow-auto { overflow: auto; }
+
+/* ---- Width / Height ---- */
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+
+/* ---- Border Utilities ---- */
+.rounded { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-full { border-radius: var(--radius-full); }
+.rounded-circle { border-radius: var(--radius-circle); }
+
+/* ---- Shadow Utilities ---- */
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-none { box-shadow: none; }
+
+/* ---- Social Links (footer) ---- */
+.social-links {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+}
+
+.social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-circle);
+    color: var(--color-white);
+    text-decoration: none;
+    transition: all var(--duration-normal);
+}
+
+.social-links a:hover {
+    background: var(--color-primary);
+    transform: translateY(-3px);
+}
+
+/* ---- Scroll-triggered animations ---- */
+.scroll-hidden {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .scroll-hidden {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* ---- Print Styles ---- */
+@media print {
+    .site-header,
+    .site-footer,
+    .burger,
+    .hero-controls,
+    .skip-to-content {
+        display: none !important;
+    }
+
+    body {
+        color: #000;
+        background: #fff;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}공공형 하늘 꿈나무 어린이집{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}경기 고양시 일산동구 공공형 하늘 꿈나무 어린이집 - 사랑과 전문성으로 아이들의 성장을 돕습니다.{% endblock %}">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% block og_title %}공공형 하늘 꿈나무 어린이집{% endblock %}">
+    <meta property="og:description" content="경기 고양시 일산동구 공공형 하늘 꿈나무 어린이집">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sections.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/utilities.css') }}">
+
+    {% block head %}{% endblock %}
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ChildCare",
+        "name": "공공형 하늘 꿈나무 어린이집",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "중산동 1800",
+            "addressLocality": "고양시 일산동구",
+            "addressRegion": "경기도",
+            "addressCountry": "KR"
+        },
+        "telephone": "031-818-9150",
+        "openingHours": "Mo-Fr 07:30-19:30",
+        "url": "{{ request.url_root }}"
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip Navigation (Accessibility) -->
+    <a href="#main-content" class="skip-to-content">본문으로 바로가기</a>
+
+    {% include "components/header.html" %}
+
+    <main id="main-content" role="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "components/footer.html" %}
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- App JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/animations.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/hero.js') }}" defer></script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

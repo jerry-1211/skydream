@@ -1,0 +1,75 @@
+{% extends "admin/base.html" %}
+{% block title %}미디어 관리{% endblock %}
+{% block page_title %}미디어 관리{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>총 {{ pagination.total }}건</h2>
+    <a href="{{ url_for('admin.media_upload') }}" class="btn btn-primary">
+        <i class="fas fa-upload"></i> 파일 업로드
+    </a>
+</div>
+
+{% if pagination.items %}
+<div class="media-grid">
+    {% for media in pagination.items %}
+    <div class="media-item">
+        {% if media.is_image %}
+        <img src="{{ url_for('static', filename='uploads/originals/' + media.filename) }}" alt="{{ media.alt_text or media.original_filename }}" class="media-preview">
+        {% else %}
+        <div class="media-preview" style="display:flex;align-items:center;justify-content:center;background:#f0f0f0;">
+            <i class="fas fa-video" style="font-size:2rem;color:#adb5bd;"></i>
+        </div>
+        {% endif %}
+        <div class="media-info">
+            <div class="filename" title="{{ media.original_filename }}">{{ media.original_filename }}</div>
+            <div class="file-meta">
+                {{ media.file_type }} &middot;
+                {% if media.file_size %}{{ (media.file_size / 1024)|round(1) }}KB{% endif %}
+            </div>
+        </div>
+        <div class="media-actions">
+            <form method="post" action="{{ url_for('admin.media_delete', id=media.id) }}" onsubmit="return confirm('이 파일을 삭제하시겠습니까?');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if pagination.pages > 1 %}
+<div class="pagination">
+    {% if pagination.has_prev %}
+    <a href="{{ url_for('admin.media_list', page=pagination.prev_num) }}"><i class="fas fa-chevron-left"></i></a>
+    {% else %}
+    <span class="disabled"><span><i class="fas fa-chevron-left"></i></span></span>
+    {% endif %}
+
+    {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if p %}
+            {% if p == pagination.page %}
+            <span class="active"><span>{{ p }}</span></span>
+            {% else %}
+            <a href="{{ url_for('admin.media_list', page=p) }}">{{ p }}</a>
+            {% endif %}
+        {% else %}
+        <span>...</span>
+        {% endif %}
+    {% endfor %}
+
+    {% if pagination.has_next %}
+    <a href="{{ url_for('admin.media_list', page=pagination.next_num) }}"><i class="fas fa-chevron-right"></i></a>
+    {% else %}
+    <span class="disabled"><span><i class="fas fa-chevron-right"></i></span></span>
+    {% endif %}
+</div>
+{% endif %}
+
+{% else %}
+<div class="empty-state">
+    <i class="fas fa-images"></i>
+    <p>업로드된 미디어가 없습니다.</p>
+    <a href="{{ url_for('admin.media_upload') }}" class="btn btn-primary">파일 업로드하기</a>
+</div>
+{% endif %}
+{% endblock %}

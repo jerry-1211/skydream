@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}관리자{% endblock %} - 하늘 꿈나무 어린이집</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>관리자</h2>
+                <span>하늘 꿈나무 어린이집</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('admin.dashboard') }}" class="nav-item {% if request.endpoint == 'admin.dashboard' %}active{% endif %}">
+                    <i class="fas fa-tachometer-alt"></i> 대시보드
+                </a>
+                <a href="{{ url_for('admin.notices_list') }}" class="nav-item {% if request.endpoint and 'notices' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-bullhorn"></i> 공지사항
+                </a>
+                <a href="{{ url_for('admin.media_list') }}" class="nav-item {% if request.endpoint and 'media' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-images"></i> 미디어
+                </a>
+                <a href="{{ url_for('admin.programs_list') }}" class="nav-item {% if request.endpoint and 'programs' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-graduation-cap"></i> 프로그램
+                </a>
+                <a href="{{ url_for('admin.gallery_list') }}" class="nav-item {% if request.endpoint and 'gallery' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-photo-video"></i> 갤러리
+                </a>
+                <a href="{{ url_for('admin.hero_slides_list') }}" class="nav-item {% if request.endpoint and 'hero' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-sliders-h"></i> 히어로 슬라이드
+                </a>
+                <a href="{{ url_for('admin.site_info_edit') }}" class="nav-item {% if request.endpoint and 'site_info' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-cog"></i> 사이트 정보
+                </a>
+                <a href="{{ url_for('admin.meals_list') }}" class="nav-item {% if request.endpoint and 'meals' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-utensils"></i> 급식관리
+                </a>
+                <a href="{{ url_for('admin.events_list') }}" class="nav-item {% if request.endpoint and 'events' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-calendar-alt"></i> 행사일정
+                </a>
+                <a href="{{ url_for('admin.teachers_list') }}" class="nav-item {% if request.endpoint and 'teachers' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-chalkboard-teacher"></i> 교사 소개
+                </a>
+                <a href="{{ url_for('admin.parent_notes_list') }}" class="nav-item {% if request.endpoint and 'parent_notes' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-sticky-note"></i> 학부모 알림
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="{{ url_for('public.index') }}"><i class="fas fa-home"></i> 사이트 보기</a>
+                <a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i> 로그아웃</a>
+            </div>
+        </aside>
+        <main class="admin-content">
+            <header class="admin-header">
+                <h1>{% block page_title %}대시보드{% endblock %}</h1>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+            </header>
+            <div class="admin-body">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

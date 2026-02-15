@@ -1,0 +1,22 @@
+<!-- Site Header -->
+<header class="site-header" role="banner">
+    <nav aria-label="메인 네비게이션">
+        <div class="logo">
+            <a href="{{ url_for('public.index') }}">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="하늘 꿈나무 어린이집 로고" class="logo-img" width="50" height="50">
+            </a>
+        </div>
+        <ul class="nav-links" id="navLinks" role="menubar">
+            <li role="none"><a href="#about" role="menuitem">어린이집 소개</a></li>
+            <li role="none"><a href="#programs" role="menuitem">배움과 놀이의 여정</a></li>
+            <li role="none"><a href="#gallery" role="menuitem">활동 앨범</a></li>
+            <li role="none"><a href="#info" role="menuitem">원운영안내</a></li>
+            <li role="none"><a href="#contact" role="menuitem">오시는 길</a></li>
+        </ul>
+        <button class="burger" id="burger" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </button>
+    </nav>
+</header>

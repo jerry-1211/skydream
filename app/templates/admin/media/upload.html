@@ -1,0 +1,79 @@
+{% extends "admin/base.html" %}
+{% block title %}파일 업로드{% endblock %}
+{% block page_title %}파일 업로드{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="post" action="{{ url_for('admin.media_upload') }}" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click();">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>클릭하거나 파일을 드래그하여 업로드</p>
+                <p class="form-hint">이미지 (PNG, JPG, GIF, WebP, SVG) 또는 동영상 (MP4, WebM, MOV)</p>
+                <input type="file" id="fileInput" name="file" accept="image/*,video/*" required>
+                <div id="fileName" style="margin-top:0.5rem;color:#495057;font-weight:500;"></div>
+            </div>
+
+            <div class="form-group mt-2">
+                <label for="alt_text">대체 텍스트 (alt)</label>
+                <input type="text" id="alt_text" name="alt_text" class="form-control" placeholder="이미지 설명을 입력하세요">
+                <div class="form-hint">웹 접근성을 위한 이미지 설명입니다.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="category">카테고리</label>
+                <select id="category" name="category" class="form-control">
+                    <option value="general">일반</option>
+                    <option value="hero">히어로</option>
+                    <option value="program">프로그램</option>
+                    <option value="gallery">갤러리</option>
+                    <option value="teacher">교사</option>
+                    <option value="meal">급식</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-upload"></i> 업로드
+                </button>
+                <a href="{{ url_for('admin.media_list') }}" class="btn btn-secondary">취소</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+    var area = document.getElementById('uploadArea');
+    var input = document.getElementById('fileInput');
+    var nameDisplay = document.getElementById('fileName');
+
+    input.addEventListener('change', function() {
+        if (input.files.length > 0) {
+            nameDisplay.textContent = input.files[0].name;
+        }
+    });
+
+    area.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        area.classList.add('dragover');
+    });
+
+    area.addEventListener('dragleave', function() {
+        area.classList.remove('dragover');
+    });
+
+    area.addEventListener('drop', function(e) {
+        e.preventDefault();
+        area.classList.remove('dragover');
+        if (e.dataTransfer.files.length > 0) {
+            input.files = e.dataTransfer.files;
+            nameDisplay.textContent = e.dataTransfer.files[0].name;
+        }
+    });
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,10 @@
+[project]
+name = "skydream"
+version = "1.0.0"
+description = "하늘 꿈나무 어린이집 웹사이트"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]

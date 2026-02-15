@@ -1,0 +1,31 @@
+{% extends "admin/base.html" %}
+{% block title %}사이트 정보 관리{% endblock %}
+{% block page_title %}사이트 정보 관리{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="post" action="{{ url_for('admin.site_info_edit') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="site-info-grid">
+                {% for key, label in keys.items() %}
+                <div class="form-group">
+                    <label for="{{ key }}">{{ label }}</label>
+                    {% if key in ('principal_greeting', 'principal_greeting_2', 'admission_info', 'curriculum_intro') %}
+                    <textarea id="{{ key }}" name="{{ key }}" class="form-control" rows="4">{{ values.get(key, '') }}</textarea>
+                    {% else %}
+                    <input type="text" id="{{ key }}" name="{{ key }}" class="form-control" value="{{ values.get(key, '') }}">
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> 저장
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
