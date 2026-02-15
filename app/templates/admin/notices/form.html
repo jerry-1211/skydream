@@ -110,9 +110,10 @@ $(document).ready(function() {
             success: function(data) {
                 $statusBar.remove();
                 if (data.url) {
-                    $('#noticeContent').summernote('insertImage', data.url, function($image) {
-                        $image.css({'max-width': '100%', 'height': 'auto'});
-                    });
+                    var $editor = $('#noticeContent');
+                    var currentHtml = $editor.summernote('code');
+                    var imgHtml = '<p><img src="' + data.url + '" style="max-width:100%;height:auto;"></p>';
+                    $editor.summernote('code', currentHtml + imgHtml);
                 } else {
                     alert('이미지 URL을 받지 못했습니다.');
                 }
