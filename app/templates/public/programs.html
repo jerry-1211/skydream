@@ -24,7 +24,7 @@
                     <div class="swiper-slide">
                         <div class="program-card">
                             {% if program.image %}
-                            <img src="{{ url_for('static', filename='images/' + program.image.filename) }}" alt="{{ program.title }}" loading="lazy">
+                            <img src="{{ url_for('static', filename=program.image.static_path) }}" alt="{{ program.title }}" loading="lazy">
                             {% endif %}
                             {% if program.description %}
                             <div class="card-content">

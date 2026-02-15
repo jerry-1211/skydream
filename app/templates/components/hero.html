@@ -6,7 +6,7 @@
         {% for slide in hero_slides %}
         <div class="slide {% if loop.first %}active{% endif %}">
             {% if slide.image %}
-            <div class="slide-bg" style="background-image: url('{{ url_for('static', filename='images/' + slide.image.filename) }}')"></div>
+            <div class="slide-bg" style="background-image: url('{{ url_for('static', filename=slide.image.static_path) }}')"></div>
             {% endif %}
             <div class="slide-content">
                 <h1>{{ slide.heading }}</h1>

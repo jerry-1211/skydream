@@ -14,7 +14,7 @@
                 <div class="swiper-slide">
                     <div class="gallery-item">
                         {% if item.image %}
-                        <img src="{{ url_for('static', filename='images/' + item.image.filename) }}" alt="{{ item.title }}" loading="lazy">
+                        <img src="{{ url_for('static', filename=item.image.static_path) }}" alt="{{ item.title }}" loading="lazy">
                         {% endif %}
                         <div class="overlay">
                             <h4>{{ item.title }}</h4>

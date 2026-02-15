@@ -129,7 +129,7 @@
                         {% for item in gallery_items %}
                         <a href="{{ url_for('public.gallery') }}">
                             {% if item.image %}
-                            <img src="{{ url_for('static', filename='images/' + item.image.filename) }}" alt="{{ item.title }}" loading="lazy">
+                            <img src="{{ url_for('static', filename=item.image.static_path) }}" alt="{{ item.title }}" loading="lazy">
                             {% endif %}
                         </a>
                         {% endfor %}

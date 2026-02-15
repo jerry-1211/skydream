@@ -32,7 +32,7 @@
             </div>
             <div class="about-hero-image">
                 {% if principal and principal.photo %}
-                <img src="{{ url_for('static', filename='images/' + principal.photo.filename) }}" alt="원장님" loading="lazy">
+                <img src="{{ url_for('static', filename=principal.photo.static_path) }}" alt="원장님" loading="lazy">
                 {% else %}
                 <img src="{{ url_for('static', filename='images/teacher.jpeg') }}" alt="원장님" loading="lazy">
                 {% endif %}

@@ -12,7 +12,7 @@
             {% for teacher in teachers %}
             <div class="teacher-card">
                 {% if teacher.photo %}
-                <img src="{{ url_for('static', filename='images/' + teacher.photo.filename) }}" alt="{{ teacher.name }}" loading="lazy">
+                <img src="{{ url_for('static', filename=teacher.photo.static_path) }}" alt="{{ teacher.name }}" loading="lazy">
                 {% else %}
                 <img src="{{ url_for('static', filename='images/teacher.jpeg') }}" alt="{{ teacher.name }}" loading="lazy">
                 {% endif %}
