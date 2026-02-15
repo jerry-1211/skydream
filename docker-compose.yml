@@ -26,6 +26,7 @@ services:
       - "443:443"
     volumes:
       - ./app/static:/app/static:ro
+      - ./images:/app/static/images:ro
       - uploads:/app/static/uploads:ro
       - certbot_www:/var/www/certbot:ro
       - certbot_conf:/etc/letsencrypt:ro

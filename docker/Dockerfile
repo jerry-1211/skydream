@@ -18,6 +18,9 @@ COPY . .
 # Create upload directories
 RUN mkdir -p app/static/uploads/originals app/static/uploads/webp app/static/uploads/thumbnails
 
+# Fix symlink: copy images to the expected static path
+RUN rm -f app/static/images && cp -r images app/static/images
+
 # Create non-root user
 RUN adduser --disabled-password --gecos '' appuser && chown -R appuser:appuser /app
 USER appuser
