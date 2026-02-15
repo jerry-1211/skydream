@@ -5,37 +5,27 @@
 <form method="post" action="{{ url_for('admin.site_info_edit') }}">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-    {# 기본 정보 #}
+    {# 1. 원장 인사말 #}
     <div class="card" style="margin-bottom:1.5rem;">
-        <div class="card-header"><i class="fas fa-info-circle" style="color:#42A5F5"></i> 기본 정보</div>
+        <div class="card-header"><i class="fas fa-envelope-open-text" style="color:#FF7043"></i> 원장 인사말</div>
         <div class="card-body">
-            <p class="form-hint" style="margin-bottom:1rem;">어린이집의 기본적인 정보를 설정합니다. 사이트 전반에 걸쳐 표시됩니다.</p>
-            <div class="site-info-grid">
-                <div class="form-group">
-                    <label for="daycare_name">어린이집 이름</label>
-                    <input type="text" id="daycare_name" name="daycare_name" class="form-control" value="{{ values.get('daycare_name', '') }}" placeholder="하늘 꿈나무 어린이집">
-                </div>
-                <div class="form-group">
-                    <label for="phone">대표 전화번호</label>
-                    <input type="text" id="phone" name="phone" class="form-control" value="{{ values.get('phone', '') }}" placeholder="031-818-9150">
-                </div>
-                <div class="form-group">
-                    <label for="director_phone">원장님 연락처</label>
-                    <input type="text" id="director_phone" name="director_phone" class="form-control" value="{{ values.get('director_phone', '') }}" placeholder="010-0000-0000">
-                </div>
-                <div class="form-group">
-                    <label for="address">주소</label>
-                    <input type="text" id="address" name="address" class="form-control" value="{{ values.get('address', '') }}" placeholder="경기 고양시 일산동구 중산동 1800">
-                </div>
+            <p class="form-hint" style="margin-bottom:1rem;">어린이집 소개 페이지 상단에 표시되는 원장님 인사말입니다.</p>
+            <div class="form-group">
+                <label for="principal_greeting">인사말 (첫번째 문단)</label>
+                <textarea id="principal_greeting" name="principal_greeting" class="form-control" rows="3" placeholder="안녕하세요, 학부모님! 놀면서 자라고, 놀이는 곧 배움이 됩니다...">{{ values.get('principal_greeting', '') }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="principal_greeting_2">인사말 (두번째 문단)</label>
+                <textarea id="principal_greeting_2" name="principal_greeting_2" class="form-control" rows="3" placeholder="안정, 사랑, 즐거움이 조화를 이루는 공간 속에서...">{{ values.get('principal_greeting_2', '') }}</textarea>
             </div>
         </div>
     </div>
 
-    {# 운영 정보 #}
+    {# 2. 운영 시간 #}
     <div class="card" style="margin-bottom:1.5rem;">
-        <div class="card-header"><i class="fas fa-clock" style="color:#66BB6A"></i> 운영 정보</div>
+        <div class="card-header"><i class="fas fa-clock" style="color:#66BB6A"></i> 운영 시간</div>
         <div class="card-body">
-            <p class="form-hint" style="margin-bottom:1rem;">어린이집 운영시간과 정원 정보입니다. '어린이집 소개' 페이지에 표시됩니다.</p>
+            <p class="form-hint" style="margin-bottom:1rem;">어린이집 소개 페이지의 '운영시간' 탭에 표시됩니다.</p>
             <div class="site-info-grid">
                 <div class="form-group">
                     <label for="operating_hours">기본보육 시간</label>
@@ -49,6 +39,25 @@
                     <label for="closed_days">휴원일</label>
                     <input type="text" id="closed_days" name="closed_days" class="form-control" value="{{ values.get('closed_days', '') }}" placeholder="일요일, 공휴일">
                 </div>
+            </div>
+        </div>
+    </div>
+
+    {# 3. 입소안내 · 급식 #}
+    <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-header"><i class="fas fa-clipboard-list" style="color:#42A5F5"></i> 입소안내 · 급식</div>
+        <div class="card-body">
+            <p class="form-hint" style="margin-bottom:1rem;">어린이집 소개 페이지의 '입소안내'와 '급식안내' 탭에 표시됩니다.</p>
+            <div class="form-group">
+                <label for="admission_info">입소 안내 문구</label>
+                <textarea id="admission_info" name="admission_info" class="form-control" rows="2" placeholder="임신육아종합포털 아이사랑(www.childcare.go.kr)에서 온라인 신청 가능합니다.">{{ values.get('admission_info', '') }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="admission_details">입소안내 상세 항목</label>
+                <textarea id="admission_details" name="admission_details" class="form-control" rows="4" placeholder="만 0세~2세 영아 보육&#10;공공형 어린이집 우선순위 적용&#10;입소 상담 후 최종 결정">{{ values.get('admission_details', '') }}</textarea>
+                <div class="form-hint">한 줄에 하나씩 입력하면 목록으로 표시됩니다.</div>
+            </div>
+            <div class="site-info-grid" style="margin-top:1rem;">
                 <div class="form-group">
                     <label for="capacity">정원</label>
                     <input type="text" id="capacity" name="capacity" class="form-control" value="{{ values.get('capacity', '') }}" placeholder="20명" style="max-width:120px;">
@@ -62,33 +71,7 @@
                     <input type="text" id="grade" name="grade" class="form-control" value="{{ values.get('grade', '') }}" placeholder="A" style="max-width:80px;">
                 </div>
             </div>
-        </div>
-    </div>
-
-    {# 소개 페이지 콘텐츠 #}
-    <div class="card" style="margin-bottom:1.5rem;">
-        <div class="card-header"><i class="fas fa-file-alt" style="color:#FF7043"></i> 소개 페이지 콘텐츠</div>
-        <div class="card-body">
-            <p class="form-hint" style="margin-bottom:1rem;">'어린이집 소개' 페이지의 원장인사말, 입소안내 등에 사용됩니다.</p>
-            <div class="form-group">
-                <label for="principal_greeting">원장님 인사말 (1번째 문단)</label>
-                <textarea id="principal_greeting" name="principal_greeting" class="form-control" rows="3">{{ values.get('principal_greeting', '') }}</textarea>
-            </div>
-            <div class="form-group">
-                <label for="principal_greeting_2">원장님 인사말 (2번째 문단)</label>
-                <textarea id="principal_greeting_2" name="principal_greeting_2" class="form-control" rows="3">{{ values.get('principal_greeting_2', '') }}</textarea>
-            </div>
-            <div class="form-group">
-                <label for="admission_info">입소 안내 문구</label>
-                <textarea id="admission_info" name="admission_info" class="form-control" rows="2">{{ values.get('admission_info', '') }}</textarea>
-                <div class="form-hint">입소안내 탭의 상단 안내 문구입니다.</div>
-            </div>
-            <div class="form-group">
-                <label for="admission_details">입소안내 상세 항목</label>
-                <textarea id="admission_details" name="admission_details" class="form-control" rows="4" placeholder="만 0세~2세 영아 보육&#10;공공형 어린이집 우선순위 적용&#10;입소 상담 후 최종 결정">{{ values.get('admission_details', '') }}</textarea>
-                <div class="form-hint">한 줄에 하나씩 입력하면 목록으로 표시됩니다.</div>
-            </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-top:1rem;">
                 <label for="meal_features">급식 특징</label>
                 <textarea id="meal_features" name="meal_features" class="form-control" rows="4" placeholder="저염식 인증 어린이집&#10;신선한 제철 식재료 사용&#10;아워홈 식재료 공급업체">{{ values.get('meal_features', '') }}</textarea>
                 <div class="form-hint">한 줄에 하나씩 입력하면 목록으로 표시됩니다.</div>
@@ -100,11 +83,15 @@
         </div>
     </div>
 
-    {# 지도 설정 #}
+    {# 4. 오시는 길 #}
     <div class="card" style="margin-bottom:1.5rem;">
-        <div class="card-header"><i class="fas fa-map-marker-alt" style="color:#EF5350"></i> 지도 설정</div>
+        <div class="card-header"><i class="fas fa-map-marker-alt" style="color:#EF5350"></i> 오시는 길</div>
         <div class="card-body">
-            <p class="form-hint" style="margin-bottom:1rem;">'오시는 길' 페이지에 표시되는 지도의 좌표입니다.</p>
+            <p class="form-hint" style="margin-bottom:1rem;">'오시는 길' 페이지에 표시되는 주소와 지도 좌표입니다.</p>
+            <div class="form-group">
+                <label for="address">주소</label>
+                <input type="text" id="address" name="address" class="form-control" value="{{ values.get('address', '') }}" placeholder="경기 고양시 일산동구 중산동 1800">
+            </div>
             <div class="site-info-grid">
                 <div class="form-group">
                     <label for="map_latitude">위도 (Latitude)</label>
@@ -113,6 +100,28 @@
                 <div class="form-group">
                     <label for="map_longitude">경도 (Longitude)</label>
                     <input type="text" id="map_longitude" name="map_longitude" class="form-control" value="{{ values.get('map_longitude', '') }}" placeholder="126.787819" style="max-width:200px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# 5. 기본 연락처 #}
+    <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-header"><i class="fas fa-phone-alt" style="color:#78909C"></i> 기본 연락처</div>
+        <div class="card-body">
+            <p class="form-hint" style="margin-bottom:1rem;">어린이집 이름과 연락처입니다. 사이트 전반에 걸쳐 표시됩니다.</p>
+            <div class="site-info-grid">
+                <div class="form-group">
+                    <label for="daycare_name">어린이집 이름</label>
+                    <input type="text" id="daycare_name" name="daycare_name" class="form-control" value="{{ values.get('daycare_name', '') }}" placeholder="하늘 꿈나무 어린이집">
+                </div>
+                <div class="form-group">
+                    <label for="phone">대표 전화번호</label>
+                    <input type="text" id="phone" name="phone" class="form-control" value="{{ values.get('phone', '') }}" placeholder="031-818-9150">
+                </div>
+                <div class="form-group">
+                    <label for="director_phone">원장님 연락처</label>
+                    <input type="text" id="director_phone" name="director_phone" class="form-control" value="{{ values.get('director_phone', '') }}" placeholder="010-0000-0000">
                 </div>
             </div>
         </div>

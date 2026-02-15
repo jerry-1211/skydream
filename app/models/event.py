@@ -13,7 +13,7 @@ class Event(db.Model):
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
     EVENT_TYPES = {
-        'general': '일반',
+        'general': '행사·체험',
         'field_trip': '현장학습',
         'parent': '학부모 참여',
         'holiday': '휴원/공휴일',
