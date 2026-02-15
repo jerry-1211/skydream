@@ -1,7 +1,8 @@
 from . import admin_bp
+from .upload_helper import handle_image_upload
 from flask import render_template, request, redirect, url_for, flash
 from ...extensions import db
-from ...models import Gallery, Media
+from ...models import Gallery
 
 
 @admin_bp.route('/gallery/')
@@ -15,17 +16,17 @@ def gallery_list():
 def gallery_create():
     if request.method == 'POST':
         title = request.form.get('title', '').strip()
-        image_id = request.form.get('image_id', type=int)
         sort_order = request.form.get('sort_order', 0, type=int)
 
         if not title:
             flash('제목을 입력해주세요.', 'error')
-            media_list = Media.query.filter_by(file_type='image').order_by(Media.created_at.desc()).all()
-            return render_template('admin/gallery/form.html', gallery_item=None, media_list=media_list)
+            return render_template('admin/gallery/form.html', gallery_item=None)
+
+        image_id = handle_image_upload('photo', category='gallery', alt_text=title)
 
         gallery_item = Gallery(
             title=title,
-            image_id=image_id if image_id else None,
+            image_id=image_id,
             sort_order=sort_order,
         )
         db.session.add(gallery_item)
@@ -33,8 +34,7 @@ def gallery_create():
         flash('갤러리 항목이 등록되었습니다.', 'success')
         return redirect(url_for('admin.gallery_list'))
 
-    media_list = Media.query.filter_by(file_type='image').order_by(Media.created_at.desc()).all()
-    return render_template('admin/gallery/form.html', gallery_item=None, media_list=media_list)
+    return render_template('admin/gallery/form.html', gallery_item=None)
 
 
 @admin_bp.route('/gallery/<int:id>/edit', methods=['GET', 'POST'])
@@ -43,23 +43,23 @@ def gallery_edit(id):
 
     if request.method == 'POST':
         title = request.form.get('title', '').strip()
-        image_id = request.form.get('image_id', type=int)
         sort_order = request.form.get('sort_order', 0, type=int)
 
         if not title:
             flash('제목을 입력해주세요.', 'error')
-            media_list = Media.query.filter_by(file_type='image').order_by(Media.created_at.desc()).all()
-            return render_template('admin/gallery/form.html', gallery_item=gallery_item, media_list=media_list)
+            return render_template('admin/gallery/form.html', gallery_item=gallery_item)
+
+        new_image_id = handle_image_upload('photo', category='gallery', alt_text=title)
+        if new_image_id:
+            gallery_item.image_id = new_image_id
 
         gallery_item.title = title
-        gallery_item.image_id = image_id if image_id else None
         gallery_item.sort_order = sort_order
         db.session.commit()
         flash('갤러리 항목이 수정되었습니다.', 'success')
         return redirect(url_for('admin.gallery_list'))
 
-    media_list = Media.query.filter_by(file_type='image').order_by(Media.created_at.desc()).all()
-    return render_template('admin/gallery/form.html', gallery_item=gallery_item, media_list=media_list)
+    return render_template('admin/gallery/form.html', gallery_item=gallery_item)
 
 
 @admin_bp.route('/gallery/<int:id>/delete', methods=['POST'])

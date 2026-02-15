@@ -7,48 +7,74 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
     {% block head %}{% endblock %}
 </head>
 <body>
     <div class="admin-layout">
         <aside class="admin-sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h2>관리자</h2>
-                <span>하늘 꿈나무 어린이집</span>
+                <a href="{{ url_for('admin.dashboard') }}" class="sidebar-logo-link">
+                    <span class="sidebar-logo-mark">
+                        <svg viewBox="0 0 48 48" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="18" cy="22" r="9" fill="#64B5F6"/>
+                            <circle cx="28" cy="19" r="10" fill="#42A5F5"/>
+                            <circle cx="22" cy="16" r="8" fill="#90CAF9"/>
+                            <circle cx="32" cy="24" r="7" fill="#64B5F6"/>
+                            <circle cx="12" cy="24" r="6" fill="#90CAF9"/>
+                            <rect x="22" y="28" width="3" height="10" rx="1.5" fill="#66BB6A"/>
+                            <ellipse cx="19.5" cy="29.5" rx="4.5" ry="3.5" fill="#81C784"/>
+                            <ellipse cx="27.5" cy="30.5" rx="4" ry="3" fill="#66BB6A"/>
+                            <circle cx="38" cy="10" r="2.5" fill="#FFD54F"/>
+                            <path d="M38 5.5v2M38 13v2M33.5 10H35.5M40.5 10H42.5M34.5 6.5l1.4 1.4M40.1 12.1l1.4 1.4M40.1 6.5l-1.4 1.4M34.5 12.1l-1.4 1.4" stroke="#FFC107" stroke-width="1.2" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                    <span class="sidebar-logo-text">
+                        <strong>하늘꿈나무</strong>
+                        <small>관리자</small>
+                    </span>
+                </a>
             </div>
             <nav class="sidebar-nav">
                 <a href="{{ url_for('admin.dashboard') }}" class="nav-item {% if request.endpoint == 'admin.dashboard' %}active{% endif %}">
                     <i class="fas fa-tachometer-alt"></i> 대시보드
                 </a>
+                <div class="sidebar-divider"></div>
+                <div class="sidebar-label">메인 페이지</div>
+                <a href="{{ url_for('admin.hero_slides_list') }}" class="nav-item {% if request.endpoint and 'hero' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-sliders-h"></i> 메인 배너
+                </a>
+                <a href="{{ url_for('admin.popups_list') }}" class="nav-item {% if request.endpoint and 'popups' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-window-restore"></i> 팝업 관리
+                </a>
+                <div class="sidebar-divider"></div>
+                <div class="sidebar-label">소식</div>
                 <a href="{{ url_for('admin.notices_list') }}" class="nav-item {% if request.endpoint and 'notices' in request.endpoint %}active{% endif %}">
                     <i class="fas fa-bullhorn"></i> 공지사항
                 </a>
-                <a href="{{ url_for('admin.media_list') }}" class="nav-item {% if request.endpoint and 'media' in request.endpoint %}active{% endif %}">
-                    <i class="fas fa-images"></i> 미디어
-                </a>
-                <a href="{{ url_for('admin.programs_list') }}" class="nav-item {% if request.endpoint and 'programs' in request.endpoint %}active{% endif %}">
-                    <i class="fas fa-graduation-cap"></i> 프로그램
-                </a>
-                <a href="{{ url_for('admin.gallery_list') }}" class="nav-item {% if request.endpoint and 'gallery' in request.endpoint %}active{% endif %}">
-                    <i class="fas fa-photo-video"></i> 갤러리
-                </a>
-                <a href="{{ url_for('admin.hero_slides_list') }}" class="nav-item {% if request.endpoint and 'hero' in request.endpoint %}active{% endif %}">
-                    <i class="fas fa-sliders-h"></i> 히어로 슬라이드
-                </a>
-                <a href="{{ url_for('admin.site_info_edit') }}" class="nav-item {% if request.endpoint and 'site_info' in request.endpoint %}active{% endif %}">
-                    <i class="fas fa-cog"></i> 사이트 정보
-                </a>
-                <a href="{{ url_for('admin.meals_list') }}" class="nav-item {% if request.endpoint and 'meals' in request.endpoint %}active{% endif %}">
-                    <i class="fas fa-utensils"></i> 급식관리
+                <a href="{{ url_for('admin.parent_notes_list') }}" class="nav-item {% if request.endpoint and 'parent_notes' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-envelope-open-text"></i> 가정통신문
                 </a>
                 <a href="{{ url_for('admin.events_list') }}" class="nav-item {% if request.endpoint and 'events' in request.endpoint %}active{% endif %}">
                     <i class="fas fa-calendar-alt"></i> 행사일정
                 </a>
+                <div class="sidebar-divider"></div>
+                <div class="sidebar-label">교육</div>
+                <a href="{{ url_for('admin.programs_list') }}" class="nav-item {% if request.endpoint and 'programs' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-graduation-cap"></i> 교육과정
+                </a>
+                <a href="{{ url_for('admin.gallery_list') }}" class="nav-item {% if request.endpoint and 'gallery' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-photo-video"></i> 활동 앨범
+                </a>
+                <div class="sidebar-divider"></div>
+                <div class="sidebar-label">운영</div>
                 <a href="{{ url_for('admin.teachers_list') }}" class="nav-item {% if request.endpoint and 'teachers' in request.endpoint %}active{% endif %}">
                     <i class="fas fa-chalkboard-teacher"></i> 교사 소개
                 </a>
-                <a href="{{ url_for('admin.parent_notes_list') }}" class="nav-item {% if request.endpoint and 'parent_notes' in request.endpoint %}active{% endif %}">
-                    <i class="fas fa-sticky-note"></i> 학부모 알림
+                <div class="sidebar-divider"></div>
+                <div class="sidebar-label">설정</div>
+                <a href="{{ url_for('admin.site_info_edit') }}" class="nav-item {% if request.endpoint and 'site_info' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-cog"></i> 사이트 정보
                 </a>
             </nav>
             <div class="sidebar-footer">
@@ -74,6 +100,58 @@
             </div>
         </main>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-ko-KR.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.summernote').summernote({
+            lang: 'ko-KR',
+            height: 250,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'strikethrough']],
+                ['font', ['fontsize', 'color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'hr']],
+                ['view', ['codeview']]
+            ],
+            placeholder: '내용을 입력하세요...',
+            callbacks: {
+                onPaste: function(e) {
+                    // Clean paste from Word
+                    var buf = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text/plain');
+                    e.preventDefault();
+                    document.execCommand('insertText', false, buf);
+                }
+            }
+        });
+    });
+    </script>
+    <script>
+    // Image upload preview
+    document.querySelectorAll('.img-upload-btn input[type="file"]').forEach(function(input) {
+        input.addEventListener('change', function() {
+            var preview = document.getElementById('photoPreview');
+            var previewImg = document.getElementById('photoPreviewImg');
+            var previewName = document.getElementById('photoPreviewName');
+            var currentImg = document.getElementById('currentImg');
+            var emptyThumb = document.getElementById('emptyThumb');
+            if (this.files && this.files[0]) {
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    preview.style.display = 'block';
+                    previewName.textContent = file.name;
+                    previewName.style.display = 'block';
+                    if (currentImg) currentImg.style.opacity = '0.3';
+                    if (emptyThumb) emptyThumb.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+    </script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

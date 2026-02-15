@@ -1,7 +1,9 @@
 from . import admin_bp
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, jsonify, current_app
 from ...extensions import db
 from ...models import Notice
+import os
+import uuid
 
 
 @admin_bp.route('/notices/')
@@ -63,3 +65,27 @@ def notices_delete(id):
     db.session.commit()
     flash('공지사항이 삭제되었습니다.', 'success')
     return redirect(url_for('admin.notices_list'))
+
+
+@admin_bp.route('/notices/upload-image', methods=['POST'])
+def notice_image_upload():
+    """Handle image upload from Summernote editor in notices."""
+    file = request.files.get('file')
+    if not file or file.filename == '':
+        return jsonify({'error': '파일이 없습니다.'}), 400
+
+    ext = file.filename.rsplit('.', 1)[-1].lower()
+    allowed = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+    if ext not in allowed:
+        return jsonify({'error': '허용되지 않는 파일 형식입니다.'}), 400
+
+    unique_filename = f"{uuid.uuid4().hex}.{ext}"
+    upload_folder = current_app.config.get('UPLOAD_FOLDER', 'app/static/uploads')
+    notice_dir = os.path.join(upload_folder, 'notices')
+    os.makedirs(notice_dir, exist_ok=True)
+
+    filepath = os.path.join(notice_dir, unique_filename)
+    file.save(filepath)
+
+    img_url = url_for('static', filename=f'uploads/notices/{unique_filename}')
+    return jsonify({'url': img_url})

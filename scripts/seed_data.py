@@ -3,13 +3,14 @@
 
 import os
 import sys
+from datetime import date, timedelta
 
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app import create_app
 from app.extensions import db
-from app.models import SiteInfo, HeroSlide, Program, Gallery, Media, Teacher
+from app.models import SiteInfo, HeroSlide, Program, Gallery, Media, Teacher, Notice, Event, MealPlan, ParentNote, Popup
 
 
 # ---------------------------------------------------------------------------
@@ -45,7 +46,7 @@ HERO_SLIDES_DATA = [
         'heading': '아이들의 행복한 웃음이 가득한 곳',
         'description': '사랑과 전문성으로 아이들의 성장을 돕습니다.',
         'button_text': '입소 상담 문의하기',
-        'button_link': '#contact',
+        'button_link': '/contact',
         'sort_order': 1,
         'is_active': True,
         'image_filename': 'main1.png',
@@ -54,7 +55,7 @@ HERO_SLIDES_DATA = [
         'heading': '놀이중심 교육과정',
         'description': '아이들의 창의력과 꿈을 키우는 배움터',
         'button_text': '프로그램 보기',
-        'button_link': '#programs',
+        'button_link': '/programs',
         'sort_order': 2,
         'is_active': True,
         'image_filename': 'main2.png',
@@ -62,8 +63,8 @@ HERO_SLIDES_DATA = [
     {
         'heading': '친구와 함께하는 즐거운 배움',
         'description': '소통하고 협력하며 함께 성장하는 공간',
-        'button_text': '원운영안내',
-        'button_link': '#info',
+        'button_text': '어린이집 소개',
+        'button_link': '/about',
         'sort_order': 3,
         'is_active': True,
         'image_filename': 'main3.png',
@@ -133,9 +134,175 @@ TEACHER_DATA = {
     'photo_filename': 'teacher.jpeg',
 }
 
+NOTICES_DATA = [
+    {
+        'title': '2026년 봄학기 신규 원아 모집 안내',
+        'content': '2026년 봄학기 신규 원아를 모집합니다.\n\n모집 대상: 만 0세~2세\n모집 인원: 약간 명\n접수 기간: 2026년 2월 1일 ~ 2월 28일\n접수 방법: 아이사랑 포털(www.childcare.go.kr) 온라인 접수\n\n문의: 031-818-9150',
+        'is_pinned': True,
+    },
+    {
+        'title': '2월 보육료 납부 안내',
+        'content': '2월 보육료 납부 기간을 안내드립니다.\n\n납부 기간: 2026년 2월 1일 ~ 2월 10일\n납부 방법: 아이행복카드 자동결제\n\n궁금한 사항은 어린이집으로 문의해 주세요.',
+        'is_pinned': False,
+    },
+    {
+        'title': '설날 연휴 휴원 안내',
+        'content': '설날 연휴 기간 동안 어린이집이 휴원합니다.\n\n휴원 기간: 2026년 2월 16일(월) ~ 2월 18일(수)\n정상 운영: 2026년 2월 19일(목)부터\n\n즐거운 명절 보내세요!',
+        'is_pinned': False,
+    },
+    {
+        'title': '겨울철 건강관리 안내',
+        'content': '겨울철 감기 예방을 위한 건강관리 수칙을 안내합니다.\n\n1. 외출 후 손 씻기를 철저히 해주세요.\n2. 실내 적정 온도(20~22도)와 습도(50~60%)를 유지해 주세요.\n3. 균형 잡힌 식사와 충분한 수면이 중요합니다.\n4. 증상이 있을 경우 등원을 자제해 주세요.',
+        'is_pinned': False,
+    },
+    {
+        'title': '어린이집 안전교육 실시 안내',
+        'content': '정기 안전교육을 실시합니다.\n\n일시: 2026년 2월 25일(화) 오전 10시\n내용: 화재 대피 훈련 및 교통안전 교육\n대상: 전체 원아\n\n안전한 어린이집을 위해 항상 노력하겠습니다.',
+        'is_pinned': False,
+    },
+]
+
+EVENTS_DATA = [
+    {
+        'title': '설날맞이 전통놀이 행사',
+        'description': '우리 전통 놀이를 체험하며 설날의 의미를 배워요.',
+        'event_date': date(2026, 2, 14),
+        'event_type': 'special',
+    },
+    {
+        'title': '겨울 현장학습 - 눈썰매장',
+        'description': '친구들과 함께 눈썰매장에서 신나는 겨울을 즐겨요.',
+        'event_date': date(2026, 2, 20),
+        'event_type': 'field_trip',
+    },
+    {
+        'title': '2월 학부모 상담 주간',
+        'description': '학부모님과 담임 교사의 1:1 상담이 진행됩니다.',
+        'event_date': date(2026, 2, 24),
+        'event_type': 'parent',
+    },
+    {
+        'title': '3월 개학식',
+        'description': '새 학기를 맞이하는 개학식을 진행합니다.',
+        'event_date': date(2026, 3, 2),
+        'event_type': 'general',
+    },
+    {
+        'title': '봄맞이 식목일 행사',
+        'description': '아이들이 직접 작은 화분에 씨앗을 심어요.',
+        'event_date': date(2026, 3, 12),
+        'event_type': 'special',
+    },
+    {
+        'title': '3월 생일잔치',
+        'description': '3월에 태어난 친구들의 생일을 축하해요!',
+        'event_date': date(2026, 3, 20),
+        'event_type': 'general',
+    },
+]
+
+MEAL_DATA = []
+_meal_week_start = date(2026, 2, 16)
+_menus = {
+    0: {  # Monday
+        'breakfast': ['흰밥', '미역국', '계란말이', '깍두기'],
+        'lunch': ['잡곡밥', '된장찌개', '소고기불고기', '나물무침', '배추김치'],
+        'snack': ['우유', '과일(사과)'],
+    },
+    1: {  # Tuesday
+        'breakfast': ['흰밥', '콩나물국', '김구이', '깍두기'],
+        'lunch': ['흰밥', '어묵탕', '닭갈비', '감자조림', '배추김치'],
+        'snack': ['요구르트', '고구마'],
+    },
+    2: {  # Wednesday
+        'breakfast': ['흰밥', '시금치국', '두부조림', '깍두기'],
+        'lunch': ['카레라이스', '미니돈까스', '양배추샐러드', '배추김치'],
+        'snack': ['우유', '떡볶이'],
+    },
+    3: {  # Thursday
+        'breakfast': ['흰밥', '감자국', '멸치볶음', '깍두기'],
+        'lunch': ['잡곡밥', '김치찌개', '생선구이', '콩나물무침', '배추김치'],
+        'snack': ['주스', '과일(바나나)'],
+    },
+    4: {  # Friday
+        'breakfast': ['흰밥', '무국', '햄야채볶음', '깍두기'],
+        'lunch': ['비빔밥', '콩나물국', '배추김치'],
+        'snack': ['우유', '쿠키'],
+    },
+}
+for day_offset in range(5):
+    plan_date = _meal_week_start + timedelta(days=day_offset)
+    day_menus = _menus.get(day_offset, {})
+    for meal_type, items in day_menus.items():
+        MEAL_DATA.append({
+            'plan_date': plan_date,
+            'meal_type': meal_type,
+            'menu_items': items,
+        })
+
+PARENT_NOTES_DATA = [
+    {
+        'title': '2월 가정통신문 - 겨울철 건강관리',
+        'content': '안녕하세요, 하늘 꿈나무 어린이집입니다.\n\n겨울철 건강관리에 대해 안내드립니다.\n\n1. 충분한 수분 섭취를 해주세요.\n2. 외출 시 따뜻하게 옷을 입혀주세요.\n3. 손 씻기를 생활화해 주세요.\n\n감사합니다.',
+        'target_class': 'all',
+    },
+    {
+        'title': '0세반 적응 프로그램 안내',
+        'content': '0세반 신입 원아 적응 프로그램을 안내드립니다.\n\n기간: 입소 후 2주간\n방법: 단계적으로 보육 시간을 늘려갑니다.\n\n1일차~3일차: 오전 2시간 (보호자 동반)\n4일차~7일차: 오전 반일\n8일차~14일차: 종일반\n\n아이의 적응 상태에 따라 기간이 조정될 수 있습니다.',
+        'target_class': 'age0',
+    },
+    {
+        'title': '1세반 2월 활동 계획안',
+        'content': '1세반 2월 활동 계획을 안내드립니다.\n\n주제: 겨울과 우리\n\n1주: 겨울 날씨 느끼기\n2주: 따뜻하게 입어요\n3주: 겨울 놀이\n4주: 설날 놀이\n\n가정에서도 관련 활동을 해보시면 좋겠습니다.',
+        'target_class': 'age1',
+    },
+    {
+        'title': '2세반 졸업식 안내',
+        'content': '2세반 졸업식 일정을 안내드립니다.\n\n일시: 2026년 2월 28일(토) 오전 11시\n장소: 어린이집 놀이실\n\n보호자 참석을 부탁드립니다.\n준비물: 없음 (졸업앨범은 어린이집에서 준비합니다)\n\n졸업을 진심으로 축하합니다!',
+        'target_class': 'age2',
+    },
+]
+
+POPUP_DATA = [
+    {
+        'title': '2026년 봄학기 원아 모집',
+        'content': '<p style="text-align:center;font-size:1.1rem;"><strong>2026년 봄학기 원아 모집중!</strong></p><p style="text-align:center;">자세한 사항은 전화문의 바랍니다.</p><p style="text-align:center;">☎ 031-818-9150</p>',
+        'link_url': '/contact',
+        'is_active': True,
+        'show_today_hide': True,
+        'position': 'center',
+        'width': 440,
+        'sort_order': 1,
+    },
+    {
+        'title': '통학버스 운영 안내',
+        'content': (
+            '<div style="text-align:center; padding: 10px;">'
+            '<p style="font-size:1.2rem; font-weight:bold; color:#2c5282; margin-bottom:12px;">🚌 통학버스 운영 안내</p>'
+            '<p style="font-size:0.95rem; margin-bottom:8px;">하늘 꿈나무 어린이집에서<br><strong>통학버스를 운영</strong>합니다.</p>'
+            '<hr style="border:none; border-top:1px solid #e2e8f0; margin:12px 0;">'
+            '<p style="font-size:0.9rem; line-height:1.8; text-align:left; padding:0 10px;">'
+            '🕗 <strong>등원</strong>: 오전 8:00 ~ 9:00<br>'
+            '🕓 <strong>하원</strong>: 오후 4:00 ~ 5:00<br>'
+            '📍 <strong>운행 구간</strong>: 중산동, 풍산동, 백석동 일대<br>'
+            '💰 <strong>이용료</strong>: 월 50,000원'
+            '</p>'
+            '<hr style="border:none; border-top:1px solid #e2e8f0; margin:12px 0;">'
+            '<p style="font-size:0.9rem;">문의: <strong>031-818-9150</strong></p>'
+            '</div>'
+        ),
+        'link_url': '/contact',
+        'is_active': True,
+        'show_today_hide': True,
+        'position': 'center',
+        'width': 420,
+        'sort_order': 2,
+    },
+]
+
 
 # ---------------------------------------------------------------------------
-# Helper: determine file extension → type
+# Helper: determine file extension -> type
 # ---------------------------------------------------------------------------
 
 def _file_type(filename):
@@ -145,7 +312,6 @@ def _file_type(filename):
 
 def _file_size(filename, images_dir):
     """Return file size in bytes, or 0 if the file doesn't exist."""
-    # filename may be in a subdirectory (e.g. basic/basic1.png) or root
     path = os.path.join(images_dir, filename)
     if os.path.isfile(path):
         return os.path.getsize(path)
@@ -192,7 +358,7 @@ def seed_hero_slides(images_dir):
 
         image_filename = slide_data['image_filename']
         media = _create_media(image_filename, 'hero', slide_data['heading'], images_dir)
-        db.session.flush()  # get media.id
+        db.session.flush()
 
         slide = HeroSlide(
             heading=slide_data['heading'],
@@ -218,7 +384,6 @@ def seed_programs(images_dir):
             if existing:
                 continue
 
-            # Image lives in a subdirectory named after the category
             image_path = f'{category}/{image_filename}'
             media = _create_media(image_path, 'program', title, images_dir)
             db.session.flush()
@@ -281,12 +446,116 @@ def seed_teachers(images_dir):
     print('  Teachers: 1 new teacher added.')
 
 
+def seed_notices():
+    """Seed notice entries."""
+    count = 0
+    for notice_data in NOTICES_DATA:
+        existing = Notice.query.filter_by(title=notice_data['title']).first()
+        if existing:
+            continue
+        notice = Notice(
+            title=notice_data['title'],
+            content=notice_data['content'],
+            is_pinned=notice_data['is_pinned'],
+        )
+        db.session.add(notice)
+        count += 1
+    db.session.flush()
+    print(f'  Notices: {count} new notices added.')
+
+
+def seed_events():
+    """Seed event entries."""
+    count = 0
+    for event_data in EVENTS_DATA:
+        existing = Event.query.filter_by(title=event_data['title']).first()
+        if existing:
+            continue
+        event = Event(
+            title=event_data['title'],
+            description=event_data['description'],
+            event_date=event_data['event_date'],
+            event_type=event_data['event_type'],
+        )
+        db.session.add(event)
+        count += 1
+    db.session.flush()
+    print(f'  Events: {count} new events added.')
+
+
+def seed_meals():
+    """Seed meal plan entries for one week."""
+    count = 0
+    for meal_data in MEAL_DATA:
+        existing = MealPlan.query.filter_by(
+            plan_date=meal_data['plan_date'],
+            meal_type=meal_data['meal_type']
+        ).first()
+        if existing:
+            continue
+        meal = MealPlan(
+            plan_date=meal_data['plan_date'],
+            meal_type=meal_data['meal_type'],
+        )
+        meal.menu_items = meal_data['menu_items']
+        db.session.add(meal)
+        count += 1
+    db.session.flush()
+    print(f'  Meals: {count} new meal plans added.')
+
+
+def seed_parent_notes():
+    """Seed parent note entries."""
+    count = 0
+    for note_data in PARENT_NOTES_DATA:
+        existing = ParentNote.query.filter_by(title=note_data['title']).first()
+        if existing:
+            continue
+        note = ParentNote(
+            title=note_data['title'],
+            content=note_data['content'],
+            target_class=note_data['target_class'],
+        )
+        db.session.add(note)
+        count += 1
+    db.session.flush()
+    print(f'  Parent notes: {count} new notes added.')
+
+
+def seed_popups():
+    """Seed popup entries."""
+    count = 0
+    for popup_data in POPUP_DATA:
+        existing = Popup.query.filter_by(title=popup_data['title']).first()
+        if existing:
+            continue
+        popup = Popup(
+            title=popup_data['title'],
+            content=popup_data['content'],
+            link_url=popup_data.get('link_url', ''),
+            is_active=popup_data.get('is_active', True),
+            show_today_hide=popup_data.get('show_today_hide', True),
+            position=popup_data.get('position', 'center'),
+            width=popup_data.get('width', 480),
+            sort_order=popup_data.get('sort_order', 0),
+        )
+        db.session.add(popup)
+        count += 1
+    db.session.flush()
+    print(f'  Popups: {count} new popups added.')
+
+
 def clear_all_data():
     """Delete all seeded data (order matters for FK constraints)."""
     HeroSlide.query.delete()
     Program.query.delete()
     Gallery.query.delete()
     Teacher.query.delete()
+    Notice.query.delete()
+    Event.query.delete()
+    MealPlan.query.delete()
+    ParentNote.query.delete()
+    Popup.query.delete()
     Media.query.delete()
     SiteInfo.query.delete()
     db.session.flush()
@@ -320,6 +589,11 @@ def main():
         seed_programs(images_dir)
         seed_gallery(images_dir)
         seed_teachers(images_dir)
+        seed_notices()
+        seed_events()
+        seed_meals()
+        seed_parent_notes()
+        seed_popups()
 
         db.session.commit()
 
@@ -331,6 +605,11 @@ def main():
         print(f'  - Programs: {Program.query.count()}')
         print(f'  - Gallery: {Gallery.query.count()}')
         print(f'  - Teachers: {Teacher.query.count()}')
+        print(f'  - Notices: {Notice.query.count()}')
+        print(f'  - Events: {Event.query.count()}')
+        print(f'  - Meals: {MealPlan.query.count()}')
+        print(f'  - Parent notes: {ParentNote.query.count()}')
+        print(f'  - Popups: {Popup.query.count()}')
 
 
 if __name__ == '__main__':

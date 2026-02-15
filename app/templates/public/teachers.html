@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}교사소개 - 공공형 하늘 꿈나무 어린이집{% endblock %}
+
+{% block content %}
+{% include "components/page_header.html" %}
+
+<section class="content-section">
+    <div class="container">
+        {% if teachers %}
+        <div class="teacher-grid">
+            {% for teacher in teachers %}
+            <div class="teacher-card">
+                {% if teacher.photo %}
+                <img src="{{ url_for('static', filename='images/' + teacher.photo.filename) }}" alt="{{ teacher.name }}" loading="lazy">
+                {% else %}
+                <img src="{{ url_for('static', filename='images/teacher.jpeg') }}" alt="{{ teacher.name }}" loading="lazy">
+                {% endif %}
+                <div class="card-body">
+                    <h4>{{ teacher.name }}</h4>
+                    <p class="title">{{ teacher.title }}</p>
+                    {% if teacher.greeting %}
+                    <p class="greeting">{{ teacher.greeting }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p style="text-align: center; color: #999; padding: 3rem 0;">등록된 교사 정보가 없습니다.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

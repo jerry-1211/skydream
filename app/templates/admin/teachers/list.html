@@ -27,7 +27,7 @@
                 <td>{{ teacher.sort_order }}</td>
                 <td>
                     {% if teacher.photo %}
-                    <img src="{{ url_for('static', filename='uploads/originals/' + teacher.photo.filename) }}" class="table-thumb" alt="">
+                    <img src="{{ url_for('static', filename=teacher.photo.static_path) }}" class="table-thumb" alt="">
                     {% else %}
                     <span class="text-muted">-</span>
                     {% endif %}

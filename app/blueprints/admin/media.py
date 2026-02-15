@@ -22,11 +22,54 @@ def _get_file_type(filename):
     return 'video'
 
 
+MEDIA_CATEGORIES = {
+    'all': '전체',
+    'hero': '메인 슬라이드',
+    'program': '프로그램',
+    'gallery': '갤러리',
+    'teacher': '교사',
+    'meal': '급식',
+    'popup': '팝업',
+    'general': '일반',
+}
+
+
 @admin_bp.route('/media/')
 def media_list():
     page = request.args.get('page', 1, type=int)
-    pagination = Media.query.order_by(Media.created_at.desc()).paginate(page=page, per_page=24)
-    return render_template('admin/media/list.html', pagination=pagination)
+    category = request.args.get('category', 'all')
+
+    query = Media.query
+    if category != 'all':
+        query = query.filter_by(category=category)
+
+    pagination = query.order_by(Media.created_at.desc()).paginate(page=page, per_page=24)
+
+    # Compute usage info for each media item
+    from ...models import HeroSlide, Program, Gallery, Teacher
+    for media in pagination.items:
+        usages = []
+        if HeroSlide.query.filter_by(image_id=media.id).first():
+            usages.append('메인 슬라이드')
+        if Program.query.filter_by(image_id=media.id).first():
+            usages.append('프로그램')
+        if Gallery.query.filter_by(image_id=media.id).first():
+            usages.append('갤러리')
+        if Teacher.query.filter_by(photo_id=media.id).first():
+            usages.append('교사')
+        media.usage_info = ', '.join(usages) if usages else ''
+
+    # Category counts for filter tabs
+    from sqlalchemy import func
+    category_counts = dict(Media.query.with_entities(Media.category, func.count()).group_by(Media.category).all())
+    category_counts['all'] = sum(category_counts.values())
+
+    return render_template('admin/media/list.html',
+        pagination=pagination,
+        current_category=category,
+        categories=MEDIA_CATEGORIES,
+        category_counts=category_counts,
+    )
 
 
 @admin_bp.route('/media/upload', methods=['GET', 'POST'])

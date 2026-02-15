@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}행사일정 - 공공형 하늘 꿈나무 어린이집{% endblock %}
+
+{% block content %}
+{% include "components/page_header.html" %}
+
+<section class="content-section">
+    <div class="container">
+        <div class="event-month-nav">
+            <a href="{{ url_for('public.events', month=prev_month.strftime('%Y-%m')) }}">
+                <i class="fas fa-chevron-left" aria-hidden="true"></i> 이전 달
+            </a>
+            <span class="current-month">
+                {{ current_month.strftime('%Y년 %m월') }}
+            </span>
+            <a href="{{ url_for('public.events', month=next_month.strftime('%Y-%m')) }}">
+                다음 달 <i class="fas fa-chevron-right" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        {# Calendar Grid #}
+        <div class="cal-grid">
+            <div class="cal-header">
+                <span class="cal-dow cal-sun">일</span>
+                <span class="cal-dow">월</span>
+                <span class="cal-dow">화</span>
+                <span class="cal-dow">수</span>
+                <span class="cal-dow">목</span>
+                <span class="cal-dow">금</span>
+                <span class="cal-dow cal-sat">토</span>
+            </div>
+            {% for week in month_days %}
+            <div class="cal-row">
+                {% for day in week %}
+                {% if day == 0 %}
+                <div class="cal-cell cal-empty"></div>
+                {% else %}
+                {% set is_today = (today.year == current_month.year and today.month == current_month.month and today.day == day) %}
+                {% set is_holiday = day in holidays %}
+                {% set has_events = day in events_by_day %}
+                {% set col_index = loop.index0 %}
+                <div class="cal-cell{% if is_today %} cal-today{% endif %}{% if is_holiday %} cal-holiday{% endif %}{% if has_events %} cal-has-event{% endif %}"
+                     {% if has_events or is_holiday %}tabindex="0"{% endif %}>
+                    <span class="cal-day{% if col_index == 0 %} cal-sun{% endif %}{% if col_index == 6 %} cal-sat{% endif %}">{{ day }}</span>
+                    {% if is_holiday %}
+                    <span class="cal-holiday-name">{{ holidays[day] }}</span>
+                    {% endif %}
+                    {% if has_events %}
+                    <div class="cal-events">
+                        {% for ev in events_by_day[day] %}
+                        <span class="cal-ev-dot {{ ev.event_type }}" title="{{ ev.title }}"></span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+
+        {# Calendar Legend #}
+        <div class="cal-legend">
+            <span class="cal-legend-item"><span class="cal-ev-dot general"></span> 일반</span>
+            <span class="cal-legend-item"><span class="cal-ev-dot field_trip"></span> 현장학습</span>
+            <span class="cal-legend-item"><span class="cal-ev-dot parent"></span> 학부모 참여</span>
+            <span class="cal-legend-item"><span class="cal-ev-dot holiday"></span> 휴원/공휴일</span>
+            <span class="cal-legend-item"><span class="cal-ev-dot special"></span> 특별행사</span>
+            <span class="cal-legend-item"><span class="cal-legend-holiday"></span> 공휴일</span>
+        </div>
+
+        {# Event List Below Calendar #}
+        <h3 class="event-list-title">
+            <i class="fas fa-list-ul" aria-hidden="true"></i>
+            {{ current_month.strftime('%m월') }} 행사 목록
+        </h3>
+        {% if events %}
+        <div class="event-list">
+            {% for event in events %}
+            <div class="event-item">
+                <div class="event-date-badge">
+                    <span class="day">{{ event.event_date.strftime('%d') }}</span>
+                    <span class="month">{{ event.event_date.strftime('%m') }}월</span>
+                </div>
+                <div class="event-info">
+                    <span class="event-type-tag {{ event.event_type }}">{{ event.event_type_label }}</span>
+                    <h4>{{ event.title }}</h4>
+                    {% if event.description %}
+                    <p>{{ event.description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p style="text-align: center; color: #999; padding: 3rem 0;">이번 달 등록된 행사가 없습니다.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

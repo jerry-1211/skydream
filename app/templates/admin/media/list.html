@@ -9,12 +9,36 @@
     </a>
 </div>
 
+<div class="media-filter-tabs">
+    {% for key, label in categories.items() %}
+    {% set count = category_counts.get(key, 0) %}
+    {% if count > 0 or key == 'all' %}
+    <a href="{{ url_for('admin.media_list', category=key) }}"
+       class="filter-tab {% if current_category == key %}active{% endif %}">
+        {{ label }} <span class="filter-count">{{ count }}</span>
+    </a>
+    {% endif %}
+    {% endfor %}
+</div>
+
 {% if pagination.items %}
 <div class="media-grid">
     {% for media in pagination.items %}
     <div class="media-item">
+        {% if media.category and media.category != 'general' %}
+        <span class="media-category">
+            {% if media.category == 'hero' %}메인 슬라이드
+            {% elif media.category == 'program' %}프로그램
+            {% elif media.category == 'gallery' %}갤러리
+            {% elif media.category == 'teacher' %}교사
+            {% elif media.category == 'meal' %}급식
+            {% elif media.category == 'popup' %}팝업
+            {% else %}{{ media.category }}
+            {% endif %}
+        </span>
+        {% endif %}
         {% if media.is_image %}
-        <img src="{{ url_for('static', filename='uploads/originals/' + media.filename) }}" alt="{{ media.alt_text or media.original_filename }}" class="media-preview">
+        <img src="{{ url_for('static', filename=media.static_path) }}" alt="{{ media.alt_text or media.original_filename }}" class="media-preview">
         {% else %}
         <div class="media-preview" style="display:flex;align-items:center;justify-content:center;background:#f0f0f0;">
             <i class="fas fa-video" style="font-size:2rem;color:#adb5bd;"></i>
@@ -26,6 +50,11 @@
                 {{ media.file_type }} &middot;
                 {% if media.file_size %}{{ (media.file_size / 1024)|round(1) }}KB{% endif %}
             </div>
+            {% if media.usage_info %}
+            <div class="media-usage">
+                <i class="fas fa-link"></i> {{ media.usage_info }}
+            </div>
+            {% endif %}
         </div>
         <div class="media-actions">
             <form method="post" action="{{ url_for('admin.media_delete', id=media.id) }}" onsubmit="return confirm('이 파일을 삭제하시겠습니까?');">
@@ -40,7 +69,7 @@
 {% if pagination.pages > 1 %}
 <div class="pagination">
     {% if pagination.has_prev %}
-    <a href="{{ url_for('admin.media_list', page=pagination.prev_num) }}"><i class="fas fa-chevron-left"></i></a>
+    <a href="{{ url_for('admin.media_list', page=pagination.prev_num, category=current_category) }}"><i class="fas fa-chevron-left"></i></a>
     {% else %}
     <span class="disabled"><span><i class="fas fa-chevron-left"></i></span></span>
     {% endif %}
@@ -50,7 +79,7 @@
             {% if p == pagination.page %}
             <span class="active"><span>{{ p }}</span></span>
             {% else %}
-            <a href="{{ url_for('admin.media_list', page=p) }}">{{ p }}</a>
+            <a href="{{ url_for('admin.media_list', page=p, category=current_category) }}">{{ p }}</a>
             {% endif %}
         {% else %}
         <span>...</span>
@@ -58,7 +87,7 @@
     {% endfor %}
 
     {% if pagination.has_next %}
-    <a href="{{ url_for('admin.media_list', page=pagination.next_num) }}"><i class="fas fa-chevron-right"></i></a>
+    <a href="{{ url_for('admin.media_list', page=pagination.next_num, category=current_category) }}"><i class="fas fa-chevron-right"></i></a>
     {% else %}
     <span class="disabled"><span><i class="fas fa-chevron-right"></i></span></span>
     {% endif %}

@@ -2,40 +2,64 @@
 {% block title %}대시보드{% endblock %}
 {% block page_title %}대시보드{% endblock %}
 {% block content %}
-<p style="margin-bottom: 1.5rem; color: #6c757d;">환영합니다! 아래에서 어린이집 콘텐츠를 관리할 수 있습니다.</p>
+<p class="dash-welcome">환영합니다! 아래에서 어린이집 콘텐츠를 관리할 수 있습니다.</p>
 
-<div class="stats-grid">
-    <a href="{{ url_for('admin.notices_list') }}" class="stat-card primary" style="text-decoration:none;">
-        <div class="stat-number">{{ stats.notices }}</div>
-        <div class="stat-label"><i class="fas fa-bullhorn"></i> 공지사항</div>
+<!-- Quick Actions -->
+<div class="dash-quick-actions">
+    <a href="{{ url_for('admin.notices_create') }}" class="quick-action-btn qa-blue">
+        <i class="fas fa-plus-circle"></i> 공지 작성
     </a>
-    <a href="{{ url_for('admin.media_list') }}" class="stat-card secondary" style="text-decoration:none;">
-        <div class="stat-number">{{ stats.media }}</div>
-        <div class="stat-label"><i class="fas fa-images"></i> 미디어</div>
+    <a href="{{ url_for('admin.events_create') }}" class="quick-action-btn qa-green">
+        <i class="fas fa-calendar-plus"></i> 행사 등록
     </a>
-    <a href="{{ url_for('admin.programs_list') }}" class="stat-card success" style="text-decoration:none;">
-        <div class="stat-number">{{ stats.programs }}</div>
-        <div class="stat-label"><i class="fas fa-graduation-cap"></i> 프로그램</div>
+    <a href="{{ url_for('admin.gallery_create') }}" class="quick-action-btn qa-purple">
+        <i class="fas fa-camera"></i> 갤러리 추가
     </a>
-    <a href="{{ url_for('admin.gallery_list') }}" class="stat-card purple" style="text-decoration:none;">
-        <div class="stat-number">{{ stats.galleries }}</div>
-        <div class="stat-label"><i class="fas fa-photo-video"></i> 갤러리</div>
+    <a href="{{ url_for('admin.parent_notes_create') }}" class="quick-action-btn qa-orange">
+        <i class="fas fa-envelope"></i> 가정통신문
     </a>
-    <a href="{{ url_for('admin.hero_slides_list') }}" class="stat-card primary" style="text-decoration:none;">
-        <div class="stat-number">{{ stats.hero_slides }}</div>
-        <div class="stat-label"><i class="fas fa-sliders-h"></i> 히어로 슬라이드</div>
-    </a>
-    <a href="{{ url_for('admin.meals_list') }}" class="stat-card secondary" style="text-decoration:none;">
-        <div class="stat-number">{{ stats.meals }}</div>
-        <div class="stat-label"><i class="fas fa-utensils"></i> 급식</div>
-    </a>
-    <a href="{{ url_for('admin.events_list') }}" class="stat-card success" style="text-decoration:none;">
-        <div class="stat-number">{{ stats.events }}</div>
-        <div class="stat-label"><i class="fas fa-calendar-alt"></i> 행사</div>
-    </a>
-    <a href="{{ url_for('admin.teachers_list') }}" class="stat-card purple" style="text-decoration:none;">
-        <div class="stat-number">{{ stats.teachers }}</div>
-        <div class="stat-label"><i class="fas fa-chalkboard-teacher"></i> 교사</div>
-    </a>
+</div>
+
+<!-- Two column: Recent + Upcoming -->
+<div class="dash-panels">
+    <div class="dash-panel">
+        <h3 class="dash-panel-title"><i class="fas fa-clock"></i> 최근 공지사항</h3>
+        {% if recent_notices %}
+        <ul class="dash-list">
+            {% for notice in recent_notices %}
+            <li>
+                <a href="{{ url_for('admin.notices_edit', id=notice.id) }}">
+                    {% if notice.is_pinned %}<span class="dash-pin"><i class="fas fa-thumbtack"></i></span>{% endif %}
+                    <span class="dash-list-title">{{ notice.title }}</span>
+                    <span class="dash-list-date">{{ notice.created_at.strftime('%m/%d') if notice.created_at else '' }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('admin.notices_list') }}" class="dash-more">전체보기 <i class="fas fa-arrow-right"></i></a>
+        {% else %}
+        <p class="dash-empty">등록된 공지가 없습니다.</p>
+        {% endif %}
+    </div>
+
+    <div class="dash-panel">
+        <h3 class="dash-panel-title"><i class="fas fa-calendar-check"></i> 다가오는 행사</h3>
+        {% if upcoming_events %}
+        <ul class="dash-list">
+            {% for event in upcoming_events %}
+            <li>
+                <a href="{{ url_for('admin.events_edit', id=event.id) }}">
+                    <span class="dash-event-date">{{ event.event_date.strftime('%m/%d') }}</span>
+                    <span class="dash-list-title">{{ event.title }}</span>
+                    <span class="dash-event-type">{{ event.event_type_label }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('admin.events_list') }}" class="dash-more">전체보기 <i class="fas fa-arrow-right"></i></a>
+        {% else %}
+        <p class="dash-empty">다가오는 행사가 없습니다.</p>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

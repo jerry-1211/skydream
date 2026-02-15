@@ -1,19 +1,21 @@
 from . import admin_bp
 from flask import render_template
 from ...extensions import db
-from ...models import Notice, Media, Program, Gallery, HeroSlide, MealPlan, Event, Teacher
+from ...models import Notice, Event
+from datetime import date
 
 
 @admin_bp.route('/')
 def dashboard():
-    stats = {
-        'notices': db.session.query(Notice).count(),
-        'media': db.session.query(Media).count(),
-        'programs': db.session.query(Program).count(),
-        'galleries': db.session.query(Gallery).count(),
-        'hero_slides': db.session.query(HeroSlide).count(),
-        'meals': db.session.query(MealPlan).count(),
-        'events': db.session.query(Event).count(),
-        'teachers': db.session.query(Teacher).count(),
-    }
-    return render_template('admin/dashboard.html', stats=stats)
+    # Recent notices (latest 5)
+    recent_notices = Notice.query.order_by(Notice.created_at.desc()).limit(5).all()
+
+    # Upcoming events (next 5)
+    today = date.today()
+    upcoming_events = Event.query.filter(
+        Event.event_date >= today
+    ).order_by(Event.event_date.asc()).limit(5).all()
+
+    return render_template('admin/dashboard.html',
+                           recent_notices=recent_notices,
+                           upcoming_events=upcoming_events)

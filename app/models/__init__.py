@@ -9,3 +9,4 @@ from .event import Event
 from .teacher import Teacher
 from .parent_note import ParentNote
 from .hero_slide import HeroSlide
+from .popup import Popup

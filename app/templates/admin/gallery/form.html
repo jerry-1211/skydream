@@ -4,7 +4,7 @@
 {% block content %}
 <div class="card">
     <div class="card-body">
-        <form method="post" action="{{ url_for('admin.gallery_edit', id=gallery_item.id) if gallery_item else url_for('admin.gallery_create') }}">
+        <form method="post" action="{{ url_for('admin.gallery_edit', id=gallery_item.id) if gallery_item else url_for('admin.gallery_create') }}" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
             <div class="form-group">
@@ -12,15 +12,9 @@
                 <input type="text" id="title" name="title" class="form-control" value="{{ gallery_item.title if gallery_item else '' }}" required>
             </div>
 
-            <div class="form-group">
-                <label for="image_id">이미지</label>
-                <select id="image_id" name="image_id" class="form-control">
-                    <option value="">이미지 없음</option>
-                    {% for media in media_list %}
-                    <option value="{{ media.id }}" {{ 'selected' if gallery_item and gallery_item.image_id == media.id }}>{{ media.original_filename }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+            {% set current_image = gallery_item.image if gallery_item and gallery_item.image else None %}
+            {% set label = '이미지' %}
+            {% include 'admin/components/image_upload.html' %}
 
             <div class="form-group">
                 <label for="sort_order">정렬 순서</label>

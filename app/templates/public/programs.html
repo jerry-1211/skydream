@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}교육과정 - 공공형 하늘 꿈나무 어린이집{% endblock %}
+
+{% block content %}
+{% include "components/page_header.html" %}
+
+<section class="content-section">
+    <div class="container">
+        <div class="program-tabs">
+            <button class="tab-btn active" data-tab="basic">일상</button>
+            <button class="tab-btn" data-tab="story">놀이 이야기</button>
+            <button class="tab-btn" data-tab="special">학부모 참여수업</button>
+            <button class="tab-btn" data-tab="action">특별 활동</button>
+            <button class="tab-btn" data-tab="act">체험</button>
+        </div>
+
+        {% for category in ['basic', 'story', 'special', 'action', 'act'] %}
+        <div class="tab-content {{ 'active' if category == 'basic' }}" id="{{ category }}">
+            <div class="swiper {{ category }}-swiper">
+                <div class="swiper-wrapper">
+                    {% if programs and programs.get(category) %}
+                    {% for program in programs[category] %}
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            {% if program.image %}
+                            <img src="{{ url_for('static', filename='images/' + program.image.filename) }}" alt="{{ program.title }}" loading="lazy">
+                            {% endif %}
+                            {% if program.description %}
+                            <div class="card-content">
+                                <h4>{{ program.title }}</h4>
+                                <p>{{ program.description }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="swiper-slide">
+                        <div class="program-card">
+                            <p style="padding: 2rem; text-align: center; color: #999;">등록된 프로그램이 없습니다.</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

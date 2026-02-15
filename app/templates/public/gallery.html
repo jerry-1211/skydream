@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}활동 앨범 - 공공형 하늘 꿈나무 어린이집{% endblock %}
+
+{% block content %}
+{% include "components/page_header.html" %}
+
+<section class="content-section">
+    <div class="container">
+        <div class="swiper gallery-swiper">
+            <div class="swiper-wrapper">
+                {% if gallery_items %}
+                {% for item in gallery_items %}
+                <div class="swiper-slide">
+                    <div class="gallery-item">
+                        {% if item.image %}
+                        <img src="{{ url_for('static', filename='images/' + item.image.filename) }}" alt="{{ item.title }}" loading="lazy">
+                        {% endif %}
+                        <div class="overlay">
+                            <h4>{{ item.title }}</h4>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="swiper-slide">
+                    <div class="gallery-item">
+                        <p style="padding: 2rem; text-align: center; color: #999;">등록된 앨범이 없습니다.</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -23,9 +23,12 @@ services:
       context: docker/nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./app/static:/app/static:ro
       - uploads:/app/static/uploads:ro
+      - certbot_www:/var/www/certbot:ro
+      - certbot_conf:/etc/letsencrypt:ro
     depends_on:
       - web
     restart: unless-stopped
@@ -45,6 +48,16 @@ services:
       retries: 5
     restart: unless-stopped
 
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - certbot_www:/var/www/certbot
+      - certbot_conf:/etc/letsencrypt
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    restart: unless-stopped
+
 volumes:
   postgres_data:
   uploads:
+  certbot_www:
+  certbot_conf:

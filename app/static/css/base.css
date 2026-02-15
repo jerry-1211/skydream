@@ -46,8 +46,9 @@
     --space-4xl: 5rem;     /* 80px */
 
     /* Typography */
-    --font-primary: 'Noto Sans KR', 'Nanum Gothic', sans-serif;
-    --font-heading: 'Dongle', sans-serif;
+    --font-primary: 'Pretendard Variable', 'Pretendard', -apple-system, sans-serif;
+    --font-heading: 'Pretendard Variable', 'Pretendard', -apple-system, sans-serif;
+    --font-accent: 'Gowun Dodum', 'Pretendard Variable', sans-serif;
 
     --text-xs: 0.75rem;    /* 12px */
     --text-sm: 0.875rem;   /* 14px */
@@ -92,7 +93,7 @@
     /* Layout */
     --container-max: 1200px;
     --header-height: 80px;
-    --nav-font-size: 1.6rem;
+    --nav-font-size: 1.1rem;
 }
 
 /* Base Styles */
@@ -112,8 +113,10 @@ body {
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
     line-height: var(--leading-tight);
     color: var(--color-dark);
+    font-weight: var(--weight-bold);
 }
 
 /* Container */
@@ -177,6 +180,72 @@ img {
         scroll-behavior: auto;
     }
 }
+
+/* ---- Animations ---- */
+
+/* Fade-in-up on scroll */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+@keyframes pulse-soft {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(79, 195, 247, 0.3); }
+    50% { box-shadow: 0 0 0 8px rgba(79, 195, 247, 0); }
+}
+
+/* Scroll reveal base */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger delays for grid children */
+.reveal-stagger > *:nth-child(1) { transition-delay: 0s; }
+.reveal-stagger > *:nth-child(2) { transition-delay: 0.1s; }
+.reveal-stagger > *:nth-child(3) { transition-delay: 0.2s; }
+.reveal-stagger > *:nth-child(4) { transition-delay: 0.3s; }
+.reveal-stagger > *:nth-child(5) { transition-delay: 0.4s; }
+.reveal-stagger > *:nth-child(6) { transition-delay: 0.5s; }
 
 /* Screen reader only */
 .sr-only {

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}가정통신문 - 공공형 하늘 꿈나무 어린이집{% endblock %}
+
+{% block content %}
+{% include "components/page_header.html" %}
+
+<section class="content-section">
+    <div class="container">
+        <div class="class-filter-tabs">
+            {% for key, label in target_classes.items() %}
+            <a href="{{ url_for('public.parent_notes', **({'class': key} if key != 'all' else {})) }}"
+               class="{{ 'active' if target_class == key }}">
+                {{ label }}
+            </a>
+            {% endfor %}
+        </div>
+
+        <div class="notice-list-page">
+            {% if notes %}
+            <table>
+                <thead>
+                    <tr>
+                        <th class="num-col">번호</th>
+                        <th>제목</th>
+                        <th class="date-col">대상</th>
+                        <th class="date-col">작성일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for note in notes %}
+                    <tr>
+                        <td class="num-col">{{ note.id }}</td>
+                        <td>
+                            <a href="{{ url_for('public.parent_note_detail', note_id=note.id) }}">
+                                {{ note.title }}
+                            </a>
+                        </td>
+                        <td class="date-col">{{ note.target_class_label }}</td>
+                        <td class="date-col">{{ note.created_at.strftime('%Y.%m.%d') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% include "components/pagination.html" %}
+            {% else %}
+            <p style="text-align: center; color: #999; padding: 3rem 0;">등록된 가정통신문이 없습니다.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

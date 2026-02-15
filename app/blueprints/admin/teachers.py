@@ -1,7 +1,8 @@
 from . import admin_bp
+from .upload_helper import handle_image_upload
 from flask import render_template, request, redirect, url_for, flash
 from ...extensions import db
-from ...models import Teacher, Media
+from ...models import Teacher
 
 
 @admin_bp.route('/teachers/')
@@ -16,19 +17,19 @@ def teachers_create():
         name = request.form.get('name', '').strip()
         title = request.form.get('title', '').strip()
         greeting = request.form.get('greeting', '').strip()
-        photo_id = request.form.get('photo_id', type=int)
         sort_order = request.form.get('sort_order', 0, type=int)
 
         if not name:
             flash('이름을 입력해주세요.', 'error')
-            media_list = Media.query.filter_by(file_type='image').order_by(Media.created_at.desc()).all()
-            return render_template('admin/teachers/form.html', teacher=None, media_list=media_list)
+            return render_template('admin/teachers/form.html', teacher=None)
+
+        photo_id = handle_image_upload('photo', category='teacher', alt_text=name)
 
         teacher = Teacher(
             name=name,
             title=title,
             greeting=greeting,
-            photo_id=photo_id if photo_id else None,
+            photo_id=photo_id,
             sort_order=sort_order,
         )
         db.session.add(teacher)
@@ -36,8 +37,7 @@ def teachers_create():
         flash('교사 정보가 등록되었습니다.', 'success')
         return redirect(url_for('admin.teachers_list'))
 
-    media_list = Media.query.filter_by(file_type='image').order_by(Media.created_at.desc()).all()
-    return render_template('admin/teachers/form.html', teacher=None, media_list=media_list)
+    return render_template('admin/teachers/form.html', teacher=None)
 
 
 @admin_bp.route('/teachers/<int:id>/edit', methods=['GET', 'POST'])
@@ -48,25 +48,25 @@ def teachers_edit(id):
         name = request.form.get('name', '').strip()
         title = request.form.get('title', '').strip()
         greeting = request.form.get('greeting', '').strip()
-        photo_id = request.form.get('photo_id', type=int)
         sort_order = request.form.get('sort_order', 0, type=int)
 
         if not name:
             flash('이름을 입력해주세요.', 'error')
-            media_list = Media.query.filter_by(file_type='image').order_by(Media.created_at.desc()).all()
-            return render_template('admin/teachers/form.html', teacher=teacher, media_list=media_list)
+            return render_template('admin/teachers/form.html', teacher=teacher)
+
+        new_photo_id = handle_image_upload('photo', category='teacher', alt_text=name)
+        if new_photo_id:
+            teacher.photo_id = new_photo_id
 
         teacher.name = name
         teacher.title = title
         teacher.greeting = greeting
-        teacher.photo_id = photo_id if photo_id else None
         teacher.sort_order = sort_order
         db.session.commit()
         flash('교사 정보가 수정되었습니다.', 'success')
         return redirect(url_for('admin.teachers_list'))
 
-    media_list = Media.query.filter_by(file_type='image').order_by(Media.created_at.desc()).all()
-    return render_template('admin/teachers/form.html', teacher=teacher, media_list=media_list)
+    return render_template('admin/teachers/form.html', teacher=teacher)
 
 
 @admin_bp.route('/teachers/<int:id>/delete', methods=['POST'])

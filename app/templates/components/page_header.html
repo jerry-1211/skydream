@@ -1,0 +1,21 @@
+{# Page Header Component - breadcrumb + title banner #}
+{# Usage: {% include "components/page_header.html" %} with page_title, breadcrumb_items set #}
+<section class="page-header">
+    <div class="container">
+        <nav class="breadcrumb" aria-label="breadcrumb">
+            <ol>
+                <li><a href="{{ url_for('public.index') }}">홈</a></li>
+                {% if breadcrumb_items %}
+                {% for item in breadcrumb_items %}
+                {% if loop.last %}
+                <li class="active" aria-current="page">{{ item.label }}</li>
+                {% else %}
+                <li><a href="{{ item.url }}">{{ item.label }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </ol>
+        </nav>
+        <h2>{{ page_title }}</h2>
+    </div>
+</section>

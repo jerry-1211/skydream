@@ -26,3 +26,13 @@ class Media(db.Model):
     @property
     def is_video(self):
         return self.file_type == 'video'
+
+    @property
+    def static_path(self):
+        """Return the correct static file path (uploads or images fallback)."""
+        import os
+        from flask import current_app
+        upload_path = os.path.join(current_app.static_folder, 'uploads', 'originals', self.filename)
+        if os.path.exists(upload_path):
+            return 'uploads/originals/' + self.filename
+        return 'images/' + self.filename

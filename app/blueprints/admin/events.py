@@ -3,13 +3,67 @@ from flask import render_template, request, redirect, url_for, flash
 from ...extensions import db
 from ...models import Event
 from datetime import date
+from calendar import monthrange, Calendar
 
 
 @admin_bp.route('/events/')
 def events_list():
     page = request.args.get('page', 1, type=int)
-    pagination = Event.query.order_by(Event.event_date.desc()).paginate(page=page, per_page=10)
-    return render_template('admin/events/list.html', pagination=pagination)
+    month_str = request.args.get('month', '')
+
+    try:
+        if month_str:
+            year, month = map(int, month_str.split('-'))
+        else:
+            today = date.today()
+            year, month = today.year, today.month
+    except (ValueError, AttributeError):
+        today = date.today()
+        year, month = today.year, today.month
+
+    current_month = date(year, month, 1)
+    _, last_day = monthrange(year, month)
+    month_end = date(year, month, last_day)
+
+    if month == 1:
+        prev_month = date(year - 1, 12, 1)
+    else:
+        prev_month = date(year, month - 1, 1)
+    if month == 12:
+        next_month = date(year + 1, 1, 1)
+    else:
+        next_month = date(year, month + 1, 1)
+
+    query = Event.query.filter(
+        Event.event_date >= current_month,
+        Event.event_date <= month_end
+    )
+    pagination = query.order_by(Event.event_date.asc()).paginate(page=page, per_page=20)
+
+    # Calendar grid data
+    cal = Calendar(firstweekday=6)  # Sunday first
+    month_days = cal.monthdayscalendar(year, month)
+    events_by_day = {}
+    all_events = Event.query.filter(
+        Event.event_date >= current_month,
+        Event.event_date <= month_end
+    ).order_by(Event.event_date.asc()).all()
+    for ev in all_events:
+        day = ev.event_date.day
+        events_by_day.setdefault(day, []).append(ev)
+
+    today_obj = date.today()
+
+    return render_template('admin/events/list.html',
+                           pagination=pagination,
+                           current_month=current_month,
+                           prev_month=prev_month,
+                           next_month=next_month,
+                           month_days=month_days,
+                           events_by_day=events_by_day,
+                           today=today_obj,
+                           year=year,
+                           month=month)
 
 
 @admin_bp.route('/events/create', methods=['GET', 'POST'])

@@ -4,7 +4,7 @@
 {% block content %}
 <div class="card">
     <div class="card-body">
-        <form method="post" action="{{ url_for('admin.hero_slides_edit', id=slide.id) if slide else url_for('admin.hero_slides_create') }}">
+        <form method="post" action="{{ url_for('admin.hero_slides_edit', id=slide.id) if slide else url_for('admin.hero_slides_create') }}" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
             <div class="form-group">
@@ -24,19 +24,22 @@
             </div>
 
             <div class="form-group">
-                <label for="button_link">버튼 링크</label>
-                <input type="text" id="button_link" name="button_link" class="form-control" value="{{ slide.button_link if slide else '' }}" placeholder="/about">
-            </div>
-
-            <div class="form-group">
-                <label for="image_id">배경 이미지</label>
-                <select id="image_id" name="image_id" class="form-control">
-                    <option value="">이미지 없음</option>
-                    {% for media in media_list %}
-                    <option value="{{ media.id }}" {{ 'selected' if slide and slide.image_id == media.id }}>{{ media.original_filename }}</option>
-                    {% endfor %}
+                <label for="button_link">클릭 시 이동 페이지</label>
+                <select id="button_link" name="button_link" class="form-control">
+                    <option value="">선택하세요 (버튼 없음)</option>
+                    <option value="/about" {{ 'selected' if slide and slide.button_link == '/about' }}>어린이집 소개</option>
+                    <option value="/teachers" {{ 'selected' if slide and slide.button_link == '/teachers' }}>교사 소개</option>
+                    <option value="/programs" {{ 'selected' if slide and slide.button_link == '/programs' }}>교육과정</option>
+                    <option value="/gallery" {{ 'selected' if slide and slide.button_link == '/gallery' }}>활동 앨범</option>
+                    <option value="/notices" {{ 'selected' if slide and slide.button_link == '/notices' }}>공지사항</option>
+                    <option value="/events" {{ 'selected' if slide and slide.button_link == '/events' }}>행사일정</option>
+                    <option value="/contact" {{ 'selected' if slide and slide.button_link == '/contact' }}>오시는 길</option>
                 </select>
             </div>
+
+            {% set current_image = slide.image if slide and slide.image else None %}
+            {% set label = '배경 이미지' %}
+            {% include 'admin/components/image_upload.html' %}
 
             <div class="form-group">
                 <label for="sort_order">정렬 순서</label>

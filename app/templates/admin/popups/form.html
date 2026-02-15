@@ -1,0 +1,63 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ '팝업 수정' if popup else '팝업 추가' }}{% endblock %}
+{% block page_title %}{{ '팝업 수정' if popup else '팝업 추가' }}{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="form-group">
+                <label for="title">제목 <span style="color:#e74c3c;">*</span></label>
+                <input type="text" class="form-control" id="title" name="title" value="{{ popup.title if popup else '' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea class="summernote" id="content" name="content">{{ popup.content if popup else '' }}</textarea>
+            </div>
+
+            {% set current_image = popup.image if popup and popup.image else None %}
+            {% set label = '이미지' %}
+            {% include 'admin/components/image_upload.html' %}
+
+            <div class="form-group">
+                <label for="link_url">클릭 시 이동 URL</label>
+                <input type="text" class="form-control" id="link_url" name="link_url" value="{{ popup.link_url if popup else '' }}" placeholder="/contact 또는 https://...">
+            </div>
+
+            <div class="site-info-grid">
+                <div class="form-group">
+                    <label for="start_date">시작일</label>
+                    <input type="date" class="form-control" id="start_date" name="start_date" value="{{ popup.start_date.strftime('%Y-%m-%d') if popup and popup.start_date else '' }}">
+                    <span class="form-hint">비워두면 즉시 시작</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="end_date">종료일</label>
+                    <input type="date" class="form-control" id="end_date" name="end_date" value="{{ popup.end_date.strftime('%Y-%m-%d') if popup and popup.end_date else '' }}">
+                    <span class="form-hint">비워두면 종료 없음</span>
+                </div>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" id="is_active" name="is_active" {% if not popup or popup.is_active %}checked{% endif %}>
+                <label for="is_active">활성화</label>
+            </div>
+
+            <input type="hidden" name="link_target" value="_self">
+            <input type="hidden" name="position" value="center">
+            <input type="hidden" name="width" value="{{ popup.width if popup else 440 }}">
+            <input type="hidden" name="sort_order" value="{{ popup.sort_order if popup else 0 }}">
+            <input type="hidden" name="show_today_hide" value="on">
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ '수정' if popup else '등록' }}
+                </button>
+                <a href="{{ url_for('admin.popups_list') }}" class="btn btn-secondary">취소</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

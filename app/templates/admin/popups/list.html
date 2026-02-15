@@ -1,0 +1,83 @@
+{% extends "admin/base.html" %}
+{% block title %}팝업 관리{% endblock %}
+{% block page_title %}팝업 관리{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>총 {{ popups|length }}건</h2>
+    <a href="{{ url_for('admin.popups_create') }}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> 팝업 추가
+    </a>
+</div>
+
+{% if popups %}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width:50px;">순서</th>
+                <th style="width:80px;">이미지</th>
+                <th>제목</th>
+                <th style="width:100px;">위치</th>
+                <th style="width:180px;">기간</th>
+                <th style="width:80px;">상태</th>
+                <th style="width:140px;">관리</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for popup in popups %}
+            <tr>
+                <td>{{ popup.sort_order }}</td>
+                <td>
+                    {% if popup.image %}
+                    <img src="{{ url_for('static', filename=popup.image.static_path) }}" class="table-thumb" alt="" style="object-fit: contain; background: #f8f9fa;">
+                    {% else %}
+                    <span class="text-muted">-</span>
+                    {% endif %}
+                </td>
+                <td>{{ popup.title }}</td>
+                <td>
+                    {% if popup.position == 'center' %}중앙
+                    {% elif popup.position == 'left' %}좌측
+                    {% elif popup.position == 'right' %}우측
+                    {% endif %}
+                </td>
+                <td>
+                    {% if popup.start_date or popup.end_date %}
+                    {{ popup.start_date.strftime('%Y-%m-%d') if popup.start_date else '시작 없음' }}
+                    ~
+                    {{ popup.end_date.strftime('%Y-%m-%d') if popup.end_date else '종료 없음' }}
+                    {% else %}
+                    <span class="text-muted">상시</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if popup.is_active %}
+                    <span class="badge badge-success">활성</span>
+                    {% else %}
+                    <span class="badge badge-secondary">비활성</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="actions">
+                        <a href="{{ url_for('admin.popups_edit', id=popup.id) }}" class="btn btn-sm btn-secondary">
+                            <i class="fas fa-edit"></i> 수정
+                        </a>
+                        <form method="post" action="{{ url_for('admin.popups_delete', id=popup.id) }}" onsubmit="return confirm('정말 삭제하시겠습니까?');" style="display:inline;">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <i class="fas fa-window-restore"></i>
+    <p>등록된 팝업이 없습니다.</p>
+    <a href="{{ url_for('admin.popups_create') }}" class="btn btn-primary">팝업 추가하기</a>
+</div>
+{% endif %}
+{% endblock %}

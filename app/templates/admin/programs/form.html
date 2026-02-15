@@ -4,7 +4,7 @@
 {% block content %}
 <div class="card">
     <div class="card-body">
-        <form method="post" action="{{ url_for('admin.programs_edit', id=program.id) if program else url_for('admin.programs_create') }}">
+        <form method="post" action="{{ url_for('admin.programs_edit', id=program.id) if program else url_for('admin.programs_create') }}" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
             <div class="form-group">
@@ -27,22 +27,9 @@
                 <textarea id="description" name="description" class="form-control" rows="5">{{ program.description if program else '' }}</textarea>
             </div>
 
-            <div class="form-group">
-                <label for="image_id">이미지</label>
-                <select id="image_id" name="image_id" class="form-control">
-                    <option value="">이미지 없음</option>
-                    {% for media in media_list %}
-                    <option value="{{ media.id }}" {{ 'selected' if program and program.image_id == media.id }}>{{ media.original_filename }}</option>
-                    {% endfor %}
-                </select>
-                <div class="form-hint">미디어 라이브러리에서 이미지를 선택하세요.</div>
-            </div>
-
-            <div class="form-group">
-                <label for="sort_order">정렬 순서</label>
-                <input type="number" id="sort_order" name="sort_order" class="form-control" value="{{ program.sort_order if program else 0 }}" style="max-width:120px;">
-                <div class="form-hint">숫자가 작을수록 앞에 표시됩니다.</div>
-            </div>
+            {% set current_image = program.image if program and program.image else None %}
+            {% set label = '이미지' %}
+            {% include 'admin/components/image_upload.html' %}
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">
