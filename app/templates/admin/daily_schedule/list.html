@@ -1,0 +1,53 @@
+{% extends "admin/base.html" %}
+{% block title %}하루 일과 관리{% endblock %}
+{% block page_title %}하루 일과 관리{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
+        <span>하루 일과 목록</span>
+        <a href="{{ url_for('admin.daily_schedule_create') }}" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus"></i> 새 일과 추가
+        </a>
+    </div>
+    <div class="card-body">
+        {% if items %}
+        <style>
+            .schedule-table tbody td { padding: 12px 10px; }
+            .schedule-table tbody tr { border-bottom: 1px solid #f0f0f0; }
+        </style>
+        <table class="admin-table schedule-table">
+            <thead>
+                <tr>
+                    <th style="width:60px">순서</th>
+                    <th style="width:80px">시간</th>
+                    <th style="width:50px">아이콘</th>
+                    <th>제목</th>
+                    <th>설명</th>
+                    <th style="width:150px">관리</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.sort_order }}</td>
+                    <td><strong>{{ item.time_label }}</strong></td>
+                    <td><i class="{{ item.icon_class }}"></i></td>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>
+                        <a href="{{ url_for('admin.daily_schedule_edit', id=item.id) }}" class="btn btn-sm btn-outline">수정</a>
+                        <form method="post" action="{{ url_for('admin.daily_schedule_delete', id=item.id) }}" style="display:inline;" onsubmit="return confirm('삭제하시겠습니까?')">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-sm btn-danger">삭제</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">등록된 일과가 없습니다.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

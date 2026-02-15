@@ -4,6 +4,7 @@ from ...extensions import db
 from ...models import Event
 from datetime import date
 from calendar import monthrange, Calendar
+from ...utils.korean_holidays import get_holidays_for_month
 
 
 @admin_bp.route('/events/')
@@ -53,6 +54,7 @@ def events_list():
         events_by_day.setdefault(day, []).append(ev)
 
     today_obj = date.today()
+    holidays = get_holidays_for_month(year, month)
 
     return render_template('admin/events/list.html',
                            pagination=pagination,
@@ -61,6 +63,7 @@ def events_list():
                            next_month=next_month,
                            month_days=month_days,
                            events_by_day=events_by_day,
+                           holidays=holidays,
                            today=today_obj,
                            year=year,
                            month=month)

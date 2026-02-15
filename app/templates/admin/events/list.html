@@ -36,9 +36,12 @@
     <div class="admin-cal-row">
         {% for day in week %}
         {% set col_idx = loop.index0 %}
-        <div class="admin-cal-cell{% if day == 0 %} cal-empty{% endif %}{% if day == today.day and year == today.year and month == today.month %} cal-today{% endif %}">
+        <div class="admin-cal-cell{% if day == 0 %} cal-empty{% endif %}{% if day == today.day and year == today.year and month == today.month %} cal-today{% endif %}{% if day in holidays %} cal-holiday{% endif %}">
             {% if day != 0 %}
-            <span class="admin-cal-day{% if col_idx == 0 %} cal-sun{% elif col_idx == 6 %} cal-sat{% endif %}">{{ day }}</span>
+            <span class="admin-cal-day{% if col_idx == 0 or day in holidays %} cal-sun{% elif col_idx == 6 %} cal-sat{% endif %}">{{ day }}</span>
+            {% if day in holidays %}
+            <span class="admin-cal-holiday">{{ holidays[day] }}</span>
+            {% endif %}
             {% if day in events_by_day %}
             <div class="admin-cal-events">
                 {% for ev in events_by_day[day] %}

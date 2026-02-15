@@ -1,6 +1,6 @@
 import calendar
 from flask import Blueprint, render_template, send_from_directory, current_app, request, abort
-from ..models import HeroSlide, Program, Gallery, SiteInfo, Notice, Teacher, Event, MealPlan, ParentNote, Popup
+from ..models import HeroSlide, Program, Gallery, SiteInfo, Notice, Teacher, Event, MealPlan, ParentNote, Popup, DailySchedule, DownloadFile
 from ..extensions import db
 from ..utils.korean_holidays import get_holidays_for_month
 from datetime import date, timedelta, datetime
@@ -47,9 +47,24 @@ def about():
     """About page - principal greeting, features, operation info."""
     site_info = _get_site_info()
     principal = Teacher.query.filter_by(title='원장').first()
+    daily_schedule = DailySchedule.query.order_by(DailySchedule.sort_order, DailySchedule.time_label).all()
+
+    # Parse newline-separated SiteInfo values for lists
+    admission_raw = SiteInfo.get_value('admission_details', '')
+    admission_details = [line.strip() for line in admission_raw.split('\n') if line.strip()] if admission_raw else []
+
+    meal_raw = SiteInfo.get_value('meal_features', '')
+    meal_features = [line.strip() for line in meal_raw.split('\n') if line.strip()] if meal_raw else []
+
+    download_files = DownloadFile.query.filter_by(is_active=True).order_by(DownloadFile.sort_order).all()
+
     return render_template('public/about.html',
         site_info=site_info,
         principal=principal,
+        daily_schedule=daily_schedule,
+        admission_details=admission_details,
+        meal_features=meal_features,
+        download_files=download_files,
         page_title='어린이집 소개',
         breadcrumb_items=[{'label': '어린이집 소개'}],
     )

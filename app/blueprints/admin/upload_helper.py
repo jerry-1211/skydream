@@ -5,6 +5,7 @@ import uuid
 from flask import current_app, request
 from ...extensions import db
 from ...models import Media
+from ...utils.image_resize import resize_and_compress
 
 ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'}
 
@@ -14,6 +15,7 @@ def handle_image_upload(field_name='photo', category='general', alt_text=''):
 
     Call this from any admin route POST handler.  If the user uploaded a file
     via the given *field_name*, we save it and create a Media record.
+    Images are automatically resized and compressed.
 
     Returns:
         int | None  – the new Media.id, or None when no file was uploaded.
@@ -36,7 +38,12 @@ def handle_image_upload(field_name='photo', category='general', alt_text=''):
     filepath = os.path.join(originals_dir, unique_filename)
     file.save(filepath)
 
-    file_size = os.path.getsize(filepath)
+    # Auto resize and compress (skip SVG)
+    if ext != 'svg':
+        filepath, file_size = resize_and_compress(filepath, max_width=1600, max_height=1200, quality=82)
+        unique_filename = os.path.basename(filepath)
+    else:
+        file_size = os.path.getsize(filepath)
 
     media = Media(
         filename=unique_filename,

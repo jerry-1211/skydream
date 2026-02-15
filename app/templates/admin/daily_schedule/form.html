@@ -1,0 +1,70 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ '일과 수정' if item else '일과 추가' }}{% endblock %}
+{% block page_title %}{{ '일과 수정' if item else '일과 추가' }}{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="post" action="{{ url_for('admin.daily_schedule_edit', id=item.id) if item else url_for('admin.daily_schedule_create') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="form-group">
+                <label for="time_label">시간</label>
+                <input type="text" id="time_label" name="time_label" class="form-control" value="{{ item.time_label if item else '' }}" placeholder="07:30" required>
+            </div>
+
+            <div class="form-group">
+                <label for="icon_class">아이콘</label>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <select id="icon_class" name="icon_class" class="form-control" style="width:auto;min-width:200px;" onchange="document.getElementById('iconPreview').className=this.value">
+                        <option value="fas fa-sun" {{ 'selected' if item and item.icon_class == 'fas fa-sun' }}>☀️ 등원/아침</option>
+                        <option value="fas fa-apple-alt" {{ 'selected' if item and item.icon_class == 'fas fa-apple-alt' }}>🍎 오전 간식</option>
+                        <option value="fas fa-book-reader" {{ 'selected' if item and item.icon_class == 'fas fa-book-reader' }}>📖 놀이/학습</option>
+                        <option value="fas fa-palette" {{ 'selected' if item and item.icon_class == 'fas fa-palette' }}>🎨 특별활동</option>
+                        <option value="fas fa-utensils" {{ 'selected' if item and item.icon_class == 'fas fa-utensils' }}>🍽️ 점심식사</option>
+                        <option value="fas fa-cloud-moon" {{ 'selected' if item and item.icon_class == 'fas fa-cloud-moon' }}>🌙 낮잠</option>
+                        <option value="fas fa-cookie-bite" {{ 'selected' if item and item.icon_class == 'fas fa-cookie-bite' }}>🍪 오후 간식</option>
+                        <option value="fas fa-music" {{ 'selected' if item and item.icon_class == 'fas fa-music' }}>🎵 음악/율동</option>
+                        <option value="fas fa-hand-sparkles" {{ 'selected' if item and item.icon_class == 'fas fa-hand-sparkles' }}>👋 하원</option>
+                        <option value="fas fa-moon" {{ 'selected' if item and item.icon_class == 'fas fa-moon' }}>🌜 연장보육</option>
+                        <option value="fas fa-clock" {{ 'selected' if (item and item.icon_class == 'fas fa-clock') or not item }}>🕐 시간 일반</option>
+                        <option value="fas fa-star" {{ 'selected' if item and item.icon_class == 'fas fa-star' }}>⭐ 특별</option>
+                        <option value="fas fa-bus" {{ 'selected' if item and item.icon_class == 'fas fa-bus' }}>🚌 통학/외출</option>
+                        <option value="fas fa-tooth" {{ 'selected' if item and item.icon_class == 'fas fa-tooth' }}>🦷 양치/위생</option>
+                    </select>
+                    <span style="font-size:1.5rem;width:36px;text-align:center;">
+                        <i id="iconPreview" class="{{ item.icon_class if item else 'fas fa-clock' }}"></i>
+                    </span>
+                </div>
+                <div class="form-hint">
+                    <i class="fas fa-info-circle"></i> 해당 시간대에 맞는 아이콘을 선택하세요.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" id="title" name="title" class="form-control" value="{{ item.title if item else '' }}" placeholder="등원 및 맞이" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">설명</label>
+                <input type="text" id="description" name="description" class="form-control" value="{{ item.description if item else '' }}" placeholder="반갑게 인사하고 건강 관찰, 자유놀이">
+            </div>
+
+            <div class="form-group">
+                <label for="sort_order">표시 순서</label>
+                <input type="number" id="sort_order" name="sort_order" class="form-control" value="{{ item.sort_order if item else 0 }}" style="width:100px;">
+                <div class="form-hint">
+                    <i class="fas fa-info-circle"></i> 숫자가 작을수록 위에 표시됩니다. (예: 1→맨 위, 10→아래)
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ '수정' if item else '등록' }}
+                </button>
+                <a href="{{ url_for('admin.daily_schedule_list') }}" class="btn btn-secondary">취소</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

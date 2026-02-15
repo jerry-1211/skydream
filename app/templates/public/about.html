@@ -10,22 +10,22 @@
     <div class="container">
         <div class="about-hero-inner">
             <div class="about-hero-text">
-                <span class="about-badge">🏆 A등급 공공형 어린이집</span>
-                <h2>아이들의 꿈이<br>무럭무럭 자라는 곳 🌱</h2>
+                <span class="about-badge"><i class="fas fa-award"></i> A등급 공공형 어린이집</span>
+                <h2>아이들의 꿈이<br>무럭무럭 자라는 곳 <i class="fas fa-seedling" style="color:#66BB6A"></i></h2>
                 <p class="about-hero-desc">하늘 꿈나무 어린이집은 "놀면서 배우고, 사랑으로 자란다"는
                     보육 철학을 바탕으로, 아이들이 스스로 탐색하고 경험하며
                     행복하게 성장할 수 있는 따뜻한 우리 집 같은 공간입니다.</p>
                 <div class="about-hero-stats">
                     <div class="about-stat">
-                        <span class="about-stat-num">🏠 20</span>
+                        <span class="about-stat-num"><i class="fas fa-home" style="color:#42A5F5"></i> 20</span>
                         <span class="about-stat-label">정원 (명)</span>
                     </div>
                     <div class="about-stat">
-                        <span class="about-stat-num">👩‍🏫 15+</span>
+                        <span class="about-stat-num"><i class="fas fa-chalkboard-teacher" style="color:#FF7043"></i> 15+</span>
                         <span class="about-stat-label">교육 경력 (년)</span>
                     </div>
                     <div class="about-stat">
-                        <span class="about-stat-num">⭐ A</span>
+                        <span class="about-stat-num"><i class="fas fa-star" style="color:#FFD54F"></i> A</span>
                         <span class="about-stat-label">평가인증 등급</span>
                     </div>
                 </div>
@@ -45,29 +45,30 @@
 <section class="content-section">
     <div class="container">
         <div class="about-greeting">
-            <div class="about-greeting-deco">💌</div>
+            <div class="about-greeting-deco"><i class="fas fa-envelope-open-text" style="color:#FF7043"></i></div>
             <h3>원장 인사말</h3>
-            {% if principal and principal.greeting %}
             <div class="about-greeting-text">
+                {% if site_info.get('principal_greeting') %}
+                <p>{{ site_info.get('principal_greeting') }}</p>
+                {% if site_info.get('principal_greeting_2') %}
+                <p>{{ site_info.get('principal_greeting_2') }}</p>
+                {% endif %}
+                {% elif principal and principal.greeting %}
                 {{ principal.greeting | replace('\n', '</p><p>') | safe }}
-            </div>
-            {% else %}
-            <div class="about-greeting-text">
-                <p>안녕하세요, 학부모님! 😊</p>
+                {% else %}
+                <p>안녕하세요, 학부모님!</p>
                 <p>놀면서 자라고, 놀이는 곧 배움이 됩니다.
                     하늘 꿈나무 어린이집은 놀이 중심의 보육을 실천하며
                     아이 스스로 탐색하고 경험하는 시간을 소중히 여깁니다.</p>
                 <p>안정, 사랑, 즐거움이 조화를 이루는 공간 속에서
                     아이들이 마음껏 꿈꾸고 성장할 수 있도록
-                    엄마의 마음으로 따뜻하게 돌보겠습니다. 🌈</p>
+                    엄마의 마음으로 따뜻하게 돌보겠습니다.</p>
+                {% endif %}
             </div>
-            {% endif %}
-            {% if principal %}
             <div class="about-greeting-sign">
-                <span>하늘 꿈나무 어린이집 원장</span>
-                <strong>{{ principal.name }} 올림 ✨</strong>
+                <span>{{ site_info.get('daycare_name', '하늘 꿈나무 어린이집') }} 원장</span>
+                <strong>{% if principal %}{{ principal.name }}{% else %}원장{% endif %} 올림</strong>
             </div>
-            {% endif %}
         </div>
     </div>
 </section>
@@ -75,36 +76,36 @@
 {# 우리 어린이집은요 - 아기자기한 카드 #}
 <section class="content-section bg-light">
     <div class="container">
-        <h2 class="section-title-center">우리 어린이집은요 🎈</h2>
+        <h2 class="section-title-center">우리 어린이집은요</h2>
         <p class="section-subtitle">아이 한 명 한 명이 주인공! 따뜻한 사랑으로 함께 성장합니다.</p>
         <div class="features-grid">
             <div class="feature-item feature-safety">
-                <div class="feature-emoji">🛡️</div>
+                <div class="feature-emoji"><i class="fas fa-shield-alt" style="color:#42A5F5"></i></div>
                 <h4>안전한 환경</h4>
                 <p>매일 안전점검과 소독으로 깨끗하고 안전한 보육 환경을 유지해요. CCTV도 24시간 운영합니다!</p>
             </div>
             <div class="feature-item feature-teacher">
-                <div class="feature-emoji">👩‍🏫</div>
+                <div class="feature-emoji"><i class="fas fa-user-graduate" style="color:#FF7043"></i></div>
                 <h4>전문 교사진</h4>
                 <p>15년 이상 경력의 보육 전문가들이 아이들의 발달 단계에 맞는 세심한 돌봄을 제공해요.</p>
             </div>
             <div class="feature-item feature-play">
-                <div class="feature-emoji">🧩</div>
+                <div class="feature-emoji"><i class="fas fa-puzzle-piece" style="color:#66BB6A"></i></div>
                 <h4>놀이중심 교육</h4>
                 <p>표준보육과정에 기반한 놀이 중심 교육으로 아이들의 창의력과 사회성을 쑥쑥 키워요!</p>
             </div>
             <div class="feature-item feature-care">
-                <div class="feature-emoji">💝</div>
+                <div class="feature-emoji"><i class="fas fa-heart" style="color:#EC407A"></i></div>
                 <h4>따뜻한 돌봄</h4>
                 <p>소규모 가정 같은 분위기에서 아이 한 명 한 명에게 엄마처럼 세심한 관심을 기울여요.</p>
             </div>
             <div class="feature-item feature-food">
-                <div class="feature-emoji">🥗</div>
+                <div class="feature-emoji"><i class="fas fa-apple-alt" style="color:#FFA726"></i></div>
                 <h4>건강한 급식</h4>
                 <p>저염식 인증 어린이집! 신선한 제철 식재료와 영양사의 꼼꼼한 관리로 균형 잡힌 식단을 제공해요.</p>
             </div>
             <div class="feature-item feature-comm">
-                <div class="feature-emoji">📱</div>
+                <div class="feature-emoji"><i class="fas fa-comments" style="color:#26C6DA"></i></div>
                 <h4>열린 소통</h4>
                 <p>가정통신문, 알림장, 학부모 상담 등 가정과 어린이집이 하나 되는 소통을 실천합니다!</p>
             </div>
@@ -115,65 +116,22 @@
 {# 하루 일과 - 타임라인 #}
 <section class="content-section">
     <div class="container">
-        <h2 class="section-title-center">우리 아이의 하루 🌞</h2>
+        <h2 class="section-title-center">우리 아이의 하루</h2>
         <p class="section-subtitle">사랑과 웃음이 가득한 하루 일과를 소개합니다.</p>
         <div class="daily-timeline">
+            {% for item in daily_schedule %}
             <div class="timeline-item">
-                <div class="timeline-time">07:30</div>
+                <div class="timeline-time">{{ item.time_label }}</div>
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <h4>🌅 등원 및 맞이</h4>
-                    <p>반갑게 인사하고 건강 관찰, 자유놀이</p>
+                    <h4><i class="{{ item.icon_class }}"></i> {{ item.title }}</h4>
+                    <p>{{ item.description }}</p>
                 </div>
             </div>
-            <div class="timeline-item">
-                <div class="timeline-time">09:30</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h4>🍎 오전 간식</h4>
-                    <p>영양 가득한 과일과 간식 시간</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-time">10:00</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h4>📚 놀이 활동</h4>
-                    <p>표준보육과정에 따른 놀이 중심 수업</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-time">11:30</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h4>🍚 점심 식사</h4>
-                    <p>영양사가 관리하는 균형 잡힌 점심</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-time">12:30</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h4>😴 낮잠</h4>
-                    <p>편안한 환경에서 달콤한 낮잠 시간</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-time">15:00</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h4>🍪 오후 간식 & 놀이</h4>
-                    <p>간식 후 실내외 자유놀이 활동</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-time">16:30</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h4>👋 하원</h4>
-                    <p>하루 이야기 나누고 안전하게 귀가</p>
-                </div>
-            </div>
+            {% endfor %}
+            {% if not daily_schedule %}
+            <p class="text-muted" style="text-align:center;">등록된 일과가 없습니다.</p>
+            {% endif %}
         </div>
     </div>
 </section>
@@ -181,11 +139,11 @@
 {# Operation Info Tabs #}
 <section class="content-section bg-light">
     <div class="container">
-        <h2 class="section-title-center">원 운영 안내 📋</h2>
+        <h2 class="section-title-center">원 운영 안내</h2>
         <div class="info-tabs">
-            <button class="tab-btn active" data-tab="about-admission"><i class="fas fa-clipboard-list"></i> 입소안내</button>
-            <button class="tab-btn" data-tab="about-schedule"><i class="fas fa-clock"></i> 운영시간</button>
-            <button class="tab-btn" data-tab="about-meal"><i class="fas fa-utensils"></i> 급식안내</button>
+            <button class="tab-btn active" data-tab="about-admission"><i class="fas fa-clipboard-list" style="color:#42A5F5"></i> 입소안내</button>
+            <button class="tab-btn" data-tab="about-schedule"><i class="fas fa-clock" style="color:#66BB6A"></i> 운영시간</button>
+            <button class="tab-btn" data-tab="about-meal"><i class="fas fa-utensils" style="color:#FF7043"></i> 급식안내</button>
         </div>
 
         <div class="tab-content active" id="about-admission">
@@ -193,10 +151,15 @@
                 <h4>입소 대기 신청</h4>
                 <p>{{ site_info.get('admission_info', '임신육아종합포털 아이사랑(www.childcare.go.kr)에서 온라인 신청 가능합니다.') }}</p>
                 <ul>
+                    {% for line in admission_details %}
+                    <li>{{ line }}</li>
+                    {% endfor %}
+                    {% if not admission_details %}
                     <li>만 0세~2세 영아 보육</li>
                     <li>공공형 어린이집 우선순위 적용</li>
                     <li>입소 상담 후 최종 결정</li>
                     <li>정원: {{ site_info.get('capacity', '20명') }}</li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -206,15 +169,15 @@
                 <h4>운영 시간</h4>
                 <div class="schedule-table">
                     <div class="schedule-row">
-                        <span class="time-label">☀️ 기본보육</span>
+                        <span class="time-label"><i class="fas fa-sun" style="color:#FFD54F"></i> 기본보육</span>
                         <span class="time-value">{{ site_info.get('operating_hours', '07:30 ~ 19:30') }}</span>
                     </div>
                     <div class="schedule-row">
-                        <span class="time-label">🌙 야간연장</span>
+                        <span class="time-label"><i class="fas fa-moon" style="color:#AB47BC"></i> 야간연장</span>
                         <span class="time-value">{{ site_info.get('extended_hours', '19:30 ~ 21:30') }}</span>
                     </div>
                     <div class="schedule-row">
-                        <span class="time-label">📅 휴원일</span>
+                        <span class="time-label"><i class="fas fa-calendar-alt" style="color:#EF5350"></i> 휴원일</span>
                         <span class="time-value">{{ site_info.get('closed_days', '일요일, 공휴일') }}</span>
                     </div>
                 </div>
@@ -226,13 +189,18 @@
                 <h4>급식 안내</h4>
                 <div class="meal-info">
                     <div class="meal-features">
-                        <h5>🍽️ 급식 특징</h5>
+                        <h5><i class="fas fa-utensils" style="color:#FF7043"></i> 급식 특징</h5>
                         <ul>
+                            {% for line in meal_features %}
+                            <li>{{ line }}</li>
+                            {% endfor %}
+                            {% if not meal_features %}
                             <li>저염식 인증 어린이집</li>
                             <li>신선한 제철 식재료 사용</li>
                             <li>아워홈 식재료 공급업체</li>
                             <li>알레르기 대응 개별 식단</li>
                             <li>영양사 관리 하의 균형 잡힌 식사</li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -242,23 +210,51 @@
 </section>
 
 {# Download #}
+{% if download_files %}
 <section class="content-section">
     <div class="container">
         <div class="download-area">
+            {% for df in download_files %}
             <div class="download-container">
-                <div class="download-icon">
-                    <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                </div>
                 <div class="download-text">
-                    <h4>📄 어린이집 운영계획서</h4>
-                    <p class="download-info">어린이집의 자세한 운영 방침과 교육 계획을 확인하세요!</p>
+                    <h4><i class="{{ df.icon_class }}" style="color:{{ df.icon_color }}"></i> {{ df.title }}</h4>
+                    {% if df.description %}
+                    <p class="download-info">{{ df.description }}</p>
+                    {% endif %}
                 </div>
-                <a href="{{ url_for('static', filename='files/어린이집 운영계획서.pdf') }}" class="download-button" download>
+                <a href="{{ url_for('static', filename=df.static_path) }}" class="download-button" download>
                     <i class="fas fa-download" aria-hidden="true"></i>
                     <span>다운로드</span>
                 </a>
             </div>
+            {% endfor %}
         </div>
     </div>
 </section>
+{% endif %}
+
+<script>
+// Tab functionality for About page
+document.addEventListener('DOMContentLoaded', function() {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetTab = this.getAttribute('data-tab');
+
+            // Remove active class from all buttons and contents
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Add active class to clicked button and target content
+            this.classList.add('active');
+            const targetContent = document.getElementById(targetTab);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        });
+    });
+});
+</script>
 {% endblock %}

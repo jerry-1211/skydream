@@ -10,33 +10,41 @@
         <div class="contact-container">
             <div class="contact-info">
                 <div class="contact-item">
-                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                    <i class="fas fa-map-marker-alt" style="color:#EF5350" aria-hidden="true"></i>
                     <div>
                         <strong>주소</strong>
                         <p>{{ site_info.get('address', '경기 고양시 일산동구 중산동 1800') }}</p>
                     </div>
                 </div>
                 <div class="contact-item">
-                    <i class="fas fa-phone" aria-hidden="true"></i>
+                    <i class="fas fa-phone" style="color:#42A5F5" aria-hidden="true"></i>
                     <div>
                         <strong>연락처</strong>
                         <p>어린이집: {{ site_info.get('phone', '031-818-9150') }}<br>원장님: {{ site_info.get('director_phone', '010-5058-0771') }}</p>
                     </div>
                 </div>
                 <div class="contact-item">
-                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <i class="fas fa-clock" style="color:#66BB6A" aria-hidden="true"></i>
                     <div>
                         <strong>운영시간</strong>
                         <p>평일 {{ site_info.get('operating_hours', '07:30 ~ 19:30') }}<br>야간연장 {{ site_info.get('extended_hours', '19:30 ~ 21:30') }}</p>
                     </div>
                 </div>
+                <div class="contact-map-links">
+                    <a href="https://map.kakao.com/link/map/하늘꿈나무어린이집,{{ site_info.get('map_latitude', '37.6770705') }},{{ site_info.get('map_longitude', '126.787819') }}" target="_blank" class="map-link-btn kakao">
+                        <img src="https://t1.daumcdn.net/localimg/localimages/07/2018/pc/common/logo_kakaomap.png" alt="카카오맵" style="height:20px;"> 카카오맵에서 보기
+                    </a>
+                    <a href="https://map.naver.com/v5/search/{{ site_info.get('address', '경기 고양시 일산동구 중산동 1800') | urlencode }}" target="_blank" class="map-link-btn naver">
+                        <i class="fas fa-map"></i> 네이버지도에서 보기
+                    </a>
+                </div>
             </div>
-            <div class="map-container">
-                <iframe src="https://maps.google.com/maps?q={{ site_info.get('map_latitude', '37.6770705') }},{{ site_info.get('map_longitude', '126.787819') }}&hl=ko&z=17&output=embed"
-                        width="100%" height="100%" style="border:0;"
-                        allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        title="하늘 꿈나무 어린이집 위치"></iframe>
+            <div class="map-container" id="kakaoMap">
+                <iframe
+                    src="https://map.kakao.com/link/map/하늘꿈나무어린이집,{{ site_info.get('map_latitude', '37.6770705') }},{{ site_info.get('map_longitude', '126.787819') }}"
+                    width="100%" height="100%" style="border:0;"
+                    allowfullscreen="" loading="lazy"
+                    title="하늘 꿈나무 어린이집 위치"></iframe>
             </div>
         </div>
     </div>

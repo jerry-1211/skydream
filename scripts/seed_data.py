@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app import create_app
 from app.extensions import db
-from app.models import SiteInfo, HeroSlide, Program, Gallery, Media, Teacher, Notice, Event, MealPlan, ParentNote, Popup
+from app.models import SiteInfo, HeroSlide, Program, Gallery, Media, Teacher, Notice, Event, MealPlan, ParentNote, Popup, DailySchedule
 
 
 # ---------------------------------------------------------------------------
@@ -29,16 +29,12 @@ SITE_INFO_DATA = {
     'grade': 'A등급 공공형 어린이집',
     'map_latitude': '37.6770705',
     'map_longitude': '126.787819',
-    'principal_greeting': (
-        '놀면서 자라고, 놀이는 곧 배움이 됩니다. '
-        '공공형 어린이집은 놀이 중심의 보육을 실천하며 '
-        '아이 스스로 탐색하고 경험하는 시간을 존중합니다.\n\n'
-        '안정, 사랑, 즐거움이 조화를 이루는 공간 속에서 '
-        '아이들이 마음껏 꿈꾸고 성장할 수 있도록 '
-        '따뜻한 돌봄과 교육으로 함께 하겠습니다.'
-    ),
+    'principal_greeting': '안녕하세요, 학부모님! 놀면서 자라고, 놀이는 곧 배움이 됩니다. 하늘 꿈나무 어린이집은 놀이 중심의 보육을 실천하며 아이 스스로 탐색하고 경험하는 시간을 소중히 여깁니다.',
+    'principal_greeting_2': '안정, 사랑, 즐거움이 조화를 이루는 공간 속에서 아이들이 마음껏 꿈꾸고 성장할 수 있도록 엄마의 마음으로 따뜻하게 돌보겠습니다.',
     'curriculum_intro': '',
     'admission_info': '임신육아종합포털 아이사랑(www.childcare.go.kr)에서 온라인 신청 가능합니다.',
+    'admission_details': '만 0세~2세 영아 보육\n공공형 어린이집 우선순위 적용\n입소 상담 후 최종 결정\n정원: 20명',
+    'meal_features': '저염식 인증 어린이집\n신선한 제철 식재료 사용\n아워홈 식재료 공급업체\n알레르기 대응 개별 식단\n영양사 관리 하의 균형 잡힌 식사',
 }
 
 HERO_SLIDES_DATA = [
@@ -300,6 +296,16 @@ POPUP_DATA = [
     },
 ]
 
+DAILY_SCHEDULE_DATA = [
+    {'time_label': '07:30', 'icon_class': 'fas fa-sun', 'title': '등원 및 맞이', 'description': '반갑게 인사하고 건강 관찰, 자유놀이', 'sort_order': 1},
+    {'time_label': '09:30', 'icon_class': 'fas fa-apple-alt', 'title': '오전 간식', 'description': '영양 가득한 과일과 간식 시간', 'sort_order': 2},
+    {'time_label': '10:00', 'icon_class': 'fas fa-book-reader', 'title': '놀이 활동', 'description': '표준보육과정에 따른 놀이 중심 수업', 'sort_order': 3},
+    {'time_label': '11:30', 'icon_class': 'fas fa-utensils', 'title': '점심 식사', 'description': '영양사가 관리하는 균형 잡힌 점심', 'sort_order': 4},
+    {'time_label': '12:30', 'icon_class': 'fas fa-cloud-moon', 'title': '낮잠', 'description': '편안한 환경에서 달콤한 낮잠 시간', 'sort_order': 5},
+    {'time_label': '15:00', 'icon_class': 'fas fa-cookie-bite', 'title': '오후 간식 & 놀이', 'description': '간식 후 실내외 자유놀이 활동', 'sort_order': 6},
+    {'time_label': '16:30', 'icon_class': 'fas fa-hand-wave', 'title': '하원', 'description': '하루 이야기 나누고 안전하게 귀가', 'sort_order': 7},
+]
+
 
 # ---------------------------------------------------------------------------
 # Helper: determine file extension -> type
@@ -545,6 +551,29 @@ def seed_popups():
     print(f'  Popups: {count} new popups added.')
 
 
+def seed_daily_schedule():
+    """Seed daily schedule entries."""
+    count = 0
+    for item_data in DAILY_SCHEDULE_DATA:
+        existing = DailySchedule.query.filter_by(
+            time_label=item_data['time_label'],
+            title=item_data['title']
+        ).first()
+        if existing:
+            continue
+        item = DailySchedule(
+            time_label=item_data['time_label'],
+            icon_class=item_data['icon_class'],
+            title=item_data['title'],
+            description=item_data['description'],
+            sort_order=item_data['sort_order'],
+        )
+        db.session.add(item)
+        count += 1
+    db.session.flush()
+    print(f'  Daily schedule: {count} new items added.')
+
+
 def clear_all_data():
     """Delete all seeded data (order matters for FK constraints)."""
     HeroSlide.query.delete()
@@ -556,6 +585,7 @@ def clear_all_data():
     MealPlan.query.delete()
     ParentNote.query.delete()
     Popup.query.delete()
+    DailySchedule.query.delete()
     Media.query.delete()
     SiteInfo.query.delete()
     db.session.flush()
@@ -596,6 +626,7 @@ def main():
         seed_meals()
         seed_parent_notes()
         seed_popups()
+        seed_daily_schedule()
 
         db.session.commit()
 
@@ -612,6 +643,7 @@ def main():
         print(f'  - Meals: {MealPlan.query.count()}')
         print(f'  - Parent notes: {ParentNote.query.count()}')
         print(f'  - Popups: {Popup.query.count()}')
+        print(f'  - Daily schedule: {DailySchedule.query.count()}')
 
 
 if __name__ == '__main__':

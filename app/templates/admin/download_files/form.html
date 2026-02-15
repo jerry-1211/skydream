@@ -1,0 +1,54 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ '파일 수정' if item else '파일 추가' }}{% endblock %}
+{% block page_title %}{{ '파일 수정' if item else '파일 추가' }}{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="post" action="{{ url_for('admin.download_files_edit', id=item.id) if item else url_for('admin.download_files_create') }}" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" id="title" name="title" class="form-control" value="{{ item.title if item else '' }}" placeholder="어린이집 운영계획서" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">설명</label>
+                <input type="text" id="description" name="description" class="form-control" value="{{ item.description if item else '' }}" placeholder="어린이집의 자세한 운영 방침과 교육 계획을 확인하세요!">
+            </div>
+
+            <div class="form-group">
+                <label for="file">파일 {{ '(변경시에만 선택)' if item else '' }}</label>
+                {% if item %}
+                <div class="form-hint" style="margin-bottom:8px;">
+                    <i class="{{ item.icon_class }}" style="color:{{ item.icon_color }}"></i>
+                    현재 파일: <strong>{{ item.original_filename }}</strong>
+                    ({{ "%.1f"|format(item.file_size / 1024) }}KB)
+                </div>
+                {% endif %}
+                <input type="file" id="file" name="file" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.hwp,.hwpx,.zip" {{ 'required' if not item }}>
+                <div class="form-hint">허용 형식: PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, HWP, ZIP</div>
+            </div>
+
+            {% if item %}
+            <div class="form-check">
+                <input type="checkbox" id="is_active" name="is_active" {{ 'checked' if item.is_active }}>
+                <label for="is_active">활성 (체크 해제시 사이트에 표시되지 않음)</label>
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="sort_order">정렬 순서</label>
+                <input type="number" id="sort_order" name="sort_order" class="form-control" value="{{ item.sort_order if item else 0 }}" style="width:100px;">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ '수정' if item else '등록' }}
+                </button>
+                <a href="{{ url_for('admin.download_files_list') }}" class="btn btn-secondary">취소</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

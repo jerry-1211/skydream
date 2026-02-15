@@ -10,3 +10,5 @@ from .teacher import Teacher
 from .parent_note import ParentNote
 from .hero_slide import HeroSlide
 from .popup import Popup
+from .daily_schedule import DailySchedule
+from .download_file import DownloadFile

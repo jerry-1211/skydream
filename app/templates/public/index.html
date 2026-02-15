@@ -27,25 +27,25 @@
 <section class="menu-boxes">
     <div class="container">
         <div class="menu-grid">
+            <a href="{{ url_for('public.about') }}" class="menu-box">
+                <div class="menu-box__icon"><i class="fas fa-heart" aria-hidden="true"></i></div>
+                <h4>어린이집 소개</h4>
+                <p>원장인사와 교육철학을<br>만나보세요</p>
+            </a>
+            <a href="{{ url_for('public.teachers') }}" class="menu-box">
+                <div class="menu-box__icon"><i class="fas fa-chalkboard-teacher" aria-hidden="true"></i></div>
+                <h4>교사 소개</h4>
+                <p>사랑으로 가르치는<br>선생님들을 만나보세요</p>
+            </a>
             <a href="{{ url_for('public.programs') }}" class="menu-box">
                 <div class="menu-box__icon"><i class="fas fa-book-open" aria-hidden="true"></i></div>
                 <h4>교육과정</h4>
                 <p>놀이중심 보육과정을<br>확인하세요</p>
             </a>
-            <a href="{{ url_for('public.notices') }}" class="menu-box">
-                <div class="menu-box__icon"><i class="fas fa-bullhorn" aria-hidden="true"></i></div>
-                <h4>공지사항</h4>
-                <p>어린이집 소식과<br>안내사항을 확인하세요</p>
-            </a>
-            <a href="{{ url_for('public.gallery') }}" class="menu-box">
-                <div class="menu-box__icon"><i class="fas fa-images" aria-hidden="true"></i></div>
-                <h4>활동 앨범</h4>
-                <p>아이들의 즐거운<br>활동을 만나보세요</p>
-            </a>
-            <a href="{{ url_for('public.about') }}" class="menu-box">
-                <div class="menu-box__icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
-                <h4>운영 안내</h4>
-                <p>어린이집 운영시간을<br>확인하세요</p>
+            <a href="{{ url_for('public.events') }}" class="menu-box">
+                <div class="menu-box__icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></div>
+                <h4>행사일정</h4>
+                <p>어린이집 행사와<br>일정을 확인하세요</p>
             </a>
             <a href="{{ url_for('public.contact') }}" class="menu-box">
                 <div class="menu-box__icon"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></div>
@@ -60,7 +60,7 @@
 <div class="trust-strip">
     <div class="container">
         <div class="trust-strip__inner">
-            <img src="{{ url_for('static', filename='images/logo-public.png') }}" alt="공공형 어린이집" class="trust-strip__badge">
+            <img src="{{ url_for('static', filename='uploads/originals/logo-public.png') }}" alt="공공형 어린이집" class="trust-strip__badge">
             <span class="trust-strip__text">A등급 공공형 어린이집 &middot; 정원 20명 &middot; 안전하고 따뜻한 보육환경</span>
         </div>
     </div>

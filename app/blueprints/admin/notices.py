@@ -70,6 +70,8 @@ def notices_delete(id):
 @admin_bp.route('/notices/upload-image', methods=['POST'])
 def notice_image_upload():
     """Handle image upload from Summernote editor in notices."""
+    from ...utils.image_resize import resize_and_compress
+
     file = request.files.get('file')
     if not file or file.filename == '':
         return jsonify({'error': '파일이 없습니다.'}), 400
@@ -87,5 +89,9 @@ def notice_image_upload():
     filepath = os.path.join(notice_dir, unique_filename)
     file.save(filepath)
 
-    img_url = url_for('static', filename=f'uploads/notices/{unique_filename}')
+    # Auto resize and compress
+    filepath, _ = resize_and_compress(filepath, max_width=1200, max_height=1200, quality=80)
+    final_filename = os.path.basename(filepath)
+
+    img_url = url_for('static', filename=f'uploads/notices/{final_filename}')
     return jsonify({'url': img_url})

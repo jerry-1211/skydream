@@ -18,6 +18,8 @@ class Event(db.Model):
         'parent': '학부모 참여',
         'holiday': '휴원/공휴일',
         'special': '특별행사',
+        'graduation': '졸업식',
+        'recruitment': '원아 모집',
     }
 
     @property

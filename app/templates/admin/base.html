@@ -48,33 +48,41 @@
                     <i class="fas fa-window-restore"></i> 팝업 관리
                 </a>
                 <div class="sidebar-divider"></div>
-                <div class="sidebar-label">소식</div>
+                <div class="sidebar-label">어린이집 소개</div>
+                <a href="{{ url_for('admin.site_info_edit') }}" class="nav-item {% if request.endpoint and 'site_info' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-edit"></i> 기본정보 · 인사말
+                </a>
+                <a href="{{ url_for('admin.daily_schedule_list') }}" class="nav-item {% if request.endpoint and 'daily_schedule' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-clock"></i> 하루 일과
+                </a>
+                <a href="{{ url_for('admin.download_files_list') }}" class="nav-item {% if request.endpoint and 'download_files' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-file-download"></i> 다운로드 파일
+                </a>
+                <div class="sidebar-divider"></div>
+                <div class="sidebar-label">교사소개</div>
+                <a href="{{ url_for('admin.teachers_list') }}" class="nav-item {% if request.endpoint and 'teachers' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-chalkboard-teacher"></i> 교사 관리
+                </a>
+                <div class="sidebar-divider"></div>
+                <div class="sidebar-label">교육과정</div>
+                <a href="{{ url_for('admin.programs_list') }}" class="nav-item {% if request.endpoint and 'programs' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-graduation-cap"></i> 프로그램
+                </a>
+                <a href="{{ url_for('admin.gallery_list') }}" class="nav-item {% if request.endpoint and 'gallery' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-photo-video"></i> 활동 앨범
+                </a>
+                <div class="sidebar-divider"></div>
+                <div class="sidebar-label">알림마당</div>
                 <a href="{{ url_for('admin.notices_list') }}" class="nav-item {% if request.endpoint and 'notices' in request.endpoint %}active{% endif %}">
                     <i class="fas fa-bullhorn"></i> 공지사항
                 </a>
                 <a href="{{ url_for('admin.parent_notes_list') }}" class="nav-item {% if request.endpoint and 'parent_notes' in request.endpoint %}active{% endif %}">
                     <i class="fas fa-envelope-open-text"></i> 가정통신문
                 </a>
+                <div class="sidebar-divider"></div>
+                <div class="sidebar-label">행사일정</div>
                 <a href="{{ url_for('admin.events_list') }}" class="nav-item {% if request.endpoint and 'events' in request.endpoint %}active{% endif %}">
-                    <i class="fas fa-calendar-alt"></i> 행사일정
-                </a>
-                <div class="sidebar-divider"></div>
-                <div class="sidebar-label">교육</div>
-                <a href="{{ url_for('admin.programs_list') }}" class="nav-item {% if request.endpoint and 'programs' in request.endpoint %}active{% endif %}">
-                    <i class="fas fa-graduation-cap"></i> 교육과정
-                </a>
-                <a href="{{ url_for('admin.gallery_list') }}" class="nav-item {% if request.endpoint and 'gallery' in request.endpoint %}active{% endif %}">
-                    <i class="fas fa-photo-video"></i> 활동 앨범
-                </a>
-                <div class="sidebar-divider"></div>
-                <div class="sidebar-label">운영</div>
-                <a href="{{ url_for('admin.teachers_list') }}" class="nav-item {% if request.endpoint and 'teachers' in request.endpoint %}active{% endif %}">
-                    <i class="fas fa-chalkboard-teacher"></i> 교사 소개
-                </a>
-                <div class="sidebar-divider"></div>
-                <div class="sidebar-label">설정</div>
-                <a href="{{ url_for('admin.site_info_edit') }}" class="nav-item {% if request.endpoint and 'site_info' in request.endpoint %}active{% endif %}">
-                    <i class="fas fa-cog"></i> 사이트 정보
+                    <i class="fas fa-calendar-alt"></i> 행사 관리
                 </a>
             </nav>
             <div class="sidebar-footer">

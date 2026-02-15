@@ -466,11 +466,14 @@ a:hover {
 }
 
 .card-header {
-    padding: 1rem 1.5rem;
+    padding: 12px 20px;
+    background: #f8f9fa;
     border-bottom: 1px solid #e9ecef;
+    font-weight: 600;
+    font-size: 0.95rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 8px;
 }
 
 .card-header h2 {
@@ -1148,8 +1151,8 @@ select.form-control {
    ============================================ */
 .site-info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
 }
 
 /* ============================================
@@ -1471,9 +1474,27 @@ select.form-control {
 .admin-cal-event.evt-parent { background: #fff3e0; color: #e65100; }
 .admin-cal-event.evt-holiday { background: #ffebee; color: #c62828; }
 .admin-cal-event.evt-special { background: #f3e5f5; color: #6a1b9a; }
+.admin-cal-event.evt-graduation { background: #d7ccc8; color: #5d4037; }
+.admin-cal-event.evt-recruitment { background: #F3E5F5; color: #7B1FA2; }
+
+.admin-cal-cell.cal-holiday {
+    background: #fff5f5;
+}
+
+.admin-cal-holiday {
+    display: block;
+    font-size: 0.6rem;
+    color: #e53935;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 @media (max-width: 768px) {
     .admin-cal-cell { min-height: 60px; padding: 4px 2px; }
     .admin-cal-day { font-size: 0.7rem; }
     .admin-cal-event { font-size: 0.6rem; }
+    .admin-cal-holiday { font-size: 0.5rem; }
 }

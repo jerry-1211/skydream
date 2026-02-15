@@ -7,10 +7,13 @@
 
 <section class="content-section">
     <div class="container">
+        <p class="section-subtitle" style="text-align:center;margin-bottom:var(--space-xl);">
+            사랑과 전문성으로 아이들의 성장을 함께하는 선생님들을 소개합니다.
+        </p>
         {% if teachers %}
         <div class="teacher-grid">
             {% for teacher in teachers %}
-            <div class="teacher-card">
+            <div class="teacher-card" style="animation: fadeInUp 0.6s ease {{ loop.index0 * 0.15 }}s both;">
                 {% if teacher.photo %}
                 <img src="{{ url_for('static', filename=teacher.photo.static_path) }}" alt="{{ teacher.name }}" loading="lazy">
                 {% else %}

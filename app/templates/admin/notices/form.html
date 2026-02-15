@@ -78,13 +78,17 @@ $(document).ready(function() {
     });
 
     function uploadNoticeImage(file) {
-        if (file.size > 10 * 1024 * 1024) {
-            alert('이미지 크기는 10MB 이하만 가능합니다.');
+        if (file.size > 30 * 1024 * 1024) {
+            alert('이미지 크기는 30MB 이하만 가능합니다.');
             return;
         }
         var formData = new FormData();
         formData.append('file', file);
         formData.append('csrf_token', '{{ csrf_token() }}');
+
+        // Show uploading indicator
+        var $loading = $('<div class="upload-loading"><i class="fas fa-spinner fa-spin"></i> 이미지 업로드 중...</div>');
+        $('#noticeContent').summernote('insertNode', $loading[0]);
 
         $.ajax({
             url: '{{ url_for("admin.notice_image_upload") }}',
@@ -93,14 +97,20 @@ $(document).ready(function() {
             processData: false,
             contentType: false,
             success: function(data) {
+                $loading.remove();
                 if (data.url) {
                     var imgNode = $('<img>').attr('src', data.url)
                                            .css({'max-width': '100%', 'height': 'auto'});
                     $('#noticeContent').summernote('insertNode', imgNode[0]);
                 }
             },
-            error: function() {
-                alert('이미지 업로드에 실패했습니다.');
+            error: function(xhr) {
+                $loading.remove();
+                var msg = '이미지 업로드에 실패했습니다.';
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    msg = xhr.responseJSON.error;
+                }
+                alert(msg);
             }
         });
     }
