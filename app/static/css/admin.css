@@ -1470,12 +1470,12 @@ select.form-control {
 .admin-cal-event:hover { opacity: 0.8; }
 
 .admin-cal-event.evt-general { background: #e3f2fd; color: #1565c0; }
-.admin-cal-event.evt-field_trip { background: #e8f5e9; color: #2e7d32; }
 .admin-cal-event.evt-parent { background: #fff3e0; color: #e65100; }
 .admin-cal-event.evt-holiday { background: #ffebee; color: #c62828; }
 .admin-cal-event.evt-special { background: #f3e5f5; color: #6a1b9a; }
 .admin-cal-event.evt-graduation { background: #d7ccc8; color: #5d4037; }
 .admin-cal-event.evt-recruitment { background: #F3E5F5; color: #7B1FA2; }
+.admin-cal-event.evt-committee { background: #E0F2F1; color: #00695C; }
 
 .admin-cal-cell.cal-holiday {
     background: #fff5f5;

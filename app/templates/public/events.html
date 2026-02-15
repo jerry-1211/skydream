@@ -49,7 +49,7 @@
                     {% if has_events %}
                     <div class="cal-events">
                         {% for ev in events_by_day[day] %}
-                        <span class="cal-ev-dot {{ ev.event_type }}" title="{{ ev.title }}"></span>
+                        <span class="cal-ev-tag {{ ev.event_type }}" title="{{ ev.title }}">{{ ev.title|truncate(8, True, '…') }}</span>
                         {% endfor %}
                     </div>
                     {% endif %}
@@ -62,11 +62,13 @@
 
         {# Calendar Legend #}
         <div class="cal-legend">
-            <span class="cal-legend-item"><span class="cal-ev-dot general"></span> 일반</span>
-            <span class="cal-legend-item"><span class="cal-ev-dot field_trip"></span> 현장학습</span>
+            <span class="cal-legend-item"><span class="cal-ev-dot general"></span> 견학·체험</span>
             <span class="cal-legend-item"><span class="cal-ev-dot parent"></span> 학부모 참여</span>
             <span class="cal-legend-item"><span class="cal-ev-dot holiday"></span> 휴원/공휴일</span>
             <span class="cal-legend-item"><span class="cal-ev-dot special"></span> 특별행사</span>
+            <span class="cal-legend-item"><span class="cal-ev-dot graduation"></span> 졸업식</span>
+            <span class="cal-legend-item"><span class="cal-ev-dot recruitment"></span> 원아 모집</span>
+            <span class="cal-legend-item"><span class="cal-ev-dot committee"></span> 운영위원회</span>
             <span class="cal-legend-item"><span class="cal-legend-holiday"></span> 공휴일</span>
         </div>
 
