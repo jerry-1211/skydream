@@ -10,9 +10,17 @@ public_bp = Blueprint('public', __name__)
 
 def _get_site_info():
     """Helper: load all site_info as a dict."""
+    # Default values for keys that need non-empty defaults on the public site
+    defaults = {
+        'daycare_name': '하늘 꿈나무 어린이집',
+        'operating_hours': '07:30 ~ 19:30',
+        'extended_hours': '19:30 ~ 21:30',
+        'closed_days': '일요일, 공휴일',
+        'capacity': '20명',
+    }
     site_info = {}
     for key in SiteInfo.KEYS:
-        site_info[key] = SiteInfo.get_value(key, SiteInfo.KEYS[key])
+        site_info[key] = SiteInfo.get_value(key, defaults.get(key, ''))
     return site_info
 
 

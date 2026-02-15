@@ -297,13 +297,13 @@ POPUP_DATA = [
 ]
 
 DAILY_SCHEDULE_DATA = [
-    {'time_label': '07:30', 'icon_class': 'fas fa-sun', 'title': '등원 및 맞이', 'description': '반갑게 인사하고 건강 관찰, 자유놀이', 'sort_order': 1},
-    {'time_label': '09:30', 'icon_class': 'fas fa-apple-alt', 'title': '오전 간식', 'description': '영양 가득한 과일과 간식 시간', 'sort_order': 2},
-    {'time_label': '10:00', 'icon_class': 'fas fa-book-reader', 'title': '놀이 활동', 'description': '표준보육과정에 따른 놀이 중심 수업', 'sort_order': 3},
-    {'time_label': '11:30', 'icon_class': 'fas fa-utensils', 'title': '점심 식사', 'description': '영양사가 관리하는 균형 잡힌 점심', 'sort_order': 4},
-    {'time_label': '12:30', 'icon_class': 'fas fa-cloud-moon', 'title': '낮잠', 'description': '편안한 환경에서 달콤한 낮잠 시간', 'sort_order': 5},
-    {'time_label': '15:00', 'icon_class': 'fas fa-cookie-bite', 'title': '오후 간식 & 놀이', 'description': '간식 후 실내외 자유놀이 활동', 'sort_order': 6},
-    {'time_label': '16:30', 'icon_class': 'fas fa-hand-wave', 'title': '하원', 'description': '하루 이야기 나누고 안전하게 귀가', 'sort_order': 7},
+    {'time_label': '09:50', 'icon_class': 'fas fa-apple-alt', 'title': '오전 간식', 'description': '영양 가득한 과일과 간식 시간', 'sort_order': 1},
+    {'time_label': '10:00', 'icon_class': 'fas fa-book-reader', 'title': '놀이 활동', 'description': '표준보육과정에 따른 놀이 중심 수업', 'sort_order': 2},
+    {'time_label': '11:50', 'icon_class': 'fas fa-utensils', 'title': '점심 시간', 'description': '영양사가 관리하는 균형 잡힌 점심', 'sort_order': 3},
+    {'time_label': '12:30', 'icon_class': 'fas fa-cloud-moon', 'title': '낮잠', 'description': '12:30 ~ 13:00 편안한 환경에서 달콤한 낮잠 시간', 'sort_order': 4},
+    {'time_label': '15:00', 'icon_class': 'fas fa-cookie-bite', 'title': '오후 간식 & 놀이', 'description': '간식 후 특별활동 및 자유놀이', 'sort_order': 5},
+    {'time_label': '16:00', 'icon_class': 'fas fa-hand-wave', 'title': '기본보육 하원', 'description': '하루 이야기 나누고 안전하게 귀가', 'sort_order': 6},
+    {'time_label': '17:00', 'icon_class': 'fas fa-moon', 'title': '연장보육', 'description': '연장보육 시간 운영', 'sort_order': 7},
 ]
 
 

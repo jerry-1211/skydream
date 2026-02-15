@@ -392,7 +392,7 @@ a.menu-box {
 .schedule-row {
     display: flex;
     justify-content: space-between;
-    padding: var(--space-md) 0;
+    padding: var(--space-lg) 0;
     border-bottom: 1px solid var(--color-border);
 }
 
