@@ -69,29 +69,80 @@ def notices_delete(id):
 
 @admin_bp.route('/notices/upload-image', methods=['POST'])
 def notice_image_upload():
-    """Handle image upload from Summernote editor in notices."""
-    from ...utils.image_resize import resize_and_compress
+    """Handle image upload from Summernote editor in notices.
 
-    file = request.files.get('file')
-    if not file or file.filename == '':
-        return jsonify({'error': '파일이 없습니다.'}), 400
+    Accepts any image format that PIL can open (PNG, JPG, GIF, WEBP, BMP, TIFF, HEIC, etc.)
+    and converts to web-friendly JPEG/PNG.
+    """
+    from PIL import Image
 
-    ext = file.filename.rsplit('.', 1)[-1].lower()
-    allowed = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
-    if ext not in allowed:
-        return jsonify({'error': '허용되지 않는 파일 형식입니다.'}), 400
+    try:
+        file = request.files.get('file')
+        if not file or file.filename == '':
+            return jsonify({'error': '파일이 없습니다.'}), 400
 
-    unique_filename = f"{uuid.uuid4().hex}.{ext}"
-    upload_folder = current_app.config.get('UPLOAD_FOLDER', 'app/static/uploads')
-    notice_dir = os.path.join(upload_folder, 'notices')
-    os.makedirs(notice_dir, exist_ok=True)
+        upload_folder = current_app.config.get('UPLOAD_FOLDER', 'app/static/uploads')
+        notice_dir = os.path.join(upload_folder, 'notices')
+        os.makedirs(notice_dir, exist_ok=True)
 
-    filepath = os.path.join(notice_dir, unique_filename)
-    file.save(filepath)
+        # Save temp file first
+        temp_filename = f"{uuid.uuid4().hex}_temp"
+        ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else 'bin'
+        temp_path = os.path.join(notice_dir, f"{temp_filename}.{ext}")
+        file.save(temp_path)
 
-    # Auto resize and compress
-    filepath, _ = resize_and_compress(filepath, max_width=1200, max_height=1200, quality=80)
-    final_filename = os.path.basename(filepath)
+        # Try to open with PIL (supports all common formats)
+        try:
+            img = Image.open(temp_path)
+            img.load()  # Force load to catch corrupt files
+        except Exception:
+            os.remove(temp_path)
+            return jsonify({'error': '이미지 파일을 열 수 없습니다. 유효한 이미지 파일인지 확인해주세요.'}), 400
 
-    img_url = url_for('static', filename=f'uploads/notices/{final_filename}')
-    return jsonify({'url': img_url})
+        # Handle EXIF rotation
+        try:
+            from PIL import ExifTags
+            for orientation in ExifTags.TAGS:
+                if ExifTags.TAGS[orientation] == 'Orientation':
+                    break
+            exif = img._getexif()
+            if exif and orientation in exif:
+                rot = exif[orientation]
+                if rot == 3:
+                    img = img.rotate(180, expand=True)
+                elif rot == 6:
+                    img = img.rotate(270, expand=True)
+                elif rot == 8:
+                    img = img.rotate(90, expand=True)
+        except (AttributeError, KeyError, TypeError):
+            pass
+
+        # Resize if needed
+        max_w, max_h = 1200, 1200
+        if img.size[0] > max_w or img.size[1] > max_h:
+            img.thumbnail((max_w, max_h), Image.LANCZOS)
+
+        # Determine output format: keep PNG for transparency, JPEG for everything else
+        final_id = uuid.uuid4().hex
+        if img.mode == 'RGBA' or (img.mode == 'P' and 'transparency' in img.info):
+            out_ext = 'png'
+            out_path = os.path.join(notice_dir, f"{final_id}.png")
+            img.save(out_path, 'PNG', optimize=True)
+        else:
+            out_ext = 'jpg'
+            out_path = os.path.join(notice_dir, f"{final_id}.jpg")
+            if img.mode != 'RGB':
+                img = img.convert('RGB')
+            img.save(out_path, 'JPEG', quality=80, optimize=True)
+
+        # Clean up temp file
+        if os.path.exists(temp_path) and temp_path != out_path:
+            os.remove(temp_path)
+
+        final_filename = os.path.basename(out_path)
+        img_url = url_for('static', filename=f'uploads/notices/{final_filename}')
+        return jsonify({'url': img_url})
+
+    except Exception as e:
+        current_app.logger.error(f'Notice image upload error: {e}')
+        return jsonify({'error': '이미지 업로드 중 오류가 발생했습니다.'}), 500

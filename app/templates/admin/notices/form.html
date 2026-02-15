@@ -82,13 +82,20 @@ $(document).ready(function() {
             alert('이미지 크기는 30MB 이하만 가능합니다.');
             return;
         }
+
+        // Validate file is image type (accept all image formats)
+        if (file.type && !file.type.startsWith('image/')) {
+            alert('이미지 파일만 업로드 가능합니다.');
+            return;
+        }
+
         var formData = new FormData();
         formData.append('file', file);
         formData.append('csrf_token', '{{ csrf_token() }}');
 
-        // Show uploading indicator
-        var $loading = $('<div class="upload-loading"><i class="fas fa-spinner fa-spin"></i> 이미지 업로드 중...</div>');
-        $('#noticeContent').summernote('insertNode', $loading[0]);
+        // Show uploading indicator (outside editor to avoid focus issues)
+        var $statusBar = $('<div class="upload-status" style="background:#FFF3E0;padding:8px 16px;border-radius:4px;margin:8px 0;font-size:0.9rem;"><i class="fas fa-spinner fa-spin"></i> 이미지 업로드 중...</div>');
+        $('.note-editor').after($statusBar);
 
         $.ajax({
             url: '{{ url_for("admin.notice_image_upload") }}',
@@ -96,20 +103,29 @@ $(document).ready(function() {
             data: formData,
             processData: false,
             contentType: false,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token() }}'
+            },
+            timeout: 60000,
             success: function(data) {
-                $loading.remove();
+                $statusBar.remove();
                 if (data.url) {
-                    var imgNode = $('<img>').attr('src', data.url)
-                                           .css({'max-width': '100%', 'height': 'auto'});
-                    $('#noticeContent').summernote('insertNode', imgNode[0]);
+                    $('#noticeContent').summernote('insertImage', data.url, function($image) {
+                        $image.css({'max-width': '100%', 'height': 'auto'});
+                    });
+                } else {
+                    alert('이미지 URL을 받지 못했습니다.');
                 }
             },
-            error: function(xhr) {
-                $loading.remove();
+            error: function(xhr, status, error) {
+                $statusBar.remove();
                 var msg = '이미지 업로드에 실패했습니다.';
-                if (xhr.responseJSON && xhr.responseJSON.error) {
+                if (status === 'timeout') {
+                    msg = '업로드 시간이 초과되었습니다. 파일 크기를 줄여주세요.';
+                } else if (xhr.responseJSON && xhr.responseJSON.error) {
                     msg = xhr.responseJSON.error;
                 }
+                console.error('Image upload failed:', status, error, xhr.responseText);
                 alert(msg);
             }
         });
