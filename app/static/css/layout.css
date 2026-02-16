@@ -163,6 +163,8 @@
     color: #558b2f;
     font-weight: 700;
     letter-spacing: 0.02em;
+    word-break: keep-all;
+    text-align: center;
 }
 
 .nav-links {
@@ -382,6 +384,11 @@
 
 /* ---- Responsive: Footer & etc (768px) ---- */
 @media (max-width: 768px) {
+
+    .trust-strip__inner {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
 
     .trust-strip__badge {
         height: 32px;
