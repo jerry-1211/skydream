@@ -1596,6 +1596,127 @@
     color: var(--color-white);
 }
 
+/* ---- FAQ Accordion ---- */
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.faq-item {
+    border: 1px solid #e0e0e0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+}
+
+.faq-item:hover {
+    box-shadow: 0 2px 12px rgba(66, 165, 245, 0.1);
+}
+
+.faq-question {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 18px 20px;
+    background: #fafafa;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: 1rem;
+    font-family: inherit;
+    font-weight: 600;
+    color: var(--color-dark);
+    transition: background 0.2s;
+}
+
+.faq-question:hover {
+    background: #f0f7ff;
+}
+
+.faq-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.faq-icon-a {
+    background: #66BB6A;
+}
+
+.faq-q-text {
+    flex: 1;
+    word-break: keep-all;
+}
+
+.faq-arrow {
+    font-size: 0.85rem;
+    color: #999;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+}
+
+.faq-open .faq-arrow {
+    transform: rotate(180deg);
+}
+
+.faq-open .faq-question {
+    background: #E3F2FD;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+}
+
+.faq-open .faq-answer {
+    max-height: 500px;
+}
+
+.faq-answer-inner {
+    display: flex;
+    gap: 14px;
+    padding: 18px 20px;
+    background: #fff;
+    border-top: 1px solid #e8e8e8;
+}
+
+.faq-a-text {
+    flex: 1;
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.7;
+    word-break: keep-all;
+    white-space: pre-line;
+}
+
+@media (max-width: 480px) {
+    .faq-question {
+        padding: 14px 16px;
+        gap: 10px;
+        font-size: 0.95rem;
+    }
+    .faq-answer-inner {
+        padding: 14px 16px;
+        gap: 10px;
+    }
+    .faq-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+}
+
 /* ---- Class Filter Tabs ---- */
 .class-filter-tabs {
     display: flex;

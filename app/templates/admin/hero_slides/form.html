@@ -41,10 +41,7 @@
             {% set label = '배경 이미지' %}
             {% include 'admin/components/image_upload.html' %}
 
-            <div class="form-group">
-                <label for="sort_order">정렬 순서</label>
-                <input type="number" id="sort_order" name="sort_order" class="form-control" value="{{ slide.sort_order if slide else 0 }}" style="max-width:120px;">
-            </div>
+            {% with sort_value=slide.sort_order if slide else 0 %}{% include 'admin/components/sort_order.html' %}{% endwith %}
 
             <div class="form-check">
                 <input type="checkbox" id="is_active" name="is_active" {{ 'checked' if (slide and slide.is_active) or not slide }}>

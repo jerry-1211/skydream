@@ -1,0 +1,36 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ 'FAQ 수정' if faq else 'FAQ 등록' }}{% endblock %}
+{% block page_title %}{{ 'FAQ 수정' if faq else 'FAQ 등록' }}{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="post" action="{{ url_for('admin.faqs_edit', id=faq.id) if faq else url_for('admin.faqs_create') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="form-group">
+                <label for="question">질문</label>
+                <input type="text" id="question" name="question" class="form-control" value="{{ faq.question if faq else '' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="answer">답변</label>
+                <textarea id="answer" name="answer" class="form-control" rows="6" required>{{ faq.answer if faq else '' }}</textarea>
+            </div>
+
+            {% with sort_value=faq.sort_order if faq else 0 %}{% include 'admin/components/sort_order.html' %}{% endwith %}
+
+            <div class="form-check">
+                <input type="checkbox" id="is_active" name="is_active" {{ 'checked' if not faq or faq.is_active }}>
+                <label for="is_active">활성화</label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ '수정' if faq else '등록' }}
+                </button>
+                <a href="{{ url_for('admin.faqs_list') }}" class="btn btn-secondary">취소</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}자주 묻는 질문 - 하늘 꿈나무 어린이집{% endblock %}
+{% block content %}
+{% include "components/page_header.html" %}
+
+<section class="content-section">
+    <div class="container" style="max-width:800px;">
+        {% if faqs %}
+        <div class="faq-list">
+            {% for faq in faqs %}
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                    <span class="faq-icon">Q</span>
+                    <span class="faq-q-text">{{ faq.question }}</span>
+                    <i class="fas fa-chevron-down faq-arrow"></i>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        <span class="faq-icon faq-icon-a">A</span>
+                        <div class="faq-a-text">{{ faq.answer }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p style="text-align:center;color:#999;padding:40px 0;">등록된 FAQ가 없습니다.</p>
+        {% endif %}
+    </div>
+</section>
+
+<script>
+function toggleFaq(btn) {
+    var item = btn.parentElement;
+    var isOpen = item.classList.contains('faq-open');
+
+    // Close all
+    document.querySelectorAll('.faq-item.faq-open').forEach(function(el) {
+        el.classList.remove('faq-open');
+        el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+    });
+
+    // Open clicked (if wasn't open)
+    if (!isOpen) {
+        item.classList.add('faq-open');
+        btn.setAttribute('aria-expanded', 'true');
+    }
+}
+</script>
+{% endblock %}

@@ -1,6 +1,6 @@
 import calendar
 from flask import Blueprint, render_template, send_from_directory, current_app, request, abort, redirect, url_for, flash
-from ..models import HeroSlide, Program, Gallery, SiteInfo, Notice, Teacher, Event, MealPlan, ParentNote, Popup, DailySchedule, DownloadFile, Media, Comment
+from ..models import HeroSlide, Program, Gallery, SiteInfo, Notice, Teacher, Event, MealPlan, ParentNote, Popup, DailySchedule, DownloadFile, Media, Comment, Faq
 from ..extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from ..utils.korean_holidays import get_holidays_for_month
@@ -411,6 +411,17 @@ def contact():
         site_info=site_info,
         page_title='오시는 길',
         breadcrumb_items=[{'label': '오시는 길'}],
+    )
+
+
+@public_bp.route('/faq')
+def faq():
+    """FAQ page with accordion."""
+    faqs = Faq.query.filter_by(is_active=True).order_by(Faq.sort_order).all()
+    return render_template('public/faq.html',
+        faqs=faqs,
+        page_title='자주 묻는 질문',
+        breadcrumb_items=[{'label': '알림마당'}, {'label': '자주 묻는 질문'}],
     )
 
 

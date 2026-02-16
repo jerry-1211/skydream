@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app import create_app
 from app.extensions import db
-from app.models import SiteInfo, HeroSlide, Program, Gallery, Media, Teacher, Notice, Event, MealPlan, ParentNote, Popup, DailySchedule
+from app.models import SiteInfo, HeroSlide, Program, Gallery, Media, Teacher, Notice, Event, MealPlan, ParentNote, Popup, DailySchedule, Faq
 
 
 # ---------------------------------------------------------------------------
@@ -643,6 +643,37 @@ def main():
         print(f'  - Parent notes: {ParentNote.query.count()}')
         print(f'  - Popups: {Popup.query.count()}')
         print(f'  - Daily schedule: {DailySchedule.query.count()}')
+        print(f'  - FAQs: {Faq.query.count()}')
+
+        # ---- FAQ ----
+        if Faq.query.count() == 0:
+            print('\n--- Seeding FAQs ---')
+            faqs = [
+                Faq(question='입소 신청은 어떻게 하나요?',
+                    answer='임신육아종합포털 아이사랑(www.childcare.go.kr)에서 온라인 대기 신청 후, 결원 발생 시 연락드립니다. 방문 상담도 가능하니 언제든 전화 주세요!',
+                    sort_order=1, is_active=True),
+                Faq(question='운영 시간은 어떻게 되나요?',
+                    answer='기본 보육: 07:30 ~ 19:30\n연장 보육: 19:30 ~ 21:30 (사전 신청 필요)\n\n토요일, 일요일, 공휴일은 휴원입니다.',
+                    sort_order=2, is_active=True),
+                Faq(question='보육료는 얼마인가요?',
+                    answer='정부지원 어린이집으로 보육료는 정부에서 전액 지원됩니다. 특별활동비 등 추가 비용은 학부모 동의 후 진행하며, 자세한 내용은 원으로 문의해 주세요.',
+                    sort_order=3, is_active=True),
+                Faq(question='급식은 어떻게 운영되나요?',
+                    answer='전문 영양사가 작성한 균형 잡힌 식단으로 오전 간식, 점심, 오후 간식을 제공합니다. 알레르기가 있는 경우 사전에 알려주시면 대체식을 준비해 드립니다.',
+                    sort_order=4, is_active=True),
+                Faq(question='적응 기간은 어떻게 진행되나요?',
+                    answer='신입원아는 약 1~2주간 적응 기간을 운영합니다.\n\n1일차: 부모님과 함께 1시간 방문\n2~3일차: 2~3시간 (오전 활동 참여)\n4~5일차: 점심까지\n2주차: 정규 시간 적응\n\n아이의 상태에 따라 유연하게 조정합니다.',
+                    sort_order=5, is_active=True),
+                Faq(question='통학 버스가 있나요?',
+                    answer='현재 통학 버스는 운영하지 않습니다. 등·하원은 보호자께서 직접 해주시며, 주차 공간이 마련되어 있습니다.',
+                    sort_order=6, is_active=True),
+                Faq(question='CCTV가 설치되어 있나요?',
+                    answer='네, 모든 교실과 복도, 놀이터에 CCTV가 설치되어 있으며, 영상정보처리기기 운영 및 관리 방침에 따라 운영하고 있습니다. 보호자 열람 신청도 가능합니다.',
+                    sort_order=7, is_active=True),
+            ]
+            db.session.add_all(faqs)
+            db.session.commit()
+            print(f'  Created {len(faqs)} FAQs')
 
 
 if __name__ == '__main__':

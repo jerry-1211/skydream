@@ -50,13 +50,7 @@
                 <input type="text" id="description" name="description" class="form-control" value="{{ item.description if item else '' }}" placeholder="반갑게 인사하고 건강 관찰, 자유놀이">
             </div>
 
-            <div class="form-group">
-                <label for="sort_order">표시 순서</label>
-                <input type="number" id="sort_order" name="sort_order" class="form-control" value="{{ item.sort_order if item else 0 }}" style="width:100px;">
-                <div class="form-hint">
-                    <i class="fas fa-info-circle"></i> 숫자가 작을수록 위에 표시됩니다. (예: 1→맨 위, 10→아래)
-                </div>
-            </div>
+            {% with sort_value=item.sort_order if item else 0 %}{% include 'admin/components/sort_order.html' %}{% endwith %}
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">

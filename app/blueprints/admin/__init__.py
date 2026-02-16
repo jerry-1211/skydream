@@ -12,4 +12,4 @@ def require_login():
 
 
 # Import routes after blueprint creation to avoid circular imports
-from . import dashboard, notices, media, programs, gallery, hero_slides, site_info, meals, events, teachers, parent_notes, popups, daily_schedule, download_files, comments  # noqa: E402, F401
+from . import dashboard, notices, media, programs, gallery, hero_slides, site_info, meals, events, teachers, parent_notes, popups, daily_schedule, download_files, comments, faqs  # noqa: E402, F401

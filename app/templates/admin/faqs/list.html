@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% block title %}FAQ 관리{% endblock %}
+{% block page_title %}FAQ 관리{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <span>총 {{ faqs|length }}건</span>
+        <a href="{{ url_for('admin.faqs_create') }}" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus"></i> FAQ 등록
+        </a>
+    </div>
+    <div class="card-body">
+        {% if faqs %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width:50px;">순서</th>
+                    <th>질문</th>
+                    <th style="width:80px;">상태</th>
+                    <th style="width:120px;">관리</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for faq in faqs %}
+                <tr>
+                    <td>{{ faq.sort_order }}</td>
+                    <td>{{ faq.question }}</td>
+                    <td>
+                        {% if faq.is_active %}
+                        <span class="badge badge-green">활성</span>
+                        {% else %}
+                        <span class="badge" style="background:#eee;color:#999;">비활성</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('admin.faqs_edit', id=faq.id) }}" class="btn btn-sm btn-secondary">수정</a>
+                        <form method="post" action="{{ url_for('admin.faqs_delete', id=faq.id) }}" style="display:inline;" onsubmit="return confirm('삭제하시겠습니까?');">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-sm btn-danger">삭제</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">등록된 FAQ가 없습니다.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

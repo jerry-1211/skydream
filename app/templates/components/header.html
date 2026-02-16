@@ -47,10 +47,11 @@
             </li>
             <li role="none" class="has-dropdown">
                 <a href="{{ url_for('public.notices') }}" role="menuitem"
-                   class="{{ 'active' if request.endpoint in ['public.notices', 'public.notice_detail', 'public.parent_notes', 'public.parent_note_detail'] }}">알림마당</a>
+                   class="{{ 'active' if request.endpoint in ['public.notices', 'public.notice_detail', 'public.parent_notes', 'public.parent_note_detail', 'public.faq'] }}">알림마당</a>
                 <ul class="dropdown-menu" role="menu">
                     <li role="none"><a href="{{ url_for('public.notices') }}" role="menuitem">공지사항</a></li>
                     <li role="none"><a href="{{ url_for('public.parent_notes') }}" role="menuitem">가정통신문</a></li>
+                    <li role="none"><a href="{{ url_for('public.faq') }}" role="menuitem">자주 묻는 질문</a></li>
                 </ul>
             </li>
             <li role="none"><a href="{{ url_for('public.events') }}" role="menuitem"
