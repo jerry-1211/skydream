@@ -1,0 +1,100 @@
+{# Comments Section - include with content_type and content_id #}
+<div class="comments-section">
+    <h4 class="comments-title">
+        <i class="fas fa-comments"></i>
+        댓글 <span class="comments-count">{{ comments|length }}</span>
+    </h4>
+
+    {% if comments %}
+    <div class="comments-list">
+        {% for comment in comments %}
+        <div class="comment-item {{ 'comment-admin' if comment.is_admin }}" id="comment-{{ comment.id }}">
+            <div class="comment-header">
+                <span class="comment-author">
+                    {% if comment.is_admin %}
+                    <i class="fas fa-shield-alt" style="color:#42A5F5;"></i>
+                    {% endif %}
+                    {{ comment.author_name }}
+                </span>
+                <span class="comment-date">{{ comment.created_at.strftime('%Y.%m.%d %H:%M') }}</span>
+            </div>
+
+            {# 기본 댓글 내용 #}
+            <div class="comment-body" id="comment-body-{{ comment.id }}">{{ comment.body }}</div>
+
+            {# 수정/삭제 버튼 (댓글 하단) #}
+            <div class="comment-actions" id="comment-actions-{{ comment.id }}">
+                <button type="button" class="comment-action-btn" onclick="startEdit({{ comment.id }})" title="수정">
+                    <i class="fas fa-pen"></i>
+                </button>
+                <button type="button" class="comment-action-btn comment-action-delete" onclick="startDelete({{ comment.id }})" title="삭제">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            {# 수정 폼 (기본 숨김) #}
+            <form method="post" action="{{ url_for('public.comment_edit', comment_id=comment.id) }}"
+                  class="comment-edit-form" id="comment-edit-{{ comment.id }}" style="display:none;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <textarea name="body" class="comment-textarea" rows="3" required>{{ comment.body }}</textarea>
+                <div class="comment-edit-actions">
+                    <input type="password" name="password" placeholder="비밀번호" class="comment-pw-input" required>
+                    <button type="submit" class="comment-confirm-btn" style="background:#42A5F5;">수정</button>
+                    <button type="button" class="comment-cancel-btn" onclick="cancelEdit({{ comment.id }})">취소</button>
+                </div>
+            </form>
+
+            {# 삭제 확인 (기본 숨김) #}
+            <form method="post" action="{{ url_for('public.comment_delete', comment_id=comment.id) }}"
+                  class="comment-delete-confirm" id="comment-del-{{ comment.id }}" style="display:none;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="password" name="password" placeholder="비밀번호" class="comment-pw-input" required>
+                <button type="submit" class="comment-confirm-btn">삭제</button>
+                <button type="button" class="comment-cancel-btn" onclick="cancelDel({{ comment.id }})">취소</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="comments-empty">아직 댓글이 없습니다. 첫 댓글을 남겨보세요!</p>
+    {% endif %}
+
+    <div class="comment-form-wrap">
+        <form method="post" action="{{ url_for('public.comment_create') }}" class="comment-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="content_type" value="{{ content_type }}">
+            <input type="hidden" name="content_id" value="{{ content_id }}">
+            <div class="comment-form-row">
+                <input type="text" name="author_name" placeholder="이름" class="comment-input" required maxlength="50">
+                <input type="password" name="password" placeholder="비밀번호" class="comment-input" required maxlength="20">
+            </div>
+            <textarea name="body" placeholder="댓글을 남겨주세요..." class="comment-textarea" required rows="3" maxlength="500"></textarea>
+            <div class="comment-form-actions">
+                <button type="submit" class="comment-submit-btn">
+                    <i class="fas fa-paper-plane"></i> 댓글 작성
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function startEdit(id) {
+    document.getElementById('comment-body-' + id).style.display = 'none';
+    document.getElementById('comment-actions-' + id).style.display = 'none';
+    document.getElementById('comment-edit-' + id).style.display = 'block';
+}
+function cancelEdit(id) {
+    document.getElementById('comment-body-' + id).style.display = '';
+    document.getElementById('comment-actions-' + id).style.display = '';
+    document.getElementById('comment-edit-' + id).style.display = 'none';
+}
+function startDelete(id) {
+    document.getElementById('comment-actions-' + id).style.display = 'none';
+    document.getElementById('comment-del-' + id).style.display = 'flex';
+}
+function cancelDel(id) {
+    document.getElementById('comment-actions-' + id).style.display = '';
+    document.getElementById('comment-del-' + id).style.display = 'none';
+}
+</script>

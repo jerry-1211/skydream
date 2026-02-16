@@ -2,8 +2,64 @@
 {% block title %}기본정보 · 인사말{% endblock %}
 {% block page_title %}기본정보 · 인사말{% endblock %}
 {% block content %}
-<form method="post" action="{{ url_for('admin.site_info_edit') }}">
+<form method="post" action="{{ url_for('admin.site_info_edit') }}" enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    {# 0. 소개 페이지 대표 이미지 #}
+    <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-header"><i class="fas fa-image" style="color:#7E57C2"></i> 소개 페이지 대표 이미지</div>
+        <div class="card-body">
+            <p class="form-hint" style="margin-bottom:1rem;">어린이집 소개 페이지 상단에 표시되는 대표 이미지입니다.</p>
+            <div class="image-upload-area" id="heroUploadArea">
+                {% if hero_image %}
+                <div class="image-upload-preview" id="heroPreview">
+                    <img src="{{ url_for('static', filename=hero_image.static_path) }}" alt="현재 대표 이미지" id="heroPreviewImg">
+                    <div class="image-upload-preview-overlay">
+                        <i class="fas fa-camera"></i>
+                        <span>변경하기</span>
+                    </div>
+                </div>
+                {% else %}
+                <div class="image-upload-placeholder" id="heroPlaceholder">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>클릭하여 이미지 선택</p>
+                    <span>또는 여기로 드래그</span>
+                </div>
+                {% endif %}
+                <input type="file" id="about_hero_image" name="about_hero_image" accept="image/*" style="display:none;">
+            </div>
+            <div class="form-hint" style="margin-top:0.5rem;text-align:center;">권장: 가로 600px 이상, 세로형 또는 정사각형</div>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        var area = document.getElementById('heroUploadArea');
+        var input = document.getElementById('about_hero_image');
+
+        area.addEventListener('click', function() { input.click(); });
+
+        input.addEventListener('change', function() {
+            if (!this.files || !this.files[0]) return;
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                area.innerHTML = '<div class="image-upload-preview" id="heroPreview">' +
+                    '<img src="' + e.target.result + '" alt="미리보기" id="heroPreviewImg">' +
+                    '<div class="image-upload-preview-overlay"><i class="fas fa-check-circle"></i><span>선택됨</span></div></div>';
+                area.appendChild(input);
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+
+        area.addEventListener('dragover', function(e) { e.preventDefault(); area.classList.add('dragover'); });
+        area.addEventListener('dragleave', function() { area.classList.remove('dragover'); });
+        area.addEventListener('drop', function(e) {
+            e.preventDefault();
+            area.classList.remove('dragover');
+            if (e.dataTransfer.files.length) { input.files = e.dataTransfer.files; input.dispatchEvent(new Event('change')); }
+        });
+    })();
+    </script>
 
     {# 1. 원장 인사말 #}
     <div class="card" style="margin-bottom:1.5rem;">
@@ -75,10 +131,6 @@
                 <label for="meal_features">급식 특징</label>
                 <textarea id="meal_features" name="meal_features" class="form-control" rows="4" placeholder="저염식 인증 어린이집&#10;신선한 제철 식재료 사용&#10;아워홈 식재료 공급업체">{{ values.get('meal_features', '') }}</textarea>
                 <div class="form-hint">한 줄에 하나씩 입력하면 목록으로 표시됩니다.</div>
-            </div>
-            <div class="form-group">
-                <label for="curriculum_intro">교육과정 소개</label>
-                <textarea id="curriculum_intro" name="curriculum_intro" class="form-control" rows="3">{{ values.get('curriculum_intro', '') }}</textarea>
             </div>
         </div>
     </div>

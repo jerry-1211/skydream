@@ -684,9 +684,12 @@
 /* ---- Teacher Grid ---- */
 .teacher-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: var(--space-xl);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-lg);
     margin-top: var(--space-xl);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .teacher-card {
@@ -717,7 +720,7 @@
 
 .teacher-card img {
     width: 100%;
-    height: 280px;
+    height: 200px;
     object-fit: cover;
     transition: transform 0.5s ease;
 }
@@ -726,14 +729,41 @@
     transform: scale(1.05);
 }
 
+.teacher-avatar {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #E3F2FD 0%, #F3E5F5 100%);
+    overflow: hidden;
+}
+
+.teacher-avatar img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+}
+
+.teacher-avatar-initial {
+    background: linear-gradient(135deg, #4FC3F7 0%, #7E57C2 100%);
+}
+
+.teacher-avatar-initial span {
+    font-size: 5rem;
+    font-weight: 700;
+    color: white;
+    font-family: var(--font-heading);
+}
+
 .teacher-card .card-body {
-    padding: var(--space-lg) var(--space-lg) var(--space-xl);
+    padding: var(--space-md) var(--space-md) var(--space-lg);
     position: relative;
 }
 
 .teacher-card h4 {
     font-family: var(--font-heading);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--color-primary);
     margin-bottom: 4px;
 }
@@ -751,8 +781,8 @@
 
 .teacher-card .greeting {
     color: #666;
-    font-size: 0.9rem;
-    line-height: 1.7;
+    font-size: 0.85rem;
+    line-height: 1.6;
     position: relative;
     padding-top: var(--space-sm);
 }
@@ -1297,6 +1327,242 @@
     font-size: 0.8rem;
 }
 
+/* ---- Comments Section ---- */
+.comments-section {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 2px solid var(--color-border);
+}
+
+.comments-title {
+    font-size: 1.1rem;
+    color: var(--color-dark);
+    margin-bottom: var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.comments-title i {
+    color: var(--color-primary);
+}
+
+.comments-count {
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.comments-empty {
+    text-align: center;
+    color: #aaa;
+    padding: var(--space-xl) 0;
+    font-size: 0.95rem;
+}
+
+.comments-list {
+    margin-bottom: var(--space-xl);
+}
+
+.comment-item {
+    padding: var(--space-md) var(--space-lg);
+    border: 1px solid #eee;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-sm);
+    position: relative;
+    background: #fafafa;
+    transition: background 0.2s;
+}
+
+.comment-item:hover {
+    background: #f5f5f5;
+}
+
+.comment-admin {
+    border-left: 3px solid var(--color-primary);
+    background: #F3F8FF;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-xs);
+}
+
+.comment-author {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-dark);
+}
+
+.comment-date {
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+.comment-body {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+    justify-content: flex-end;
+}
+
+.comment-action-btn {
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    padding: 4px 6px;
+    font-size: 0.75rem;
+    transition: color 0.2s;
+    border-radius: 4px;
+}
+
+.comment-action-btn:hover {
+    color: #42A5F5;
+    background: rgba(66,165,245,0.08);
+}
+
+.comment-action-delete:hover {
+    color: #EF5350;
+    background: rgba(239,83,80,0.08);
+}
+}
+
+.comment-delete-confirm {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+}
+
+.comment-edit-form {
+    margin-top: var(--space-sm);
+}
+
+.comment-edit-form .comment-textarea {
+    margin-bottom: var(--space-xs);
+}
+
+.comment-edit-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: flex-end;
+}
+
+.comment-pw-input {
+    width: 100px;
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.comment-confirm-btn {
+    padding: 4px 10px;
+    background: #EF5350;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.comment-cancel-btn {
+    padding: 4px 10px;
+    background: #eee;
+    color: #666;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+/* Comment Form */
+.comment-form-wrap {
+    background: #f8f9fa;
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    border: 1px solid #eee;
+}
+
+.comment-form-row {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.comment-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.comment-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.comment-textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.comment-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--space-sm);
+}
+
+.comment-submit-btn {
+    padding: 8px 20px;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-family: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
+}
+
+.comment-submit-btn:hover {
+    background: var(--color-primary-dark);
+}
+
 .detail-actions {
     display: flex;
     justify-content: center;
@@ -1808,7 +2074,8 @@
 
 /* About - Section titles */
 .section-title-center {
-    font-family: var(--font-accent);
+    font-family: 'Sunflower', sans-serif !important;
+    font-weight: 700 !important;
     font-size: var(--text-4xl);
     color: var(--color-primary);
     text-align: center;

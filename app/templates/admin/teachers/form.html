@@ -22,13 +22,55 @@
                 <textarea id="greeting" name="greeting" class="form-control" rows="4">{{ teacher.greeting if teacher else '' }}</textarea>
             </div>
 
-            {% set current_image = teacher.photo if teacher and teacher.photo else None %}
-            {% set label = '프로필 사진' %}
-            {% include 'admin/components/image_upload.html' %}
-
+            {# Avatar Selection - Primary #}
             <div class="form-group">
-                <label for="sort_order">정렬 순서</label>
-                <input type="number" id="sort_order" name="sort_order" class="form-control" value="{{ teacher.sort_order if teacher else 0 }}" style="max-width:120px;">
+                <label><i class="fas fa-palette" style="color:#7E57C2;"></i> 프로필 아바타</label>
+                <div class="avatar-grid">
+                    {% set avatars = [
+                        ('sun', '해'),
+                        ('star', '별'),
+                        ('moon', '달'),
+                        ('earth', '지구'),
+                        ('saturn', '토성'),
+                        ('rocket', '로켓'),
+                        ('galaxy', '은하'),
+                        ('constellation', '별자리'),
+                        ('shooting-star', '유성'),
+                        ('wave', '바다'),
+                        ('whale', '고래'),
+                        ('cloud', '구름'),
+                        ('rainbow', '무지개'),
+                        ('dolphin', '돌고래'),
+                        ('starfish', '불가사리'),
+                        ('lighthouse', '등대'),
+                    ] %}
+                    {% for key, name in avatars %}
+                    <label class="avatar-option">
+                        <input type="radio" name="avatar" value="{{ key }}" {{ 'checked' if teacher and teacher.avatar == key }}>
+                        <div class="avatar-preview">
+                            <img src="{{ url_for('static', filename='images/avatars/' + key + '.svg') }}" alt="{{ name }}">
+                        </div>
+                        <span>{{ name }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {# Sort Order - Visual UI #}
+            <div class="form-group">
+                <label><i class="fas fa-sort-amount-up-alt" style="color:#42A5F5;"></i> 표시 순서</label>
+                <div class="sort-order-control">
+                    <button type="button" class="sort-btn sort-btn-minus" onclick="adjustOrder(-1)">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <div class="sort-order-display">
+                        <input type="number" id="sort_order" name="sort_order" value="{{ teacher.sort_order if teacher else 1 }}" min="1" max="99">
+                        <span class="sort-order-label">번째</span>
+                    </div>
+                    <button type="button" class="sort-btn sort-btn-plus" onclick="adjustOrder(1)">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
                 <div class="form-hint">숫자가 작을수록 앞에 표시됩니다.</div>
             </div>
 
@@ -41,4 +83,13 @@
         </form>
     </div>
 </div>
+
+<script>
+function adjustOrder(delta) {
+    var input = document.getElementById('sort_order');
+    var val = parseInt(input.value) || 1;
+    val = Math.max(1, Math.min(99, val + delta));
+    input.value = val;
+}
+</script>
 {% endblock %}

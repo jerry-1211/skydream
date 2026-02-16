@@ -26,7 +26,9 @@
             <tr>
                 <td>{{ teacher.sort_order }}</td>
                 <td>
-                    {% if teacher.photo %}
+                    {% if teacher.avatar %}
+                    <img src="{{ url_for('static', filename='images/avatars/' + teacher.avatar + '.svg') }}" class="table-thumb" alt="{{ teacher.avatar }}" style="background:#F3E5F5;padding:4px;">
+                    {% elif teacher.photo %}
                     <img src="{{ url_for('static', filename=teacher.photo.static_path) }}" class="table-thumb" alt="">
                     {% else %}
                     <span class="text-muted">-</span>

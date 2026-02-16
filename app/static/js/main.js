@@ -126,6 +126,12 @@ document.addEventListener('DOMContentLoaded', function () {
         var targetContent = document.getElementById(targetTab);
         if (targetContent) {
             targetContent.classList.add('active');
+            // Update swiper layout after tab switch
+            var swiper = targetContent.querySelector('.swiper');
+            if (swiper && swiper.swiper) {
+                swiper.swiper.update();
+                swiper.swiper.autoplay.start();
+            }
         }
     });
 
@@ -133,27 +139,22 @@ document.addEventListener('DOMContentLoaded', function () {
        5. Swiper Initializations
        ================================================ */
 
-    // Shared config for program swipers
-    var programSwiperConfig = {
-        slidesPerView: 2,
-        spaceBetween: 20,
-        loop: true,
-        autoplay: {
-            delay: 4000,
-            disableOnInteraction: false
-        },
-        breakpoints: {
-            320: { slidesPerView: 1, spaceBetween: 15 },
-            768: { slidesPerView: 2, spaceBetween: 20 }
-        }
-    };
-
     // Helper: create a program swiper with scoped nav/pagination
     function initProgramSwiper(selector) {
         var el = document.querySelector(selector);
         if (!el) return null;
 
-        return new Swiper(selector, Object.assign({}, programSwiperConfig, {
+        return new Swiper(selector, {
+            slidesPerView: 2,
+            spaceBetween: 20,
+            loop: true,
+            speed: 600,
+            grabCursor: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            },
             navigation: {
                 nextEl: selector + ' .swiper-button-next',
                 prevEl: selector + ' .swiper-button-prev'
@@ -161,8 +162,12 @@ document.addEventListener('DOMContentLoaded', function () {
             pagination: {
                 el: selector + ' .swiper-pagination',
                 clickable: true
+            },
+            breakpoints: {
+                320: { slidesPerView: 1, spaceBetween: 15 },
+                768: { slidesPerView: 2, spaceBetween: 20 }
             }
-        }));
+        });
     }
 
     // Gallery Swiper (different config)
@@ -191,12 +196,37 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Program tab swipers
-    initProgramSwiper('.basic-swiper');
-    initProgramSwiper('.story-swiper');
-    initProgramSwiper('.special-swiper');
-    initProgramSwiper('.action-swiper');
-    initProgramSwiper('.act-swiper');
+    // Program tab swipers - only init the active one first
+    var programSwipers = {};
+    var swiperSelectors = ['.basic-swiper', '.story-swiper', '.special-swiper', '.action-swiper', '.act-swiper'];
+
+    // Init the first (visible) swiper immediately
+    swiperSelectors.forEach(function(sel) {
+        var el = document.querySelector(sel);
+        if (el) {
+            var parent = el.closest('.tab-content');
+            if (parent && parent.classList.contains('active')) {
+                programSwipers[sel] = initProgramSwiper(sel);
+            }
+        }
+    });
+
+    // Lazy-init swipers when their tab becomes active
+    document.addEventListener('click', function(e) {
+        var btn = e.target.closest('.program-tabs .tab-btn');
+        if (!btn) return;
+        var tabId = btn.getAttribute('data-tab');
+        setTimeout(function() {
+            swiperSelectors.forEach(function(sel) {
+                var el = document.querySelector(sel);
+                if (el && el.closest('#' + tabId) && !programSwipers[sel]) {
+                    programSwipers[sel] = initProgramSwiper(sel);
+                } else if (el && el.closest('#' + tabId) && programSwipers[sel]) {
+                    programSwipers[sel].update();
+                }
+            });
+        }, 50);
+    });
 
     /* ================================================
        6. Notice Ticker

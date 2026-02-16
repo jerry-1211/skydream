@@ -25,9 +25,9 @@ class SiteInfo(db.Model):
         'grade': '등급',
         'map_latitude': '지도 위도',
         'map_longitude': '지도 경도',
-        'curriculum_intro': '교육과정 소개',
         'admission_details': '입소안내 상세 (줄바꿈으로 구분)',
         'meal_features': '급식 특징 (줄바꿈으로 구분)',
+        'about_hero_image_id': '소개 페이지 대표 이미지',
     }
 
     def __repr__(self):

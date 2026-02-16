@@ -7,12 +7,26 @@
 
 <section class="content-section">
     <div class="container">
+        {% set tab_icons = {
+            'basic': 'fas fa-sun',
+            'story': 'fas fa-book-open',
+            'special': 'fas fa-users',
+            'action': 'fas fa-star',
+            'act': 'fas fa-hiking'
+        } %}
+        {% set tab_labels = {
+            'basic': '일상',
+            'story': '놀이 이야기',
+            'special': '학부모 참여수업',
+            'action': '특별 활동',
+            'act': '체험'
+        } %}
         <div class="program-tabs">
-            <button class="tab-btn active" data-tab="basic">일상</button>
-            <button class="tab-btn" data-tab="story">놀이 이야기</button>
-            <button class="tab-btn" data-tab="special">학부모 참여수업</button>
-            <button class="tab-btn" data-tab="action">특별 활동</button>
-            <button class="tab-btn" data-tab="act">체험</button>
+            {% for cat in ['basic', 'story', 'special', 'action', 'act'] %}
+            <button class="tab-btn {{ 'active' if cat == 'basic' }}" data-tab="{{ cat }}">
+                <i class="{{ tab_icons[cat] }}"></i> {{ tab_labels[cat] }}
+            </button>
+            {% endfor %}
         </div>
 
         {% for category in ['basic', 'story', 'special', 'action', 'act'] %}
@@ -24,7 +38,14 @@
                     <div class="swiper-slide">
                         <div class="program-card">
                             {% if program.image %}
-                            <img src="{{ url_for('static', filename=program.image.static_path) }}" alt="{{ program.title }}" loading="lazy">
+                            <div class="program-card-img">
+                                <img src="{{ url_for('static', filename=program.image.static_path) }}" alt="{{ program.title }}" loading="lazy">
+                                {% if program.title %}
+                                <div class="program-card-overlay">
+                                    <span>{{ program.title }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
                             {% endif %}
                             {% if program.description %}
                             <div class="card-content">

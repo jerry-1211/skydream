@@ -15,9 +15,9 @@ class ParentNote(db.Model):
 
     TARGET_CLASSES = {
         'all': '전체',
-        'age0': '0세반',
-        'age1': '1세반',
-        'age2': '2세반',
+        'age0': '0세 (별반)',
+        'age1': '1세 (달반)',
+        'age2': '2세 (해반)',
     }
 
     @property

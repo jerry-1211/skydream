@@ -79,6 +79,9 @@
                 <a href="{{ url_for('admin.parent_notes_list') }}" class="nav-item {% if request.endpoint and 'parent_notes' in request.endpoint %}active{% endif %}">
                     <i class="fas fa-envelope-open-text"></i> 가정통신문
                 </a>
+                <a href="{{ url_for('admin.comments_list') }}" class="nav-item {% if request.endpoint and 'comments' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-comments"></i> 댓글 관리
+                </a>
                 <div class="sidebar-divider"></div>
                 <div class="sidebar-label">행사일정</div>
                 <a href="{{ url_for('admin.events_list') }}" class="nav-item {% if request.endpoint and 'events' in request.endpoint %}active{% endif %}">

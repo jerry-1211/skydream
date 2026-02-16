@@ -1,0 +1,67 @@
+{% extends "admin/base.html" %}
+{% block title %}댓글 관리{% endblock %}
+{% block page_title %}댓글 관리{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>총 {{ pagination.total }}개</h2>
+    <div class="filter-tabs" style="display:flex;gap:8px;">
+        <a href="{{ url_for('admin.comments_list') }}" class="btn btn-sm {{ 'btn-primary' if not current_type else 'btn-secondary' }}">전체</a>
+        <a href="{{ url_for('admin.comments_list', type='notice') }}" class="btn btn-sm {{ 'btn-primary' if current_type == 'notice' else 'btn-secondary' }}">공지사항</a>
+        <a href="{{ url_for('admin.comments_list', type='parent_note') }}" class="btn btn-sm {{ 'btn-primary' if current_type == 'parent_note' else 'btn-secondary' }}">가정통신문</a>
+    </div>
+</div>
+
+{% if pagination.items %}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width:50px;">ID</th>
+                <th style="width:80px;">구분</th>
+                <th style="width:80px;">작성자</th>
+                <th>내용</th>
+                <th style="width:120px;">작성일</th>
+                <th style="width:70px;">관리</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in pagination.items %}
+            <tr>
+                <td>{{ comment.id }}</td>
+                <td>
+                    {% if comment.content_type == 'notice' %}
+                    <span class="badge badge-blue">공지</span>
+                    {% else %}
+                    <span class="badge badge-green">통신문</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {{ comment.author_name }}
+                    {% if comment.is_admin %}
+                    <i class="fas fa-shield-alt" style="color:#42A5F5;font-size:0.7rem;" title="관리자"></i>
+                    {% endif %}
+                </td>
+                <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ comment.body }}</td>
+                <td>{{ comment.created_at.strftime('%Y.%m.%d %H:%M') }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('admin.comments_delete', id=comment.id) }}" onsubmit="return confirm('이 댓글을 삭제하시겠습니까?');" style="display:inline;">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if pagination.pages > 1 %}
+{% include "components/pagination.html" %}
+{% endif %}
+{% else %}
+<div class="empty-state">
+    <i class="fas fa-comments"></i>
+    <p>등록된 댓글이 없습니다.</p>
+</div>
+{% endif %}
+{% endblock %}

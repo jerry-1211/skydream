@@ -1,0 +1,19 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="60" cy="60" r="60" fill="#E8EAF6"/>
+  <rect x="48" y="40" width="24" height="50" rx="2" fill="#ECEFF1"/>
+  <rect x="48" y="40" width="24" height="50" rx="2" fill="url(#stripes)"/>
+  <defs>
+    <pattern id="stripes" x="0" y="0" width="24" height="12" patternUnits="userSpaceOnUse">
+      <rect width="24" height="6" fill="#EF5350"/>
+      <rect y="6" width="24" height="6" fill="white"/>
+    </pattern>
+  </defs>
+  <rect x="44" y="88" width="32" height="8" rx="2" fill="#78909C"/>
+  <rect x="52" y="32" width="16" height="10" rx="2" fill="#546E7A"/>
+  <rect x="55" y="34" width="10" height="6" rx="1" fill="#FFF9C4"/>
+  <polygon points="60,22 50,32 70,32" fill="#546E7A"/>
+  <line x1="35" y1="30" x2="48" y2="36" stroke="#FFD54F" stroke-width="2" opacity="0.6" stroke-linecap="round"/>
+  <line x1="85" y1="30" x2="72" y2="36" stroke="#FFD54F" stroke-width="2" opacity="0.6" stroke-linecap="round"/>
+  <line x1="60" y1="15" x2="60" y2="22" stroke="#FFD54F" stroke-width="2" opacity="0.6" stroke-linecap="round"/>
+  <path d="M0 95 Q15 88 30 95 Q45 102 60 95 Q75 88 90 95 Q105 102 120 95 V120 H0Z" fill="#42A5F5" opacity="0.5"/>
+</svg>

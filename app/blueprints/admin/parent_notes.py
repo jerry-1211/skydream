@@ -1,7 +1,7 @@
 from . import admin_bp
 from flask import render_template, request, redirect, url_for, flash
 from ...extensions import db
-from ...models import ParentNote
+from ...models import ParentNote, Comment
 
 
 @admin_bp.route('/parent-notes/')
@@ -55,7 +55,8 @@ def parent_notes_edit(id):
         flash('학부모 알림이 수정되었습니다.', 'success')
         return redirect(url_for('admin.parent_notes_list'))
 
-    return render_template('admin/parent_notes/form.html', note=note, target_classes=ParentNote.TARGET_CLASSES)
+    comments = Comment.query.filter_by(content_type='parent_note', content_id=id).order_by(Comment.created_at.asc()).all()
+    return render_template('admin/parent_notes/form.html', note=note, target_classes=ParentNote.TARGET_CLASSES, comments=comments)
 
 
 @admin_bp.route('/parent-notes/<int:id>/delete', methods=['POST'])

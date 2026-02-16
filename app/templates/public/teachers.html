@@ -14,10 +14,16 @@
         <div class="teacher-grid">
             {% for teacher in teachers %}
             <div class="teacher-card" style="animation: fadeInUp 0.6s ease {{ loop.index0 * 0.15 }}s both;">
-                {% if teacher.photo %}
+                {% if teacher.avatar %}
+                <div class="teacher-avatar">
+                    <img src="{{ url_for('static', filename='images/avatars/' + teacher.avatar + '.svg') }}" alt="{{ teacher.name }}">
+                </div>
+                {% elif teacher.photo %}
                 <img src="{{ url_for('static', filename=teacher.photo.static_path) }}" alt="{{ teacher.name }}" loading="lazy">
                 {% else %}
-                <img src="{{ url_for('static', filename='images/teacher.jpeg') }}" alt="{{ teacher.name }}" loading="lazy">
+                <div class="teacher-avatar teacher-avatar-initial">
+                    <span>{{ teacher.name[0] }}</span>
+                </div>
                 {% endif %}
                 <div class="card-body">
                     <h4>{{ teacher.name }}</h4>

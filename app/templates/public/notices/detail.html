@@ -56,6 +56,10 @@
             </div>
         </div>
 
+        {% with content_type='notice', content_id=notice.id %}
+            {% include "components/comments.html" %}
+        {% endwith %}
+
         <div class="detail-actions">
             <a href="{{ url_for('public.notices') }}" class="btn-list">
                 <i class="fas fa-list" aria-hidden="true"></i> 목록으로

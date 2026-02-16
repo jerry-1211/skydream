@@ -1,7 +1,8 @@
 import calendar
-from flask import Blueprint, render_template, send_from_directory, current_app, request, abort
-from ..models import HeroSlide, Program, Gallery, SiteInfo, Notice, Teacher, Event, MealPlan, ParentNote, Popup, DailySchedule, DownloadFile
+from flask import Blueprint, render_template, send_from_directory, current_app, request, abort, redirect, url_for, flash
+from ..models import HeroSlide, Program, Gallery, SiteInfo, Notice, Teacher, Event, MealPlan, ParentNote, Popup, DailySchedule, DownloadFile, Media, Comment
 from ..extensions import db
+from werkzeug.security import generate_password_hash, check_password_hash
 from ..utils.korean_holidays import get_holidays_for_month
 from datetime import date, timedelta, datetime
 
@@ -66,6 +67,12 @@ def about():
 
     download_files = DownloadFile.query.filter_by(is_active=True).order_by(DownloadFile.sort_order).all()
 
+    # Load about hero image from SiteInfo
+    about_hero_image = None
+    hero_image_id = SiteInfo.get_value('about_hero_image_id', '')
+    if hero_image_id:
+        about_hero_image = Media.query.get(int(hero_image_id))
+
     return render_template('public/about.html',
         site_info=site_info,
         principal=principal,
@@ -73,6 +80,7 @@ def about():
         admission_details=admission_details,
         meal_features=meal_features,
         download_files=download_files,
+        about_hero_image=about_hero_image,
         page_title='어린이집 소개',
         breadcrumb_items=[{'label': '어린이집 소개'}],
     )
@@ -141,10 +149,15 @@ def notice_detail(notice_id):
         Notice.created_at > notice.created_at
     ).order_by(Notice.created_at.asc()).first()
 
+    comments = Comment.query.filter_by(
+        content_type='notice', content_id=notice.id
+    ).order_by(Comment.created_at.asc()).all()
+
     return render_template('public/notices/detail.html',
         notice=notice,
         prev_notice=prev_notice,
         next_notice=next_notice,
+        comments=comments,
         page_title='공지사항',
         breadcrumb_items=[
             {'label': '알림마당'},
@@ -191,10 +204,15 @@ def parent_note_detail(note_id):
         ParentNote.created_at > note.created_at
     ).order_by(ParentNote.created_at.asc()).first()
 
+    comments = Comment.query.filter_by(
+        content_type='parent_note', content_id=note.id
+    ).order_by(Comment.created_at.asc()).all()
+
     return render_template('public/parent_notes/detail.html',
         note=note,
         prev_note=prev_note,
         next_note=next_note,
+        comments=comments,
         page_title='가정통신문',
         breadcrumb_items=[
             {'label': '알림마당'},
@@ -202,6 +220,78 @@ def parent_note_detail(note_id):
             {'label': note.title}
         ],
     )
+
+
+@public_bp.route('/comment', methods=['POST'])
+def comment_create():
+    """Create a comment on a notice or parent note."""
+    content_type = request.form.get('content_type', '').strip()
+    content_id = request.form.get('content_id', 0, type=int)
+    author_name = request.form.get('author_name', '').strip()
+    password = request.form.get('password', '').strip()
+    body = request.form.get('body', '').strip()
+
+    if not all([content_type, content_id, author_name, password, body]):
+        flash('모든 항목을 입력해주세요.', 'error')
+    elif content_type not in ('notice', 'parent_note'):
+        flash('잘못된 요청입니다.', 'error')
+    else:
+        comment = Comment(
+            content_type=content_type,
+            content_id=content_id,
+            author_name=author_name,
+            password=generate_password_hash(password),
+            body=body,
+        )
+        db.session.add(comment)
+        db.session.commit()
+        flash('댓글이 등록되었습니다.', 'success')
+
+    if content_type == 'notice':
+        return redirect(url_for('public.notice_detail', notice_id=content_id))
+    else:
+        return redirect(url_for('public.parent_note_detail', note_id=content_id))
+
+
+@public_bp.route('/comment/<int:comment_id>/delete', methods=['POST'])
+def comment_delete(comment_id):
+    """Delete a comment (requires password)."""
+    comment = Comment.query.get_or_404(comment_id)
+    password = request.form.get('password', '').strip()
+
+    if not check_password_hash(comment.password, password):
+        flash('비밀번호가 일치하지 않습니다.', 'error')
+    else:
+        db.session.delete(comment)
+        db.session.commit()
+        flash('댓글이 삭제되었습니다.', 'success')
+
+    if comment.content_type == 'notice':
+        return redirect(url_for('public.notice_detail', notice_id=comment.content_id))
+    else:
+        return redirect(url_for('public.parent_note_detail', note_id=comment.content_id))
+
+
+@public_bp.route('/comment/<int:comment_id>/edit', methods=['POST'])
+def comment_edit(comment_id):
+    """Edit a comment (requires password)."""
+    comment = Comment.query.get_or_404(comment_id)
+    password = request.form.get('password', '').strip()
+    new_body = request.form.get('body', '').strip()
+
+    if not check_password_hash(comment.password, password):
+        flash('비밀번호가 일치하지 않습니다.', 'error')
+    elif not new_body:
+        flash('댓글 내용을 입력해주세요.', 'error')
+    else:
+        comment.body = new_body
+        db.session.commit()
+        flash('댓글이 수정되었습니다.', 'success')
+
+    if comment.content_type == 'notice':
+        return redirect(url_for('public.notice_detail', notice_id=comment.content_id))
+    else:
+        return redirect(url_for('public.parent_note_detail', note_id=comment.content_id))
 
 
 @public_bp.route('/meals')

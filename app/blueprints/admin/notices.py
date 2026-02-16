@@ -1,7 +1,7 @@
 from . import admin_bp
 from flask import render_template, request, redirect, url_for, flash, jsonify, current_app
 from ...extensions import db
-from ...models import Notice
+from ...models import Notice, Comment
 import os
 import uuid
 
@@ -55,7 +55,8 @@ def notices_edit(id):
         flash('공지사항이 수정되었습니다.', 'success')
         return redirect(url_for('admin.notices_list'))
 
-    return render_template('admin/notices/form.html', notice=notice)
+    comments = Comment.query.filter_by(content_type='notice', content_id=id).order_by(Comment.created_at.asc()).all()
+    return render_template('admin/notices/form.html', notice=notice, comments=comments)
 
 
 @admin_bp.route('/notices/<int:id>/delete', methods=['POST'])

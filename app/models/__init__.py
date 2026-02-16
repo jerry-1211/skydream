@@ -12,3 +12,4 @@ from .hero_slide import HeroSlide
 from .popup import Popup
 from .daily_schedule import DailySchedule
 from .download_file import DownloadFile
+from .comment import Comment

@@ -23,6 +23,7 @@ def teachers_create():
             flash('이름을 입력해주세요.', 'error')
             return render_template('admin/teachers/form.html', teacher=None)
 
+        avatar = request.form.get('avatar', '').strip()
         photo_id = handle_image_upload('photo', category='teacher', alt_text=name)
 
         teacher = Teacher(
@@ -30,6 +31,7 @@ def teachers_create():
             title=title,
             greeting=greeting,
             photo_id=photo_id,
+            avatar=avatar,
             sort_order=sort_order,
         )
         db.session.add(teacher)
@@ -58,9 +60,14 @@ def teachers_edit(id):
         if new_photo_id:
             teacher.photo_id = new_photo_id
 
+        avatar = request.form.get('avatar', '').strip()
+
         teacher.name = name
         teacher.title = title
         teacher.greeting = greeting
+        teacher.avatar = avatar
+        if avatar:
+            teacher.photo_id = None
         teacher.sort_order = sort_order
         db.session.commit()
         flash('교사 정보가 수정되었습니다.', 'success')

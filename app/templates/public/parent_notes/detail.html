@@ -57,6 +57,10 @@
             </div>
         </div>
 
+        {% with content_type='parent_note', content_id=note.id %}
+            {% include "components/comments.html" %}
+        {% endwith %}
+
         <div class="detail-actions">
             <a href="{{ url_for('public.parent_notes') }}" class="btn-list">
                 <i class="fas fa-list" aria-hidden="true"></i> 목록으로

@@ -31,7 +31,9 @@
                 </div>
             </div>
             <div class="about-hero-image">
-                {% if principal and principal.photo %}
+                {% if about_hero_image %}
+                <img src="{{ url_for('static', filename=about_hero_image.static_path) }}" alt="어린이집 소개" loading="lazy">
+                {% elif principal and principal.photo %}
                 <img src="{{ url_for('static', filename=principal.photo.static_path) }}" alt="원장님" loading="lazy">
                 {% else %}
                 <img src="{{ url_for('static', filename='images/teacher.jpeg') }}" alt="원장님" loading="lazy">

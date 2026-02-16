@@ -1019,6 +1019,16 @@ select.form-control {
     color: #8e24aa;
 }
 
+.badge-blue {
+    background: rgba(66, 165, 245, 0.15);
+    color: #1976D2;
+}
+
+.badge-green {
+    background: rgba(102, 187, 106, 0.15);
+    color: #2E7D32;
+}
+
 /* Pinned notice indicator */
 .pinned-icon {
     color: #FF8A65;
@@ -1070,6 +1080,95 @@ select.form-control {
     height: 48px;
     border-radius: 6px;
     object-fit: cover;
+}
+
+/* ============================================
+   Image Upload Area (cute style)
+   ============================================ */
+.image-upload-area {
+    cursor: pointer;
+    border: 2px dashed #D1C4E9;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #F3E5F5 0%, #E8EAF6 100%);
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.image-upload-area:hover {
+    border-color: #7E57C2;
+    background: linear-gradient(135deg, #EDE7F6 0%, #E3F2FD 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(126, 87, 194, 0.15);
+}
+
+.image-upload-area.dragover {
+    border-color: #7E57C2;
+    background: linear-gradient(135deg, #EDE7F6 0%, #E3F2FD 100%);
+    box-shadow: 0 0 0 4px rgba(126, 87, 194, 0.1);
+}
+
+.image-upload-placeholder {
+    padding: 2.5rem 1rem;
+    text-align: center;
+}
+
+.image-upload-placeholder i {
+    font-size: 2.5rem;
+    color: #B39DDB;
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.image-upload-placeholder p {
+    font-weight: 600;
+    color: #5E35B1;
+    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+}
+
+.image-upload-placeholder span {
+    font-size: 0.8rem;
+    color: #9575CD;
+}
+
+.image-upload-preview {
+    position: relative;
+}
+
+.image-upload-preview img {
+    width: 100%;
+    max-height: 240px;
+    object-fit: cover;
+    display: block;
+}
+
+.image-upload-preview-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(94, 53, 177, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: #fff;
+    gap: 4px;
+}
+
+.image-upload-preview:hover .image-upload-preview-overlay {
+    opacity: 1;
+}
+
+.image-upload-preview-overlay i {
+    font-size: 1.5rem;
+}
+
+.image-upload-preview-overlay span {
+    font-size: 0.85rem;
+    font-weight: 600;
 }
 
 /* ============================================
@@ -1497,4 +1596,117 @@ select.form-control {
     .admin-cal-day { font-size: 0.7rem; }
     .admin-cal-event { font-size: 0.6rem; }
     .admin-cal-holiday { font-size: 0.5rem; }
+}
+
+/* Avatar Selection Grid */
+.avatar-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.avatar-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    gap: 4px;
+}
+
+.avatar-option input[type="radio"] {
+    display: none;
+}
+
+.avatar-preview {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, transform 0.2s;
+    background: #f5f5f5;
+}
+
+.avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-option input[type="radio"]:checked + .avatar-preview {
+    border-color: #4FC3F7;
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(79, 195, 247, 0.4);
+}
+
+.avatar-option span {
+    font-size: 0.75rem;
+    color: #666;
+    text-align: center;
+}
+
+.avatar-option input[type="radio"]:checked ~ span {
+    color: #4FC3F7;
+    font-weight: 600;
+}
+
+/* Sort Order Control */
+.sort-order-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
+
+.sort-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    background: #f5f5f5;
+    color: #888;
+    transition: background 0.2s;
+}
+
+.sort-btn:hover {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.sort-order-display {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    background: white;
+}
+
+.sort-order-display input[type="number"] {
+    width: 32px;
+    border: none;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+    background: transparent;
+    -moz-appearance: textfield;
+}
+
+.sort-order-display input[type="number"]::-webkit-outer-spin-button,
+.sort-order-display input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.sort-order-label {
+    font-size: 0.8rem;
+    color: #999;
 }
